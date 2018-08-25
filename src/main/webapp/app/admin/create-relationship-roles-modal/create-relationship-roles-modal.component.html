@@ -1,0 +1,27 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Odabir procjenjenika</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <hr class="mb-0">
+    <div class="modal-body pb-1">
+        <p class="question-text">Mark Otto je procjenitelj za:</p>
+        <ng-select [items]="evaluatees" id="selectEvaluatees" name="selectEvaluatees"
+                   notFoundText="Nema podataka" multiple="true">
+        </ng-select>
+    </div>
+    <hr>
+    <div class="modal-footer">
+        <div class="row pr-4">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default" (click)="c('Close click')">Odustani</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" (click)="c('Close click');">Spremi</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<button type="button" class="btn white-button oval-button" (click)="openModalForRelationshipsAndRoles(content)">Edit</button>

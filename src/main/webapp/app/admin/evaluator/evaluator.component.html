@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 padding-bottom">
+            <h2>Odredite uloge za zaposlenike:</h2>
+        </div>
+
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Šifra zaposlenika</th>
+                    <th scope="col">Ime</th>
+                    <th scope="col">Prezime</th>
+                    <th scope="col">Radno mjesto</th>
+                    <th scope="col">Procjenitelj</th>
+                    <th scope="col">Uredi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>563</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Programer</td>
+                    <td>
+                        <fa-icon [icon]="'times'">
+                    </td>
+                    <!--  <td><fa-icon [icon]="'edit'"></td>-->
+                    <td>
+                        <jhi-create-relationship-roles-modal></jhi-create-relationship-roles-modal>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>843</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>Voditelj JAVA tima</td>
+                    <td>
+                        <fa-icon [icon]="'times'">
+                    </td>
+                    <td><i class="fas fa-edit"></i></td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>2108</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>Voditelj .NET tima</td>
+                    <td>
+                        <fa-icon [icon]="'times'">
+                    </td>
+                    <td>
+                        <fa-icon [icon]="'edit'">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
