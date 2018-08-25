@@ -5,7 +5,7 @@
             <div class="form-group row">
                 <div class="col-md-12">
                     <label for="selectTypeEstimation" class="label-text">Vrsta procjene (model):</label>
-                    <ng-select [items]="typeEstimation" id="selectTypeEstimation" name="selectTypeEstimation"
+                    <ng-select [items]="modelEstimation" [(ngModel)]="selectedModel" bindLabel="name" id="selectTypeEstimation" name="selectTypeEstimation"
                                notFoundText="Nema podataka" required>
                     </ng-select>
                 </div>

@@ -95,6 +95,14 @@ jhipster:
             enabled: true
             report-frequency: 60 # in seconds
 
+dozer:
+    config:
+        file:
+            path: config/dozer/dozerConfig.xml
+    mapping:
+        file:
+            path: config/dozer/dozerMapping.xml
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

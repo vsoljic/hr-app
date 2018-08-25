@@ -45,7 +45,7 @@ spring:
         hibernate:
             ddl-auto: none
             naming:
-                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     messages:
         basename: i18n/messages
@@ -99,6 +99,16 @@ jhipster:
         license:
         license-url:
 
+# ===================================================================
+# Dozer configuration
+# ===================================================================
+dozer:
+    config:
+        file:
+            path: config/dozer/dozerConfig.xml
+    mapping:
+        file:
+            path: config/dozer/dozerMapping.xml
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

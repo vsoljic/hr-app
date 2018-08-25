@@ -43,4 +43,30 @@ public class AsyncConfiguration implements AsyncConfigurer {
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return new SimpleAsyncUncaughtExceptionHandler();
     }
+
+    public static interface ApplicationProperties {
+
+        String getChangeLogFile();
+
+        String getDozerConfigFilePath();
+
+        String getDozerMappingFilePath();
+
+        String getAppName();
+
+        String getServerPort();
+
+        public String getOibUrl();
+
+        public String getOibKeyStoreType();
+
+        public String getOibKeyStorePath();
+
+        public String getOibKeyStorePassword();
+
+        public String getOibTrustStorePath();
+
+        public String getOibTrustStorePassword();
+
+    }
 }

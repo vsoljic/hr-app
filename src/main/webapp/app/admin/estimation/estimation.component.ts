@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date-struct';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import {EstimationService} from 'app/admin/estimation/estimation.service';
+import {Model} from 'app/admin/models/model.model';
 
 @Component({
     selector: 'jhi-estimation',
@@ -9,24 +11,25 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./estimation.scss']
 })
 export class EstimationComponent implements OnInit {
-    typeEstimation = [
-        'Model A',
-        'Model B',
-        'Ovo nema smisla',
-        'Ne želim više raditi na šalteru',
-        'Krivo sam ispunila zahtjev',
-        'Sve sam krivo napravila',
-        'Zašto je život ovako težak???'
-    ];
+    modelEstimation: Model[];
+    selectedModel: Model;
     dateFrom: NgbDateStruct;
     dateTo: NgbDateStruct;
     dateString: string;
 
-    constructor(private http: HttpClient, private ngbDateParserFormatter: NgbDateParserFormatter) {}
+    constructor(private http: HttpClient, private ngbDateParserFormatter: NgbDateParserFormatter,
+                private estimationService: EstimationService) {}
 
     ngOnInit() {
         this.dateFrom = this.setDefaultDate();
         this.dateTo = this.setDefaultDate();
+
+        this.estimationService.getEstimations().subscribe();
+        this.estimationService.getModels().subscribe(
+            (models: Model[]) => this.modelEstimation = models,
+            error => console.log('error fetching models', error),
+            () => this.selectedModel = this.modelEstimation.find( model => model.id === 1)
+        );
     }
 
     /**
