@@ -1,6 +1,7 @@
 /* after changing this file run 'yarn run webpack:build' */
 /* tslint:disable */
 import '../content/scss/vendor.scss';
+import 'angular2-notifications';
 
 // Imports all fontawesome core and solid icons
 

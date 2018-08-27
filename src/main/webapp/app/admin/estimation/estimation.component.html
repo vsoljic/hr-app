@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="col-md-6">
         <h2>Kreiraj novu procjenu radnog učinka</h2>
-        <form name="newEstimation">
+        <form name="newEstimation" #estimation="ngForm" autocomplete="off">
             <div class="form-group row">
                 <div class="col-md-12">
                     <label for="selectTypeEstimation" class="label-text">Vrsta procjene (model):</label>
@@ -14,8 +14,8 @@
             <div class="form-group row">
                 <div class="col-md-12">
                     <label for="inputEstimationName" class="label-text">Naziv procjene:</label>
-                    <input type="text" id="inputEstimationName" name="estimationName" class="form-control"
-                           required maxlength="11">
+                    <input type="text" id="inputEstimationName" [(ngModel)]="inputEstimationName" name="estimationName" class="form-control"
+                           required />
                 </div>
             </div>
 
@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-5">
                     <input type="text" ngbDatepicker #validFrom="ngbDatepicker" class="form-control"
-                           [(ngModel)]="dateFrom" name="validFrom" (ngModelChange)="onSelectDateFrom($event)"/>
+                           [(ngModel)]="dateFrom" name="validFrom" (ngModelChange)="onSelectDateFrom($event)" required />
                     <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"
                              (click)="validFrom.toggle()"></fa-icon>
                 </div>
@@ -36,7 +36,7 @@
 
                 <div class="col-md-5">
                     <input type="text" ngbDatepicker #validTo="ngbDatepicker" class="form-control"
-                           [(ngModel)]="dateTo" name="validTo" (ngModelChange)="onSelectDateTo($event)"/>
+                           [(ngModel)]="dateTo" name="validTo" (ngModelChange)="onSelectDateTo($event)" required />
                     <fa-icon [icon]="'calendar-alt'" (click)="validTo.toggle()"
                              class="position-absolute calendar-inside-input"></fa-icon>
                 </div>
@@ -44,7 +44,7 @@
 
             <div class="form-group row padding-top">
                 <div class="offset-md-9 col-md-3">
-                    <button type="submit" class="btn btn-default">Kreiraj procjenu
+                    <button type="submit" class="btn btn-default" (click)="createNewEstimation(estimation)" [disabled]="!estimation.valid">Kreiraj procjenu
                     </button>
                 </div>
             </div>
@@ -52,3 +52,4 @@
         </form>
     </div>
 </div>
+<simple-notifications></simple-notifications>

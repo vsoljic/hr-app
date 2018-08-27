@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SERVER_API_URL} from 'app/app.constants';
+import {Estimation} from 'app/admin/models/estimation.model';
 
 @Injectable()
 export class EstimationService {
@@ -13,6 +14,14 @@ export class EstimationService {
 
     getModels() {
         return this.http.get(SERVER_API_URL + 'api/admin/estimation/model');
+    }
+
+    getStatuses() {
+        return this.http.get(SERVER_API_URL + 'api/admin/estimation/statuses');
+    }
+
+    createNewEstimation(estimation: Estimation) {
+        return this.http.post(SERVER_API_URL + '/api/admin/estimation', estimation);
     }
 
 }

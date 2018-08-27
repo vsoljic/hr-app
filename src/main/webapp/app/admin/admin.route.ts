@@ -1,12 +1,12 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 
-import { auditsRoute, configurationRoute, docsRoute, healthRoute, logsRoute, metricsRoute, userMgmtRoute } from './';
+import {auditsRoute, configurationRoute, docsRoute, healthRoute, logsRoute, metricsRoute, userMgmtRoute} from './';
 
-import { UserRouteAccessService } from 'app/core';
-import { ESTIMATION_ROUTE } from 'app/admin/estimation/estimation.route';
-import { EVALUATOR_ROUTE } from 'app/admin/evaluator/evaluator.route';
-import { EVALUATEE_ROUTE } from 'app/admin/evaluatee/evaluatee.route';
-import { ESTIMATIONS_OVERVIEW_ROUTE } from 'app/admin/estimations-overview/estimations-overview.route';
+import {UserRouteAccessService} from 'app/core';
+import {ESTIMATION_ROUTE} from 'app/admin/estimation/estimation.route';
+import {RELATIONSHIPS_FOR_ESTIMATION} from 'app/admin/relationships-for-estimation/relationships-for-estimation.route';
+import {EVALUATEE_ROUTE} from 'app/admin/evaluatee/evaluatee.route';
+import {ESTIMATIONS_OVERVIEW_ROUTE} from 'app/admin/estimations-overview/estimations-overview.route';
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -17,7 +17,7 @@ const ADMIN_ROUTES = [
     ...userMgmtRoute,
     metricsRoute,
     ESTIMATION_ROUTE,
-    EVALUATOR_ROUTE,
+    RELATIONSHIPS_FOR_ESTIMATION,
     EVALUATEE_ROUTE,
     ESTIMATIONS_OVERVIEW_ROUTE
 ];

@@ -1,6 +1,6 @@
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
-import { isNumber, padNumber, toInteger } from '../../../../../../HRApp_old/src/main/webapp/app/shared/util/util';
+import {isNumber, padNumber, toInteger} from 'app/shared/util/util';
 
 @Injectable()
 export class NgbDateCustomParserFormatter extends NgbDateParserFormatter {

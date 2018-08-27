@@ -19,12 +19,14 @@ import {
     UserMgmtUpdateComponent
 } from './';
 import {EstimationComponent} from 'app/admin/estimation/estimation.component';
-import {EvaluatorComponent} from './evaluator/evaluator.component';
 import {CreateRelationshipRolesModalComponent} from 'app/admin/create-relationship-roles-modal/create-relationship-roles-modal.component';
 import {EvaluateeComponent} from 'app/admin/evaluatee/evaluatee.component';
 import {CreateNewGoalModalComponent} from './create-new-goal-modal/create-new-goal-modal.component';
 import {EstimationsOverviewComponent} from './estimations-overview/estimations-overview.component';
 import {EstimationService} from 'app/admin/estimation/estimation.service';
+import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateCustomParserFormatter} from 'app/shared/ngb-date-custom-parser-formatter';
+import {RelationshipsForEstimationComponent} from 'app/admin/relationships-for-estimation/relationships-for-estimation.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -48,13 +50,17 @@ import {EstimationService} from 'app/admin/estimation/estimation.service';
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent,
         EstimationComponent,
-        EvaluatorComponent,
+        RelationshipsForEstimationComponent,
         EvaluateeComponent,
         CreateRelationshipRolesModalComponent,
         CreateNewGoalModalComponent,
         EstimationsOverviewComponent
     ],
-    providers: [EstimationService],
+    providers: [EstimationService,
+        {
+            provide: NgbDateParserFormatter,
+            useClass: NgbDateCustomParserFormatter
+        }],
     entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent, JhiMetricsMonitoringModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

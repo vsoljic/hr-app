@@ -1,7 +1,6 @@
 import './vendor.ts';
 
 import {Injector, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LocalStorageService, Ng2Webstorage, SessionStorageService} from 'ngx-webstorage';
 import {JhiEventManager} from 'ng-jhipster';
@@ -25,14 +24,15 @@ import {
     NavbarComponent,
     PageRibbonComponent
 } from './layouts';
-import {NgbDateCustomParserFormatter} from 'app/shared/ngb-date-custom-parser-formatter';
-import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {GoalGroupComponent} from './goal-group/goal-group.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
         BrowserModule,
         HrAppAppRoutingModule,
+        BrowserAnimationsModule,
         Ng2Webstorage.forRoot({prefix: 'jhi', separator: '-'}),
         HrAppSharedModule,
         HrAppCoreModule,
@@ -74,10 +74,6 @@ import {GoalGroupComponent} from './goal-group/goal-group.component';
             useClass: NotificationInterceptor,
             multi: true,
             deps: [Injector]
-        },
-        {
-            provide: NgbDateParserFormatter,
-            useClass: NgbDateCustomParserFormatter
         }
     ],
     bootstrap: [JhiMainComponent]

@@ -18,6 +18,7 @@ logging:
         ROOT: DEBUG
         io.github.jhipster: DEBUG
         hr.tvz.hrapp: DEBUG
+        org.dozer: WARN
 
 spring:
     profiles:

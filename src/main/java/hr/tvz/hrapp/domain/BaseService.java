@@ -33,4 +33,8 @@ public abstract class BaseService {
     public <T, W> W mapEntityToDTO(T entity, Class<W> dtoClass) {
         return dozerBeanMapper.map(entity, dtoClass);
     }
+
+    public <T, W> W mapDTOToEntity(T dto, Class<W> entityClass) {
+        return dozerBeanMapper.map(dto, entityClass);
+    }
 }
