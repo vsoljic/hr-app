@@ -23,8 +23,6 @@ import java.util.List;
 @RequestMapping("/api/admin/estimation")
 public class EstimationController {
 
-    private final EmployeesService employeesService;
-
     private final ModelService modelService;
 
     private final EstimationService estimationService;
@@ -32,21 +30,12 @@ public class EstimationController {
     private final EstimationStatusService estimationStatusService;
 
 
-    public EstimationController(EmployeesService employeesService, ModelService modelService, EstimationService estimationService, EstimationStatusService estimationStatusService) {
-        this.employeesService = employeesService;
+    public EstimationController(ModelService modelService, EstimationService estimationService, EstimationStatusService estimationStatusService) {
         this.modelService = modelService;
         this.estimationService = estimationService;
         this.estimationStatusService = estimationStatusService;
     }
 
-    @GetMapping
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<List<EmployeeDTO>> allEmployees() {
-
-        List<EmployeeDTO> employeeDTOS = employeesService.getAllEmployees();
-
-        return new ResponseEntity<>(employeeDTOS, HttpStatus.OK);
-    }
 
     @GetMapping("/model")
     @Secured(AuthoritiesConstants.ADMIN)

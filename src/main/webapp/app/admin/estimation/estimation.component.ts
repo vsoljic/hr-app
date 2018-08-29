@@ -26,7 +26,6 @@ export class EstimationComponent implements OnInit {
     status: Status;
     inputEstimationName: string;
 
-
     constructor(private http: HttpClient,
                 private ngbDateParserFormatter: NgbDateParserFormatter,
                 private estimationService: EstimationService,
@@ -77,10 +76,9 @@ export class EstimationComponent implements OnInit {
      */
     onSelectDateFrom(date: NgbDateStruct) {
         if (date != null) {
-            // this.dateFrom = date;
             // if selected dateFrom is greater than dateTo just set it to dateTo
             this.dateFrom = this.isDateGreaterThan(date, this.dateTo) ? this.dateTo : date;
-            console.log(this.dateFrom);
+            console.log('Ovo je trenutno postavljen datum FROM:' + this.dateFrom);
             this.dateString = this.ngbDateParserFormatter.format(this.dateFrom);
         }
     }
@@ -88,6 +86,7 @@ export class EstimationComponent implements OnInit {
     onSelectDateTo(date: NgbDateStruct) {
         if (date != null) {
             this.dateTo = date;
+            console.log('Ovo je trenutno postavljen datum TO:' + this.dateTo);
             this.dateString = this.ngbDateParserFormatter.format(date);
         }
     }
@@ -109,7 +108,7 @@ export class EstimationComponent implements OnInit {
             return; // to exit without calling backend
         }
 
-        let estimation = this.prepareEstimationValues();
+        const estimation = this.prepareEstimationValues();
         this.estimationService.createNewEstimation(estimation).subscribe(
             (createdEstimation: Estimation) => estimation,
             () => {
@@ -127,8 +126,8 @@ export class EstimationComponent implements OnInit {
      */
     prepareEstimationValues(): Estimation {
         // initialize form object
-        const estimation = new Estimation(this.status, this.selectedModel, this.inputEstimationName, this.convertToDate(this.dateFrom),
-            this.convertToDate(this.dateTo));
+        const estimation = new Estimation(this.status, this.selectedModel, this.inputEstimationName, new Date(),
+            new Date());
         // return form model for backend
         return estimation;
     }
@@ -148,6 +147,6 @@ export class EstimationComponent implements OnInit {
      * @param timeInMs given time of delay
      */
     private delay(timeInMs: number) {
-        return new Promise((resolve) => setTimeout(resolve, timeInMs));
+        return new Promise(resolve => setTimeout(resolve, timeInMs));
     }
 }

@@ -28,4 +28,11 @@ public class EmployeesServiceImpl extends BaseService implements EmployeesServic
 
         return mapEntitiesToDTO(employees, EmployeeDTO.class);
     }
+
+    @Override
+    public List<EmployeeDTO> getAllEmployeesExceptSelectedOne(Long id) {
+        List<Employee> employees = employeeRepository.findAllByIdNotIn(id);
+
+        return mapEntitiesToDTO(employees, EmployeeDTO.class);
+    }
 }

@@ -9,7 +9,7 @@ import {AuthInterceptor} from './blocks/interceptor/auth.interceptor';
 import {AuthExpiredInterceptor} from './blocks/interceptor/auth-expired.interceptor';
 import {ErrorHandlerInterceptor} from './blocks/interceptor/errorhandler.interceptor';
 import {NotificationInterceptor} from './blocks/interceptor/notification.interceptor';
-import {HrAppSharedModule} from 'app/shared';
+import {HrAppSharedCommonModule, HrAppSharedModule} from 'app/shared';
 import {HrAppCoreModule} from 'app/core';
 import {HrAppAppRoutingModule} from './app-routing.module';
 import {HrAppHomeModule} from './home/home.module';
@@ -27,6 +27,7 @@ import {
 import {GoalGroupComponent} from './goal-group/goal-group.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 @NgModule({
     imports: [
@@ -38,7 +39,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         HrAppCoreModule,
         HrAppHomeModule,
         HrAppAccountModule,
-        HrAppEntityModule
+        HrAppEntityModule,
+        SimpleNotificationsModule.forRoot({
+            position: ['top', 'right'],
+            timeOut: 5000,
+            showProgressBar: true,
+            pauseOnHover: true,
+            clickToClose: true,
+            animate: 'scale'
+        })
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

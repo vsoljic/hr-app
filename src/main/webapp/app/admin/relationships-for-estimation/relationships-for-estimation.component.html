@@ -18,21 +18,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>563</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Programer</td>
+                <tr *ngFor="let employee of employees">
+                    <th scope="row">{{employee.id}}</th>
+                    <td>{{employee.employeeCode}}</td>
+                    <td>{{employee.firstName}}</td>
+                    <td>{{employee.lastName}}</td>
+                    <td>{{employee.workPosition}}</td>
                     <td>
                         <fa-icon [icon]="'times'">
                     </td>
                     <!--  <td><fa-icon [icon]="'edit'"></td>-->
                     <td>
-                        <jhi-create-relationship-roles-modal></jhi-create-relationship-roles-modal>
+                        <jhi-create-relationship-roles-modal [employeeId]="employee.id" [employeeName]="employee.firstName"></jhi-create-relationship-roles-modal>
                     </td>
                 </tr>
-                <tr>
+               <!-- <tr>
                     <th scope="row">2</th>
                     <td>843</td>
                     <td>Jacob</td>
@@ -55,7 +55,7 @@
                     <td>
                         <fa-icon [icon]="'edit'">
                     </td>
-                </tr>
+                </tr>-->
                 </tbody>
             </table>
         </div>

@@ -1,5 +1,6 @@
 package hr.tvz.hrapp.domain.goal;
 
+
 import hr.tvz.hrapp.domain.employee.Employee;
 import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.group.Group;
@@ -30,16 +31,16 @@ public class Goal implements Serializable {
     @Column(name = "ACHIEVEMENT_PERCENTAGE")
     private Long achievementPercentage;
 
-    @JoinColumn(name = "ID")
     @OneToOne
+    @JoinColumn(name = "GROUP_ID")
     private Group group;
 
-    @JoinColumn(name = "ID")
     @OneToOne
+    @JoinColumn(name = "EMPLOYEE_ID")
     private Employee employee;
 
-    @JoinColumn(name = "ID")
     @OneToOne
+    @JoinColumn(name = "ESTIMATION_ID")
     private Estimation estimation;
 
     public Goal() {

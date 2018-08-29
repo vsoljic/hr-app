@@ -2,7 +2,6 @@ package hr.tvz.hrapp.domain.employee;
 
 import hr.tvz.hrapp.domain.User;
 import hr.tvz.hrapp.domain.estimation.Estimation;
-import hr.tvz.hrapp.domain.goal.Goal;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -47,15 +46,11 @@ public class Employee implements Serializable {
     @ManyToMany
     private List<Estimation> estimationsForEvaluatee;
 
-    @JoinColumn(name = "ID")
-    @OneToMany
-    private List<Goal> goals;
-
     public Employee() {
     }
 
     public Employee(Long id, User user, Long employeeCode, String firstName, String lastName, String workPosition,
-                    List<Estimation> estimationsForEvaluator, List<Estimation> estimationsForEvaluatee, List<Goal> goals) {
+                    List<Estimation> estimationsForEvaluator, List<Estimation> estimationsForEvaluatee) {
         this.id = id;
         this.user = user;
         this.employeeCode = employeeCode;
@@ -64,7 +59,7 @@ public class Employee implements Serializable {
         this.workPosition = workPosition;
         this.estimationsForEvaluator = estimationsForEvaluator;
         this.estimationsForEvaluatee = estimationsForEvaluatee;
-        this.goals = goals;
+        /*  this.goals = goals;*/
     }
 
     public User getUser() {
@@ -129,13 +124,5 @@ public class Employee implements Serializable {
 
     public void setEstimationsForEvaluatee(List<Estimation> estimationsForEvaluatee) {
         this.estimationsForEvaluatee = estimationsForEvaluatee;
-    }
-
-    public List<Goal> getGoals() {
-        return goals;
-    }
-
-    public void setGoals(List<Goal> goals) {
-        this.goals = goals;
     }
 }

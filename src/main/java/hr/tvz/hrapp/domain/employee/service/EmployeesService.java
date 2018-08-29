@@ -10,4 +10,6 @@ import java.util.List;
 public interface EmployeesService {
 
     List<EmployeeDTO> getAllEmployees();
+
+    List<EmployeeDTO> getAllEmployeesExceptSelectedOne(Long id);
 }

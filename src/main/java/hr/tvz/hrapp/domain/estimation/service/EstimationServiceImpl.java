@@ -4,7 +4,6 @@ import hr.tvz.hrapp.domain.BaseService;
 import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.repository.EstimationRepository;
-import hr.tvz.hrapp.domain.estimation_status.EstimationStatus;
 import hr.tvz.hrapp.domain.estimation_status.repository.EstimationStatusRepository;
 import hr.tvz.hrapp.domain.model.repository.ModelRepository;
 import org.dozer.DozerBeanMapper;
