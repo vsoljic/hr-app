@@ -23,16 +23,19 @@ public class EstimationDTO implements Serializable {
 
     private LocalDate periodTo;
 
+    private Integer activity;
+
     public EstimationDTO() {
     }
 
-    public EstimationDTO(Long id, EstimationStatus status, Model model, String name, LocalDate periodFrom, LocalDate periodTo) {
+    public EstimationDTO(Long id, EstimationStatus status, Model model, String name, LocalDate periodFrom, LocalDate periodTo, Integer activity) {
         this.id = id;
         this.status = status;
         this.model = model;
         this.name = name;
         this.periodFrom = periodFrom;
         this.periodTo = periodTo;
+        this.activity = activity;
     }
 
     public Long getId() {
@@ -81,5 +84,13 @@ public class EstimationDTO implements Serializable {
 
     public void setPeriodTo(LocalDate periodTo) {
         this.periodTo = periodTo;
+    }
+
+    public Integer getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Integer activity) {
+        this.activity = activity;
     }
 }

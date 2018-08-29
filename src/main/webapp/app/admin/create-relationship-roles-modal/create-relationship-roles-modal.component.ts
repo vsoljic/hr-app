@@ -6,6 +6,7 @@ import {RelationshipsForEstimationService} from 'app/admin/relationships-for-est
 import {NotificationsService} from 'angular2-notifications';
 import {Relationship} from 'app/admin/models/relationship.model';
 import {DataSharingService} from 'app/shared/data-sharing.service';
+import {Estimation} from 'app/admin/models/estimation.model';
 
 @Component({
     selector: 'jhi-create-relationship-roles-modal',
@@ -15,6 +16,7 @@ import {DataSharingService} from 'app/shared/data-sharing.service';
 export class CreateRelationshipRolesModalComponent implements OnInit {
     modalReference: NgbModalRef;
     closeResult: string;
+    estimation: Estimation;
     @Input() employeeId: number;
     @Input() employeeName: string;
     employees: Employee[];
@@ -29,10 +31,14 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     }
 
     ngOnInit() {
+        // dohvat podataka s prvog ekrana
+        this.estimation = this.dataSharingService.storage;
+        // obrisati sve iz dataSharing-a kako se ne bi nepotrebno zadržavali objekti
+        this.dataSharingService.storage = null;
     }
 
     openModalForRelationshipsAndRoles(content) {
-        this.modalReference =  this.modalService.open(content);
+        this.modalReference = this.modalService.open(content);
         this.modalReference.result.then(
             result => {
                 this.closeResult = `Closed with: ${result}`;
@@ -51,21 +57,15 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
 
     onSelect(employee) {
         this.evaluateeIdList.push(employee.id);
-
-        /*for (let id of this.evaluateeIdList) {
-            if (this.evaluateeIdList.find(evaluateeId => evaluateeId != id)) {
-                this.evaluateeIdList.push(employee.id);
-            }
-        }*/
     }
+
     /**
-     * Stores estimation response of created estimation into a shared service which later passes the same estimation to another screen.
-     * After a short delay, navigates to another screen.
-     * @param estimation created estimation from backend
+     * Prepares estimation form for POST request to backend.
      */
-    async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
-        this.dataSharingService.storage = relationship; // store orderForm to application wide storage
-        await this.delay(2000).then(() => this.router.navigate(['admin/estimations-overview']));
+    prepareRelationshipValues(): Relationship {
+        const relationship = new Relationship(this.estimation.id, this.employeeId, this.evaluateeIdList);
+
+        return relationship;
     }
 
     private createNewRelationship(relationshipTemplate) {
@@ -90,12 +90,13 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     }
 
     /**
-     * Prepares estimation form for POST request to backend.
+     * Stores estimation response of created estimation into a shared service which later passes the same estimation to another screen.
+     * After a short delay, navigates to another screen.
+     * @param estimation created estimation from backend
      */
-    prepareRelationshipValues(): Relationship {
-        const relationship = new Relationship(1, this.employeeId, this.evaluateeIdList);
-
-        return relationship;
+    async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
+        this.dataSharingService.storage = relationship; // store orderForm to application wide storage
+        await this.delay(2000).then(() => this.router.navigate(['admin/estimations-overview']));
     }
 
     /**

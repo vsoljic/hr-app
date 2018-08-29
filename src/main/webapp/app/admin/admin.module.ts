@@ -28,6 +28,9 @@ import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDateCustomParserFormatter} from 'app/shared/ngb-date-custom-parser-formatter';
 import {RelationshipsForEstimationComponent} from 'app/admin/relationships-for-estimation/relationships-for-estimation.component';
 import {RelationshipsForEstimationService} from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
+import {EstimationsOverviewEvaluatorComponent} from 'app/admin/estimations-overview-evaluator/estimations-overview-evaluator.component';
+import {EstimationsOverviewService} from 'app/admin/estimations-overview/estimations-overview.service';
+import { EstimationEditComponent } from './estimation-edit/estimation-edit.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -55,9 +58,11 @@ import {RelationshipsForEstimationService} from 'app/admin/relationships-for-est
         EvaluateeComponent,
         CreateRelationshipRolesModalComponent,
         CreateNewGoalModalComponent,
-        EstimationsOverviewComponent
+        EstimationsOverviewComponent,
+        EstimationsOverviewEvaluatorComponent,
+        EstimationEditComponent
     ],
-    providers: [EstimationService, RelationshipsForEstimationService,
+    providers: [EstimationService, RelationshipsForEstimationService, EstimationsOverviewService,
         {
             provide: NgbDateParserFormatter,
             useClass: NgbDateCustomParserFormatter

@@ -8,10 +8,6 @@ export class EstimationService {
     constructor(private http: HttpClient) {
     }
 
-    getEstimations() {
-        return this.http.get(SERVER_API_URL + 'api/admin/estimation');
-    }
-
     getModels() {
         return this.http.get(SERVER_API_URL + 'api/admin/estimation/model');
     }
@@ -22,6 +18,10 @@ export class EstimationService {
 
     createNewEstimation(estimation: Estimation) {
         return this.http.post(SERVER_API_URL + '/api/admin/estimation', estimation);
+    }
+
+    editSelectedEstimation(estimation: Estimation) {
+        return this.http.post(SERVER_API_URL + '/api/admin/estimation/edit' , estimation);
     }
 
 }

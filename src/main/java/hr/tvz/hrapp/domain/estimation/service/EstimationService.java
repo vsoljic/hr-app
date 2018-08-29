@@ -12,4 +12,6 @@ public interface EstimationService {
     List<EstimationDTO> findAllEstimations();
 
     EstimationDTO createNewEstimation(EstimationDTO estimationDTO);
+
+    EstimationDTO editSelectedEstimation(EstimationDTO estimationDTO);
 }

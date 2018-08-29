@@ -33,15 +33,38 @@ public class EstimationServiceImpl extends BaseService implements EstimationServ
 
     @Override
     public List<EstimationDTO> findAllEstimations() {
-        return mapEntitiesToDTO(estimationRepository.findAll(), EstimationDTO.class);
+        return mapEntitiesToDTO(estimationRepository.findAllByActivityNot(0), EstimationDTO.class);
     }
 
     @Override
     public EstimationDTO createNewEstimation(EstimationDTO estimationDTO) {
 
         Estimation estimation = mapDTOToEntity(estimationDTO, Estimation.class);
+        estimation.setActivity(1);
 
         Estimation newEstimation = estimationRepository.save(estimation);
+
+        return mapEntityToDTO(newEstimation, EstimationDTO.class);
+    }
+
+    @Override
+    public EstimationDTO editSelectedEstimation(EstimationDTO estimationDTO) {
+        Estimation estimation = mapDTOToEntity(estimationDTO, Estimation.class);
+        estimation.setActivity(0);
+        estimationRepository.save(estimation);
+
+        Estimation newEstimation = new Estimation();
+        newEstimation.setModel(estimation.getModel());
+        newEstimation.setActivity(1);
+        newEstimation.setStatus(estimation.getStatus());
+        newEstimation.setName(estimation.getName());
+        newEstimation.setPeriodFrom(estimation.getPeriodFrom());
+        newEstimation.setPeriodTo(estimation.getPeriodTo());
+        newEstimation.setEmployeesEvaluatees(estimation.getEmployeesEvaluatees());
+        newEstimation.setEmployeesEvaluators(estimation.getEmployeesEvaluators());
+
+
+        newEstimation = estimationRepository.save(newEstimation);
 
         return mapEntityToDTO(newEstimation, EstimationDTO.class);
     }

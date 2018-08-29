@@ -63,4 +63,13 @@ public class EstimationController {
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @PostMapping("/edit")
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<EstimationDTO> editSelectedEstimation(@RequestBody EstimationDTO estimationDTO) {
+
+        EstimationDTO dto = estimationService.editSelectedEstimation(estimationDTO);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 }

@@ -126,7 +126,7 @@ export class EstimationComponent implements OnInit {
      */
     prepareEstimationValues(): Estimation {
         // initialize form object
-        const estimation = new Estimation(this.status, this.selectedModel, this.inputEstimationName, new Date(),
+        const estimation = new Estimation(null, this.status, this.selectedModel, this.inputEstimationName, new Date(),
             new Date());
         // return form model for backend
         return estimation;

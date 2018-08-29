@@ -1,5 +1,6 @@
 package hr.tvz.hrapp.domain.estimation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import hr.tvz.hrapp.domain.employee.Employee;
 import hr.tvz.hrapp.domain.estimation_status.EstimationStatus;
 import hr.tvz.hrapp.domain.model.Model;
@@ -38,22 +39,36 @@ public class Estimation implements Serializable {
     @Column(name = "PERIOD_TO")
     private LocalDate periodTo;
 
-    @ManyToMany(mappedBy = "estimationsForEvaluator")
+    @Column(name="ACTIVITY")
+    private Integer activity;
+
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY,
+        cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+        }, mappedBy = "estimationsForEvaluator")
     private List<Employee> employeesEvaluators;
 
-    @ManyToMany(mappedBy = "estimationsForEvaluatee")
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY,
+        cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+        }, mappedBy = "estimationsForEvaluatee")
     private List<Employee> employeesEvaluatees;
 
     public Estimation() {
     }
 
     public Estimation(EstimationStatus status, Model model, String name, LocalDate periodFrom, LocalDate periodTo,
-                      List<Employee> employeesEvaluators, List<Employee> employeesEvaluatees) {
+                      Integer activity, List<Employee> employeesEvaluators, List<Employee> employeesEvaluatees) {
         this.status = status;
         this.model = model;
         this.name = name;
         this.periodFrom = periodFrom;
         this.periodTo = periodTo;
+        this.activity = activity;
         this.employeesEvaluators = employeesEvaluators;
         this.employeesEvaluatees = employeesEvaluatees;
     }
@@ -104,6 +119,14 @@ public class Estimation implements Serializable {
 
     public void setPeriodTo(LocalDate periodTo) {
         this.periodTo = periodTo;
+    }
+
+    public Integer getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Integer activity) {
+        this.activity = activity;
     }
 
     public List<Employee> getEmployeesEvaluators() {

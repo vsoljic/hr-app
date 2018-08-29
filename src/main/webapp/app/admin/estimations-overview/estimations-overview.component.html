@@ -1,77 +1,55 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6 padding-bottom">
-            <h2>Izaberite procjenitelja:</h2>
+        <div class="col-md-12 padding-bottom">
+            <h2>Sve procjene:</h2>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <ng-select [items]="evaluators" id="selectEvaluators" name="selectEvaluators"
-                       notFoundText="Nema podataka">
-            </ng-select>
-        </div>
-    </div>
-    <div class="row padding-top-40">
+
         <div class="col-md-12">
-            <div class="col-md-12">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Šifra zaposlenika</th>
-                        <th scope="col">Ime</th>
-                        <th scope="col">Prezime</th>
-                        <th scope="col">Radno mjesto</th>
-                        <th scope="col">Procjenitelj</th>
-                        <th scope="col">Uredi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>563</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Programer</td>
-                        <td>
-                            <fa-icon [icon]="'times'">
-                        </td>
-                        <!--  <td><fa-icon [icon]="'edit'"></td>-->
-                        <td>
-                            <jhi-create-relationship-roles-modal></jhi-create-relationship-roles-modal>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>843</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>Voditelj JAVA tima</td>
-                        <td>
-                            <fa-icon [icon]="'times'">
-                        </td>
-                        <td><i class="fas fa-edit"></i></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>2108</td>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>Voditelj .NET tima</td>
-                        <td>
-                            <fa-icon [icon]="'times'">
-                        </td>
-                        <td>
-                            <fa-icon [icon]="'edit'">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Naziv procjene</th>
+                    <th scope="col">Period od</th>
+                    <th scope="col">Period do</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Uredi procjenu</th>
+                    <th scope="col">Uredi veze</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let estimation of estimations">
+                    <th scope="row">{{estimation.id}}</th>
+                    <td>{{estimation.name}}</td>
+                    <td>{{estimation.periodFrom | date: 'dd.MM.yyyy.'}}</td>
+                    <td>{{estimation.periodTo | date: 'dd.MM.yyyy.'}}</td>
+                    <td>{{estimation.model.name}}</td>
+                    <td>{{estimation.status.status}}</td>
+                    <td>
+                        <button type="button" class="btn btn-default cursor" (click)="editEstimation(estimation)">Uredi
+                            procjenu
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-default cursor" (click)="editRelationships(estimation)">
+                            Uredi veze
+                        </button>
+                    </td>
+
+                </tr>
+                <!--  <tr>
+                      <th scope="row">3</th>
+                      <td>Procjena xy</td>
+                      <td>10.10.2018.</td>
+                      <td>30.10.2018.</td>
+                      <td>Model Vedrana</td>
+                      <td>Zaključena</td>
+                      <td><button type="submit">Uredi</button></td>
+                  </tr>-->
+                </tbody>
+            </table>
         </div>
 
-        </div>
     </div>
-
-
 </div>

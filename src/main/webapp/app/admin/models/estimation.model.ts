@@ -10,7 +10,8 @@ export class Estimation {
     periodTo: Date;
 
 
-    constructor(status: Status, model: Model, name: string, periodFrom: Date, periodTo: Date) {
+    constructor(id: number, status: Status, model: Model, name: string, periodFrom: Date, periodTo: Date) {
+        this.id = id;
         this.status = status;
         this.model = model;
         this.name = name;

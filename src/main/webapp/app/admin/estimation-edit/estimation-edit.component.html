@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="col-md-6">
+        <h2>Izmjeni procjenu - {{estimation.name}}:</h2>
+        <form name="estimationEdit" #estimationEdit="ngForm" autocomplete="off">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label for="selectTypeEstimation" class="label-text">Vrsta procjene (model):</label>
+                    <ng-select [items]="modelEstimation" [(ngModel)]="selectedModel" bindLabel="name" id="selectTypeEstimation" name="selectTypeEstimation"
+                               notFoundText="Nema podataka" required>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label for="inputEstimationName" class="label-text">Naziv procjene:</label>
+                    <input type="text" id="inputEstimationName" [(ngModel)]="inputEstimationName" name="estimationName" class="form-control"
+                           required />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-12">
+                    <label>Vrijedi od:</label>
+                </div>
+                <div class="col-md-5">
+                    <input ngbDatepicker #validFrom="ngbDatepicker" class="form-control"
+                           [ngModel]="dateFrom" name="validFrom" (ngModelChange)="onSelectDateFrom($event)" required />
+                    <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"
+                             (click)="validFrom.toggle()"></fa-icon>
+                </div>
+
+                <div class="col-md-1 text-align-center">
+                    <span class="span-date-from-to">-</span>
+                </div>
+
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="dpValidTo" [ngModel]="dateTo" (ngModelChange)="dateTo = onSelectDateTo($event)"
+                           ngbDatepicker #validTo="ngbDatepicker" required />
+                    <span id="dateTo" class="cursor" (click)="validTo.toggle()">
+                        <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"></fa-icon>
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label for="selectStatusForEstimation" class="label-text">Status:</label>
+                    <ng-select [items]="statuses" [(ngModel)]="selectedStatus" bindLabel="status" id="selectStatusForEstimation" name="selectStatusForEstimation"
+                               notFoundText="Nema podataka" required>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="form-group row padding-top">
+                <div class="offset-md-9 col-md-3">
+                    <button type="submit" class="btn btn-default" (click)="editSelectedEstimation(estimationEdit)" [disabled]="!estimationEdit.valid">Izmijeni procjenu
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<simple-notifications></simple-notifications>
