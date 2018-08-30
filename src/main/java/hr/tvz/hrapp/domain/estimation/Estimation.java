@@ -1,6 +1,6 @@
 package hr.tvz.hrapp.domain.estimation;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.hrapp.domain.employee.Employee;
 import hr.tvz.hrapp.domain.estimation_status.EstimationStatus;
 import hr.tvz.hrapp.domain.model.Model;
@@ -39,10 +39,10 @@ public class Estimation implements Serializable {
     @Column(name = "PERIOD_TO")
     private LocalDate periodTo;
 
-    @Column(name="ACTIVITY")
+    @Column(name = "ACTIVITY")
     private Integer activity;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
         cascade = {
             CascadeType.PERSIST,
@@ -50,7 +50,7 @@ public class Estimation implements Serializable {
         }, mappedBy = "estimationsForEvaluator")
     private List<Employee> employeesEvaluators;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
         cascade = {
             CascadeType.PERSIST,

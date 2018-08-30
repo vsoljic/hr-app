@@ -1,7 +1,5 @@
 package hr.tvz.hrapp.web.rest.controllers;
 
-import hr.tvz.hrapp.domain.employee.EmployeeDTO;
-import hr.tvz.hrapp.domain.employee.service.EmployeesService;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.service.EstimationService;
 import hr.tvz.hrapp.domain.estimation_status.EstimationStatusDTO;
@@ -23,53 +21,25 @@ import java.util.List;
 @RequestMapping("/api/admin/estimation")
 public class EstimationController {
 
-    private final ModelService modelService;
-
     private final EstimationService estimationService;
 
-    private final EstimationStatusService estimationStatusService;
-
-
-    public EstimationController(ModelService modelService, EstimationService estimationService, EstimationStatusService estimationStatusService) {
-        this.modelService = modelService;
+    public EstimationController(EstimationService estimationService) {
         this.estimationService = estimationService;
-        this.estimationStatusService = estimationStatusService;
-    }
-
-
-    @GetMapping("/model")
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<List<ModelDTO>> getAllModels() {
-
-        List<ModelDTO> modelDTOS = modelService.findAllModels();
-
-        return new ResponseEntity<>(modelDTOS, HttpStatus.OK);
-    }
-
-    @GetMapping("/statuses")
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<List<EstimationStatusDTO>> getAllStatuses() {
-
-        List<EstimationStatusDTO> estimationStatusDTOS = estimationStatusService.findAllEstimationStatuses();
-
-        return new ResponseEntity<>(estimationStatusDTOS, HttpStatus.OK);
     }
 
     @PostMapping
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<EstimationDTO> saveNewEstimation(@RequestBody EstimationDTO estimationDTO) {
+    public ResponseEntity<EstimationDTO> createNewEstimation(@RequestBody EstimationDTO estimationDTO) {
 
         EstimationDTO dto = estimationService.createNewEstimation(estimationDTO);
-
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/save")
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<EstimationDTO> editSelectedEstimation(@RequestBody EstimationDTO estimationDTO) {
+    public ResponseEntity<EstimationDTO> saveSelectedEstimation(@RequestBody EstimationDTO estimationDTO) {
 
-        EstimationDTO dto = estimationService.editSelectedEstimation(estimationDTO);
-
+        EstimationDTO dto = estimationService.saveSelectedEstimation(estimationDTO);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

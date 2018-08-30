@@ -21,7 +21,7 @@ export class EstimationService {
     }
 
     editSelectedEstimation(estimation: Estimation) {
-        return this.http.post(SERVER_API_URL + '/api/admin/estimation/edit' , estimation);
+        return this.http.post(SERVER_API_URL + '/api/admin/estimation/save' , estimation);
     }
 
 }

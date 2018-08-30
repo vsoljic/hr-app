@@ -1,13 +1,14 @@
 package hr.tvz.hrapp.web.rest.controllers;
 
+import hr.tvz.hrapp.domain.employee.EmployeeDTO;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.service.EstimationService;
-import hr.tvz.hrapp.domain.model.ModelDTO;
 import hr.tvz.hrapp.security.AuthoritiesConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +34,21 @@ public class EstimationsOverviewController {
         List<EstimationDTO> estimationDTOS = estimationService.findAllEstimations();
 
         return new ResponseEntity<>(estimationDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/evaluators")
+    public ResponseEntity<List<EmployeeDTO>> getAllEvaluatorsForEstimation(@PathVariable("id") Long estimationId) {
+
+        List<EmployeeDTO> employeeEvaluatorsDTOS = estimationService.findAllEmployeesEvaluatorsById(estimationId);
+        return new ResponseEntity<>(employeeEvaluatorsDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/evaluators/{evaluatorId}/evaluatees")
+    public ResponseEntity<List<EmployeeDTO>> getAllEvaluateesForEvaluatorAndEstimation(@PathVariable("id") Long estimationId,
+                                                                                       @PathVariable("evaluatorId") Long evaluatorId) {
+
+        List<EmployeeDTO> employeeEvaluateesDTO = estimationService.findAllEvaluateesByEvaluatorAndEstimation(estimationId, evaluatorId);
+        return new ResponseEntity<>(employeeEvaluateesDTO, HttpStatus.OK);
     }
 
 }

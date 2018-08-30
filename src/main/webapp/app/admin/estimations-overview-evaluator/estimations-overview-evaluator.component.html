@@ -6,15 +6,17 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <ng-select [items]="evaluators" id="selectEvaluators" name="selectEvaluators"
-                       notFoundText="Nema podataka">
+            <ng-select [items]="evaluators" [(ngModel)]="selectedEvaluator" bindLabel="firstName"
+                       id="selectEvaluators" name="selectEvaluators"
+                       notFoundText="Nema podataka"
+                        (ngModelChange)="getAllEvaluateesForEvaluator()">
             </ng-select>
         </div>
     </div>
 
     <div class="row">
         <div class="offset-10 col-md-2">
-            <button type="submit">Dodaj procjenjenika</button>
+            <button type="submit" class="btn btn-primary">Dodaj procjenjenika</button>
         </div>
     </div>
     <div class="row padding-top-40">
@@ -40,7 +42,7 @@
                         <td>Programer</td>
                         <!--  <td><fa-icon [icon]="'edit'"></td>-->
                         <td>
-                            <button type="submit">Obriši</button>
+                            <button type="submit" class="btn btn-default">Obriši</button>
                         </td>
                     </tr>
                     <tr>
@@ -50,7 +52,7 @@
                         <td>Thornton</td>
                         <td>Voditelj JAVA tima</td>
                         <td>
-                            <button type="submit">Obriši</button>
+                            <button type="submit" class="btn btn-default">Obriši</button>
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +62,7 @@
                         <td>the Bird</td>
                         <td>Voditelj .NET tima</td>
                         <td>
-                            <button type="submit">Obriši</button>
+                            <button type="submit" class="btn btn-default">Obriši</button>
                         </td>
                     </tr>
                     </tbody>

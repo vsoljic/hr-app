@@ -1,10 +1,9 @@
 package hr.tvz.hrapp.domain.employee.service;
 
-import hr.tvz.hrapp.domain.BaseService;
 import hr.tvz.hrapp.domain.employee.Employee;
 import hr.tvz.hrapp.domain.employee.EmployeeDTO;
+import hr.tvz.hrapp.domain.employee.mapper.EmployeeMapper;
 import hr.tvz.hrapp.domain.employee.repository.EmployeeRepository;
-import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,26 +12,32 @@ import java.util.List;
  * @author vedrana.soljic
  */
 @Service
-public class EmployeesServiceImpl extends BaseService implements EmployeesService {
+public class EmployeesServiceImpl implements EmployeesService {
 
     private final EmployeeRepository employeeRepository;
+    private final EmployeeMapper employeeMapper;
 
-    public EmployeesServiceImpl(DozerBeanMapper dozerBeanMapper, EmployeeRepository employeeRepository) {
-        super(dozerBeanMapper);
+    public EmployeesServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
         this.employeeRepository = employeeRepository;
+        this.employeeMapper = employeeMapper;
+    }
+
+    @Override
+    public Employee findById(Long id) {
+        return employeeRepository.getOne(id);
     }
 
     @Override
     public List<EmployeeDTO> getAllEmployees() {
         List<Employee> employees = employeeRepository.findAll();
 
-        return mapEntitiesToDTO(employees, EmployeeDTO.class);
+        return employeeMapper.mapListToDtoList(employees);
     }
 
     @Override
     public List<EmployeeDTO> getAllEmployeesExceptSelectedOne(Long id) {
         List<Employee> employees = employeeRepository.findAllByIdNotIn(id);
 
-        return mapEntitiesToDTO(employees, EmployeeDTO.class);
+        return employeeMapper.mapListToDtoList(employees);
     }
 }

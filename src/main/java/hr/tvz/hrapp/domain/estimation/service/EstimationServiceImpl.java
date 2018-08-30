@@ -1,71 +1,111 @@
 package hr.tvz.hrapp.domain.estimation.service;
 
-import hr.tvz.hrapp.domain.BaseService;
+import hr.tvz.hrapp.domain.employee.Employee;
+import hr.tvz.hrapp.domain.employee.EmployeeDTO;
+import hr.tvz.hrapp.domain.employee.mapper.EmployeeMapper;
+import hr.tvz.hrapp.domain.employee.service.EmployeesService;
 import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
+import hr.tvz.hrapp.domain.estimation.mapper.EstimationMapper;
 import hr.tvz.hrapp.domain.estimation.repository.EstimationRepository;
-import hr.tvz.hrapp.domain.estimation_status.repository.EstimationStatusRepository;
-import hr.tvz.hrapp.domain.model.repository.ModelRepository;
-import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author vedrana.soljic
  */
 @Service
-public class EstimationServiceImpl extends BaseService implements EstimationService {
+public class EstimationServiceImpl implements EstimationService {
 
     private final EstimationRepository estimationRepository;
 
-    private final EstimationStatusRepository estimationStatusRepository;
+    private final EmployeesService employeesService;
 
-    private final ModelRepository modelRepository;
+    private final EstimationMapper estimationMapper;
 
-    public EstimationServiceImpl(DozerBeanMapper dozerBeanMapper, EstimationRepository estimationRepository,
-                                 EstimationStatusRepository estimationStatusRepository, ModelRepository modelRepository) {
-        super(dozerBeanMapper);
+    private final EmployeeMapper employeeMapper;
+
+    public EstimationServiceImpl(EstimationRepository estimationRepository, EmployeesService employeesService,
+                                 EstimationMapper estimationMapper, EmployeeMapper employeeMapper) {
         this.estimationRepository = estimationRepository;
-        this.estimationStatusRepository = estimationStatusRepository;
-        this.modelRepository = modelRepository;
+        this.employeesService = employeesService;
+        this.estimationMapper = estimationMapper;
+        this.employeeMapper = employeeMapper;
     }
 
     @Override
     public List<EstimationDTO> findAllEstimations() {
-        return mapEntitiesToDTO(estimationRepository.findAllByActivityNot(0), EstimationDTO.class);
+        return estimationMapper.mapListToDtoList(estimationRepository.findAllByActivityNot(0));
+    }
+
+    @Override
+    public EstimationDTO findById(Long id) {
+        return estimationMapper.mapToDto(estimationRepository.findById(id).get());
+    }
+
+    @Override
+    public List<EmployeeDTO> findAllEmployeesEvaluatorsById(Long id) {
+
+        Estimation estimation = estimationRepository.findById(id).get();
+        List<Employee> employeeEvaluators = estimation.getEmployeesEvaluators();
+
+        return employeeMapper.mapListToDtoList(employeeEvaluators);
+    }
+
+    @Override
+    public List<EmployeeDTO> findAllEvaluateesByEvaluatorAndEstimation(Long id, Long evaluatorId) {
+
+        Estimation estimation = estimationRepository.findById(id).get();
+        List<Employee> employeeEvaluatees = estimation.getEmployeesEvaluatees()
+            .stream().filter(employee -> employee.getId().equals(evaluatorId)).collect(Collectors.toList());
+
+
+        return employeeMapper.mapListToDtoList(employeeEvaluatees);
     }
 
     @Override
     public EstimationDTO createNewEstimation(EstimationDTO estimationDTO) {
 
-        Estimation estimation = mapDTOToEntity(estimationDTO, Estimation.class);
+        Estimation estimation = estimationMapper.reverse(estimationDTO);
         estimation.setActivity(1);
 
         Estimation newEstimation = estimationRepository.save(estimation);
 
-        return mapEntityToDTO(newEstimation, EstimationDTO.class);
+        return estimationMapper.mapToDto(newEstimation);
     }
 
     @Override
-    public EstimationDTO editSelectedEstimation(EstimationDTO estimationDTO) {
-        Estimation estimation = mapDTOToEntity(estimationDTO, Estimation.class);
-        estimation.setActivity(0);
-        estimationRepository.save(estimation);
+    public EstimationDTO saveSelectedEstimation(EstimationDTO estimationDTO) {
+        Estimation estimation = estimationRepository.findById(estimationDTO.getId()).get();
 
-        Estimation newEstimation = new Estimation();
-        newEstimation.setModel(estimation.getModel());
-        newEstimation.setActivity(1);
-        newEstimation.setStatus(estimation.getStatus());
-        newEstimation.setName(estimation.getName());
-        newEstimation.setPeriodFrom(estimation.getPeriodFrom());
-        newEstimation.setPeriodTo(estimation.getPeriodTo());
-        newEstimation.setEmployeesEvaluatees(estimation.getEmployeesEvaluatees());
-        newEstimation.setEmployeesEvaluators(estimation.getEmployeesEvaluators());
+        estimation.setModel(estimationDTO.getModel());
+        estimation.setStatus(estimationDTO.getStatus());
+        estimation.setName(estimationDTO.getName());
+        estimation.setPeriodFrom(estimationDTO.getPeriodFrom());
+        estimation.setPeriodTo(estimationDTO.getPeriodTo());
+
+  /*      estimation.getEmployeesEvaluatees().clear();
+        estimation.getEmployeesEvaluators().clear();
 
 
-        newEstimation = estimationRepository.save(newEstimation);
+        estimation.setEmployeesEvaluatees(getEmployeesByDtoIds(estimationDTO.getEmployeesEvaluatees()));
+        estimation.setEmployeesEvaluators(getEmployeesByDtoIds(estimationDTO.getEmployeesEvaluators()));
 
-        return mapEntityToDTO(newEstimation, EstimationDTO.class);
+*/
+        estimation = estimationRepository.save(estimation);
+
+        return estimationMapper.mapToDto(estimation);
     }
+
+    private List<Employee> getEmployeesByDtoIds(List<EmployeeDTO> employeeDtos) {
+        List<Employee> result = new ArrayList<>();
+        employeeDtos.stream().forEach(i -> result.add(employeesService.findById(i.getId())));
+
+        return result;
+    }
+
+
 }

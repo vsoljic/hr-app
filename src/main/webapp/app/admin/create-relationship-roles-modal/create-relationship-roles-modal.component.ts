@@ -63,7 +63,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
      * Prepares estimation form for POST request to backend.
      */
     prepareRelationshipValues(): Relationship {
-        const relationship = new Relationship(this.estimation.id, this.employeeId, this.evaluateeIdList);
+        const relationship = new Relationship(1, this.employeeId, this.evaluateeIdList);
 
         return relationship;
     }

@@ -1,6 +1,5 @@
 package hr.tvz.hrapp.domain.employee;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.tvz.hrapp.domain.User;
 import hr.tvz.hrapp.domain.estimation.Estimation;
 
@@ -43,7 +42,6 @@ public class Employee implements Serializable {
     @JoinTable(name = "RELATIONSHIP_EST_EMPLOYEES",
         joinColumns = @JoinColumn(name = "EMPLOYEE_EVALUATOR_ID"),
         inverseJoinColumns = @JoinColumn(name = "ESTIMATION_ID"))
-    @JsonManagedReference
     private List<Estimation> estimationsForEvaluator;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -54,7 +52,6 @@ public class Employee implements Serializable {
     @JoinTable(name = "RELATIONSHIP_EST_EMPLOYEES",
         joinColumns = @JoinColumn(name = "EMPLOYEE_EVALUATEE_ID"),
         inverseJoinColumns = @JoinColumn(name = "ESTIMATION_ID"))
-    @JsonManagedReference
     private List<Estimation> estimationsForEvaluatee;
 
     public Employee() {

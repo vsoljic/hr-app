@@ -10,4 +10,13 @@ export class EstimationsOverviewService {
     getEstimations() {
         return this.http.get(SERVER_API_URL + 'api/admin/estimations-overview');
     }
+
+    getEvaluators(estimationId: number) {
+        return this.http.get(SERVER_API_URL + 'api/admin/estimations-overview/' + estimationId + '/evaluators/');
+    }
+
+    getEvaluateesForEvaluator(estimationId: number, evaluatorId: number) {
+        return this.http.get(SERVER_API_URL + 'api/admin/estimations-overview/' + estimationId + '/evaluators/' + evaluatorId +
+            '/evaluatees');
+    }
 }

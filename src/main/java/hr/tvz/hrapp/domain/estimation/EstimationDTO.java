@@ -1,10 +1,13 @@
 package hr.tvz.hrapp.domain.estimation;
 
+import hr.tvz.hrapp.domain.employee.Employee;
+import hr.tvz.hrapp.domain.employee.EmployeeDTO;
 import hr.tvz.hrapp.domain.estimation_status.EstimationStatus;
 import hr.tvz.hrapp.domain.model.Model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author vedrana.soljic
@@ -25,10 +28,16 @@ public class EstimationDTO implements Serializable {
 
     private Integer activity;
 
+    private List<EmployeeDTO> employeesEvaluators;
+
+    private List<EmployeeDTO> employeesEvaluatees;
+
     public EstimationDTO() {
     }
 
-    public EstimationDTO(Long id, EstimationStatus status, Model model, String name, LocalDate periodFrom, LocalDate periodTo, Integer activity) {
+    public EstimationDTO(Long id, EstimationStatus status, Model model, String name, LocalDate periodFrom,
+                         LocalDate periodTo, Integer activity, List<EmployeeDTO> employeesEvaluators,
+                         List<EmployeeDTO> employeesEvaluatees) {
         this.id = id;
         this.status = status;
         this.model = model;
@@ -36,6 +45,8 @@ public class EstimationDTO implements Serializable {
         this.periodFrom = periodFrom;
         this.periodTo = periodTo;
         this.activity = activity;
+        this.employeesEvaluators = employeesEvaluators;
+        this.employeesEvaluatees = employeesEvaluatees;
     }
 
     public Long getId() {
@@ -92,5 +103,21 @@ public class EstimationDTO implements Serializable {
 
     public void setActivity(Integer activity) {
         this.activity = activity;
+    }
+
+    public List<EmployeeDTO> getEmployeesEvaluators() {
+        return employeesEvaluators;
+    }
+
+    public void setEmployeesEvaluators(List<EmployeeDTO> employeesEvaluators) {
+        this.employeesEvaluators = employeesEvaluators;
+    }
+
+    public List<EmployeeDTO> getEmployeesEvaluatees() {
+        return employeesEvaluatees;
+    }
+
+    public void setEmployeesEvaluatees(List<EmployeeDTO> employeesEvaluatees) {
+        this.employeesEvaluatees = employeesEvaluatees;
     }
 }

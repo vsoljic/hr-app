@@ -2,6 +2,7 @@ package hr.tvz.hrapp.domain.employee;
 
 import hr.tvz.hrapp.domain.User;
 import hr.tvz.hrapp.domain.estimation.Estimation;
+import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,15 +24,15 @@ public class EmployeeDTO implements Serializable {
 
     private String workPosition;
 
-    private List<Estimation> estimationsForEvaluator;
+    private List<EstimationDTO> estimationsForEvaluator;
 
-    private List<Estimation> estimationsForEvaluatee;
+    private List<EstimationDTO> estimationsForEvaluatee;
 
     public EmployeeDTO() {
     }
 
     public EmployeeDTO(Long id, User user, Long employeeCode, String firstName, String lastName, String workPosition,
-                       List<Estimation> estimationsForEvaluator, List<Estimation> estimationsForEvaluatee) {
+                       List<EstimationDTO> estimationsForEvaluator, List<EstimationDTO> estimationsForEvaluatee) {
         this.id = id;
         this.user = user;
         this.employeeCode = employeeCode;
@@ -90,19 +91,19 @@ public class EmployeeDTO implements Serializable {
         this.workPosition = workPosition;
     }
 
-    public List<Estimation> getEstimationsForEvaluator() {
+    public List<EstimationDTO> getEstimationsForEvaluator() {
         return estimationsForEvaluator;
     }
 
-    public void setEstimationsForEvaluator(List<Estimation> estimationsForEvaluator) {
+    public void setEstimationsForEvaluator(List<EstimationDTO> estimationsForEvaluator) {
         this.estimationsForEvaluator = estimationsForEvaluator;
     }
 
-    public List<Estimation> getEstimationsForEvaluatee() {
+    public List<EstimationDTO> getEstimationsForEvaluatee() {
         return estimationsForEvaluatee;
     }
 
-    public void setEstimationsForEvaluatee(List<Estimation> estimationsForEvaluatee) {
+    public void setEstimationsForEvaluatee(List<EstimationDTO> estimationsForEvaluatee) {
         this.estimationsForEvaluatee = estimationsForEvaluatee;
     }
 }
