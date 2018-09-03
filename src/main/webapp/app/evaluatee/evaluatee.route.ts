@@ -1,5 +1,5 @@
-import { Route } from '@angular/router';
-import { EvaluateeComponent } from 'app/admin/evaluatee/evaluatee.component';
+import {Route} from '@angular/router';
+import {EvaluateeComponent} from 'app/evaluatee/evaluatee.component';
 
 export const EVALUATEE_ROUTE: Route = {
     path: 'evaluatee',

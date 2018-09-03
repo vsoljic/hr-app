@@ -9,7 +9,7 @@ import {AuthInterceptor} from './blocks/interceptor/auth.interceptor';
 import {AuthExpiredInterceptor} from './blocks/interceptor/auth-expired.interceptor';
 import {ErrorHandlerInterceptor} from './blocks/interceptor/errorhandler.interceptor';
 import {NotificationInterceptor} from './blocks/interceptor/notification.interceptor';
-import {HrAppSharedCommonModule, HrAppSharedModule} from 'app/shared';
+import {HrAppSharedModule} from 'app/shared';
 import {HrAppCoreModule} from 'app/core';
 import {HrAppAppRoutingModule} from './app-routing.module';
 import {HrAppHomeModule} from './home/home.module';
@@ -28,6 +28,12 @@ import {GoalGroupComponent} from './goal-group/goal-group.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SimpleNotificationsModule} from 'angular2-notifications';
+import {EvaluateeComponent} from 'app/evaluatee/evaluatee.component';
+import {CreateNewGoalModalComponent} from 'app/create-new-goal-modal/create-new-goal-modal.component';
+import {EstimationsEvaluatorComponent} from './estimations-evaluator/estimations-evaluator.component';
+import {EstimationsEvaluateeComponent} from './estimations-evaluatee/estimations-evaluatee.component';
+import {EstimationsEvaluatorService} from 'app/estimations-evaluator/estimations-evaluator.service';
+import {EvaluateeService} from 'app/evaluatee/evaluatee.service';
 
 @NgModule({
     imports: [
@@ -57,7 +63,11 @@ import {SimpleNotificationsModule} from 'angular2-notifications';
         PageRibbonComponent,
         ActiveMenuDirective,
         FooterComponent,
-        GoalGroupComponent
+        GoalGroupComponent,
+        EvaluateeComponent,
+        CreateNewGoalModalComponent,
+        EstimationsEvaluatorComponent,
+        EstimationsEvaluateeComponent
     ],
     providers: [
         {
@@ -83,7 +93,8 @@ import {SimpleNotificationsModule} from 'angular2-notifications';
             useClass: NotificationInterceptor,
             multi: true,
             deps: [Injector]
-        }
+        },
+        EstimationsEvaluatorService, EvaluateeService
     ],
     bootstrap: [JhiMainComponent]
 })

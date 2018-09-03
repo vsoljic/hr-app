@@ -8,16 +8,15 @@ import {EstimationsOverviewService} from 'app/admin/estimations-overview/estimat
 
 @Component({
     selector: 'jhi-estimations-overview',
-    templateUrl: './estimations-overview-evaluator.component.html',
-    styleUrls: ['./estimations-overview-evaluator.scss']
+    templateUrl: './estimations-overview-selected.component.html',
+    styleUrls: ['./estimations-overview-selected.scss']
 })
-export class EstimationsOverviewEvaluatorComponent implements OnInit {
+export class EstimationsOverviewSelectedComponent implements OnInit {
     estimation: Estimation;
     evaluators: Employee[];
     selectedEvaluator: Employee;
     evaluatees: Employee[];
     selectedEvaluatee: Employee;
-
 
     constructor(private estimationsOverviewService: EstimationsOverviewService,
                 private dataSharingService: DataSharingService,

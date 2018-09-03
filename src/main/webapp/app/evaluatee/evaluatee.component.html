@@ -5,12 +5,12 @@
         </div>
 
         <hr>
-        <div class="col-md-12">
+        <div class="col-md-12" *ngFor="let group of groups">
             <!-- <h4>Ciljevi:</h4>-->
             <table class="table table-hover">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col" colspan="4">Korporativni:</th>
+                    <th scope="col" colspan="4" >{{group.name}}</th>
 
                 </tr>
                 <tr>
@@ -58,55 +58,58 @@
         </div>
     </div>
 
-    <div class="col-md-12 padding-top-40">
-        <!-- <h4>Ciljevi:</h4>-->
-        <table class="table table-hover">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col" colspan="4">Individualni:</th>
+   <!-- <div class="row">
+        <div class="col-md-12 padding-top-40">
+            &lt;!&ndash; <h4>Ciljevi:</h4>&ndash;&gt;
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col" colspan="4">Individualni:</th>
 
-            </tr>
-            <tr>
-                <th>Ponder</th>
-                <th>Cilj</th>
-                <th>Ciljana vrijednost</th>
-                <!-- <th>Ocjena</th>-->
-                <th>Dodaj</th>
-            </tr>
-            </thead>
+                </tr>
+                <tr>
+                    <th>Ponder</th>
+                    <th>Cilj</th>
+                    <th>Ciljana vrijednost</th>
+                    &lt;!&ndash; <th>Ocjena</th>&ndash;&gt;
+                    <th>Dodaj</th>
+                </tr>
+                </thead>
 
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>563</td>
-                <td>Mark</td>
-                <td>
-                    <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
-                </td>
+                <tbody>
+                <tr>
+                    <th scope="row">50</th>
+                    <td>Pročitati knjigu Spring Boot</td>
+                    <td>100%</td>
+                    <td>
+                        <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
+                    </td>
 
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>843</td>
-                <td>Jacob</td>
-                <td>
-                    <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
-                </td>
+                </tr>
+                <tr>
+                    <th scope="row">25</th>
+                    <td>Riješiti OCP</td>
+                    <td>100%</td>
+                    <td>
+                        <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
+                    </td>
 
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>2108</td>
-                <td>Larry</td>
-                <td>
-                    <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <hr>
-        <h6>Ukupno:</h6>
-        <p class="padding-for-total font-weight-bold no-margin">6</p>
+                </tr>
+                <tr>
+                    <th scope="row">25</th>
+                    <td>Blabla</td>
+                    <td>100%</td>
+                    <td>
+                        <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <hr>
+            <h6>Ukupno:</h6>
+            <p class="padding-for-total font-weight-bold no-margin">6</p>
+        </div>-->
     </div>
 
     <div class="row">

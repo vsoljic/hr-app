@@ -28,4 +28,11 @@ public class ModelServiceImpl extends BaseService implements ModelService {
 
         return mapEntitiesToDTO(models, ModelDTO.class);
     }
+
+  /*  @Override
+    public List<ModelDTO> findByEstimationId(Long estimationId) {
+        List<Model> models = modelRepository.
+
+        return mapEntitiesToDTO(models, ModelDTO.class);
+    }*/
 }

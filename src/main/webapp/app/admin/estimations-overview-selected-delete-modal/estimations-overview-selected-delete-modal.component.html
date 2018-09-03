@@ -1,0 +1,25 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title red-text" id="modal-basic-title">Obriši procjenjenika</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <hr class="mb-0">
+    <div class="modal-body pb-1">
+        <p class="question-text">Jeste li sigurni da želite obrisati procjenjenika - {{evaluateeName}} ?</p>
+        <p class="label-text">Brisanjem, izabrani procjenitelj mu više neće biti u mogućnosti dodijeliti ciljeve.</p>
+    </div>
+    <hr>
+    <div class="modal-footer">
+        <div class="row pr-4">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default float-left" (click)="c('Close click')">Odustani</button>
+            </div>
+            <div class="col-md-6 pr-5">
+                <button type="button" class="btn btn-primary" (click)="c('Close click'); deleteEvaluatee()">Obriši</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<button type="button" class="btn btn-primary" (click)="openDeleteEvaluateeModal(content)">Obriši</button>

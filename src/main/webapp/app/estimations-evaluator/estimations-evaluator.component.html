@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 padding-bottom">
+            <h2>Sve procjene (u ulozi procjenitelja) - {{account.login}}:</h2>
+        </div>
+
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Naziv procjene</th>
+                    <th scope="col">Period od</th>
+                    <th scope="col">Period do</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Odaberi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--  <tr *ngFor="let estimation of estimations">
+                      <th scope="row">{{estimation.id}}</th>
+                      <td>{{estimation.name}}</td>
+                      <td>{{estimation.periodFrom | date: 'dd.MM.yyyy.'}}</td>
+                      <td>{{estimation.periodTo | date: 'dd.MM.yyyy.'}}</td>
+                      <td>{{estimation.model.name}}</td>
+                      <td>{{estimation.status.status}}</td>
+                      <td>
+                          <button type="button" class="btn btn-default cursor" (click)="editEstimation(estimation)">Uredi
+                              procjenu
+                          </button>
+                      </td>
+                      <td>
+                          <button type="button" *ngIf="estimation.status.status === 'IN_PROCESS'" class="btn btn-default cursor" (click)="editRelationships(estimation)">
+                              Uredi veze
+                          </button>
+                      </td>
+
+                  </tr>-->
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Procjena xy</td>
+                    <td>10.10.2018.</td>
+                    <td>30.10.2018.</td>
+                    <td>Model Vedrana</td>
+                    <td>Zaključena</td>
+                    <td>
+                        <button type="submit" class="btn btn-default">Odaberi</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Procjena xy</td>
+                    <td>10.10.2018.</td>
+                    <td>30.10.2018.</td>
+                    <td>Model Vedrana</td>
+                    <td>Zaključena</td>
+                    <td>
+                        <button type="submit" class="btn btn-default">Odaberi</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

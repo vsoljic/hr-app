@@ -1,16 +1,14 @@
 package hr.tvz.hrapp.web.rest.controllers;
 
 import hr.tvz.hrapp.domain.employee.EmployeeDTO;
+import hr.tvz.hrapp.domain.employee.service.EmployeesService;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.service.EstimationService;
 import hr.tvz.hrapp.security.AuthoritiesConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +21,11 @@ public class EstimationsOverviewController {
 
     private final EstimationService estimationService;
 
-    public EstimationsOverviewController(EstimationService estimationService) {
+    private final EmployeesService employeesService;
+
+    public EstimationsOverviewController(EstimationService estimationService, EmployeesService employeesService) {
         this.estimationService = estimationService;
+        this.employeesService = employeesService;
     }
 
     @GetMapping
@@ -39,7 +40,7 @@ public class EstimationsOverviewController {
     @GetMapping("/{id}/evaluators")
     public ResponseEntity<List<EmployeeDTO>> getAllEvaluatorsForEstimation(@PathVariable("id") Long estimationId) {
 
-        List<EmployeeDTO> employeeEvaluatorsDTOS = estimationService.findAllEmployeesEvaluatorsById(estimationId);
+        List<EmployeeDTO> employeeEvaluatorsDTOS = estimationService.findAllEmployeesEvaluatorsByEstimationId(estimationId);
         return new ResponseEntity<>(employeeEvaluatorsDTOS, HttpStatus.OK);
     }
 
@@ -47,8 +48,18 @@ public class EstimationsOverviewController {
     public ResponseEntity<List<EmployeeDTO>> getAllEvaluateesForEvaluatorAndEstimation(@PathVariable("id") Long estimationId,
                                                                                        @PathVariable("evaluatorId") Long evaluatorId) {
 
-        List<EmployeeDTO> employeeEvaluateesDTO = estimationService.findAllEvaluateesByEvaluatorAndEstimation(estimationId, evaluatorId);
+        List<EmployeeDTO> employeeEvaluateesDTO = employeesService.findAllEvaluateesByEvaluatorAndEstimation(estimationId, evaluatorId);
         return new ResponseEntity<>(employeeEvaluateesDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/evaluators/{evaluatorId}/evaluatees")
+    public ResponseEntity<EmployeeDTO> deleteSelectedEvaluateeForEvaluatorAndEstimation(@PathVariable("id") Long estimationId,
+                                                                                        @PathVariable("evaluatorId") Long evaluatorId,
+                                                                                        @RequestBody EmployeeDTO employeeDTO) {
+
+
+        employeesService.deleteSelectedEvaluatee(estimationId, evaluatorId, employeeDTO.getId());
+        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
 }

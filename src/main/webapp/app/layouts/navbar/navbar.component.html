@@ -21,7 +21,7 @@
                     </span>
                 </a>
             </li>
-            <li *jhiHasAnyAuthority="'ROLE_EVALUATOR'" ngbDropdown class="nav-item dropdown pointer"
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluation-menu">
                     <span>
@@ -39,10 +39,10 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item" routerLink="admin/estimations-overview-evaluator"
+                        <a class="dropdown-item" routerLink="admin/estimations-overview-selected"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
-                            <span>Estimations overview for evaluator</span>
+                            <span>Estimations overview for selected estimation</span>
                         </a>
                     </li>
 
@@ -62,30 +62,56 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="admin/evaluatee" (click)="collapseNavbar()">
-                    <span>
-                        <fa-icon [icon]="'user'"></fa-icon>
-                        <span>Evaluatee estimation</span>
-                    </span>
-                </a>
-            </li>
 
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
- <!--           <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+            <li *jhiHasAnyAuthority="'ROLE_EVALUATOR'" ngbDropdown class="nav-item dropdown pointer"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluatee-menu">
                     <span>
-                        <fa-icon [icon]="'th-list'"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.main">
-                            Entities
-                        </span>
+                        <fa-icon [icon]="'home'"></fa-icon>
+                        <span>Procjena radnog učinka</span>
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
-                    &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
+                    <li>
+                        <a class="dropdown-item" routerLink="estimations-evaluator"
+                           routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'user'"></fa-icon>
+                            <span>Pregled procjena za procjenitelje</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="estimations-evaluatee"
+                           routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'user'"></fa-icon>
+                            <span>Pregled procjena za procjenjenike</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="evaluatee"
+                           routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'user'"></fa-icon>
+                            <span>Procjena za XY osobu</span>
+                        </a>
+                    </li>
                 </ul>
-            </li>-->
+            </li>
+
+
+            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+            <!--           <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{exact: true}">
+                           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+                               <span>
+                                   <fa-icon [icon]="'th-list'"></fa-icon>
+                                   <span jhiTranslate="global.menu.entities.main">
+                                       Entities
+                                   </span>
+                               </span>
+                           </a>
+                           <ul class="dropdown-menu" ngbDropdownMenu>
+                               &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
+                           </ul>
+                       </li>-->
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">

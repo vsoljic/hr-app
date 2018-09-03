@@ -20,17 +20,17 @@ import {
 } from './';
 import {EstimationComponent} from 'app/admin/estimation/estimation.component';
 import {CreateRelationshipRolesModalComponent} from 'app/admin/create-relationship-roles-modal/create-relationship-roles-modal.component';
-import {EvaluateeComponent} from 'app/admin/evaluatee/evaluatee.component';
-import {CreateNewGoalModalComponent} from './create-new-goal-modal/create-new-goal-modal.component';
 import {EstimationsOverviewComponent} from './estimations-overview/estimations-overview.component';
 import {EstimationService} from 'app/admin/estimation/estimation.service';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDateCustomParserFormatter} from 'app/shared/ngb-date-custom-parser-formatter';
 import {RelationshipsForEstimationComponent} from 'app/admin/relationships-for-estimation/relationships-for-estimation.component';
 import {RelationshipsForEstimationService} from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
-import {EstimationsOverviewEvaluatorComponent} from 'app/admin/estimations-overview-evaluator/estimations-overview-evaluator.component';
+import {EstimationsOverviewSelectedComponent} from 'app/admin/estimations-overview-selected/estimations-overview-selected.component';
 import {EstimationsOverviewService} from 'app/admin/estimations-overview/estimations-overview.service';
-import { EstimationEditComponent } from './estimation-edit/estimation-edit.component';
+import {EstimationEditComponent} from './estimation-edit/estimation-edit.component';
+import {EstimationsOverviewSelectedDeleteModalComponent} from 'app/admin/estimations-overview-selected-delete-modal/estimations-overview-selected-delete-modal.component';
+import {EstimationsOverviewSelectedAddRelModalComponent} from 'app/admin/estimations-overview-selected-add-rel-modal/estimations-overview-selected-add-rel-modal.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -55,12 +55,12 @@ import { EstimationEditComponent } from './estimation-edit/estimation-edit.compo
         JhiMetricsMonitoringModalComponent,
         EstimationComponent,
         RelationshipsForEstimationComponent,
-        EvaluateeComponent,
         CreateRelationshipRolesModalComponent,
-        CreateNewGoalModalComponent,
         EstimationsOverviewComponent,
-        EstimationsOverviewEvaluatorComponent,
-        EstimationEditComponent
+        EstimationsOverviewSelectedComponent,
+        EstimationEditComponent,
+        EstimationsOverviewSelectedDeleteModalComponent,
+        EstimationsOverviewSelectedAddRelModalComponent
     ],
     providers: [EstimationService, RelationshipsForEstimationService, EstimationsOverviewService,
         {

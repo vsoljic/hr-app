@@ -48,7 +48,7 @@ export class EstimationsOverviewComponent implements OnInit {
 
     async storeEstimationAndNavigateToRelationships(estimation: Estimation) {
         this.dataSharingService.storage = estimation; // store orderForm to application wide storage
-        await this.delay(500).then(() => this.router.navigate(['admin/estimations-overview-evaluator']));
+        await this.delay(500).then(() => this.router.navigate(['admin/estimations-overview-selected']));
     }
 
     /**

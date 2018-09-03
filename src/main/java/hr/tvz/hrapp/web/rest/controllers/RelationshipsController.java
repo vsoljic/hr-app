@@ -46,6 +46,14 @@ public class RelationshipsController {
         return new ResponseEntity<>(employeeDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/employees/{id}/notConnectedEmployees/{estimationId}")
+    public ResponseEntity<List<EmployeeDTO>> notConnectedEmployeesForEvaluator(@PathVariable("id") Long selectedEvaluatorId,
+                                                                               @PathVariable("estimationId") Long estimationId) {
+
+        List<EmployeeDTO> employeeDTOS = employeesService.findNotConnectedEmployeesForEvaluator(selectedEvaluatorId, estimationId);
+        return new ResponseEntity<>(employeeDTOS, HttpStatus.OK);
+    }
+
     @PostMapping("/employees")
     public void saveRelationship(@RequestBody RelationshipEstEmployeesDTO relationshipEstEmployeesDTO) {
 

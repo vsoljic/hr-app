@@ -14,6 +14,4 @@ public interface EstimationRepository extends JpaRepository<Estimation, Long> {
 
     List<Estimation> findAllByActivityNot(Integer activity);
 
-    List<Estimation> findAllByIdAndEmployeesEvaluators(Long id, Long evaluatorId);
-
 }

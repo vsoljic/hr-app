@@ -8,6 +8,7 @@ import hr.tvz.hrapp.domain.model.Model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,6 +72,40 @@ public class Estimation implements Serializable {
         this.activity = activity;
         this.employeesEvaluators = employeesEvaluators;
         this.employeesEvaluatees = employeesEvaluatees;
+    }
+
+    public void addEmployeeEvaluator(Employee employee) {
+        employeesEvaluators.add(employee);
+        employee.getEstimationsForEvaluator().add(this);
+    }
+
+    public void addEmployeeEvaluatee(Employee employee) {
+        employeesEvaluatees.add(employee);
+        employee.getEstimationsForEvaluatee().add(this);
+    }
+
+    public void removeEmployeeEvaluator(Employee employee) {
+        employeesEvaluators.remove(employee);
+        employee.getEstimationsForEvaluator().remove(this);
+    }
+
+
+    public void removeEmployeeEvaluatee(Employee employee) {
+        employeesEvaluatees.remove(employee);
+        employee.getEstimationsForEvaluatee().remove(this);
+    }
+
+    public void removeEvaluators() {
+        for (Employee employee : new ArrayList<>(employeesEvaluators)) {
+            removeEmployeeEvaluator(employee);
+        }
+    }
+
+
+    public void removeEvaluatees() {
+        for (Employee employee : new ArrayList<>(employeesEvaluatees)) {
+            removeEmployeeEvaluatee(employee);
+        }
     }
 
     public Long getId() {

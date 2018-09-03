@@ -1,0 +1,40 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Odabir procjenjenika</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <hr class="mb-0">
+    <div class="modal-body pb-1">
+        <form name="newRelationship" #newRelationship="ngForm" autocomplete="off">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="question-text">{{selectedEvaluatorName}} je procjenitelj za:</p>
+                </div>
+                <div class="col-md-12">
+                    <ng-select [items]="employees" bindLabel="firstName" id="selectEvaluatees" name="selectEvaluatees"
+                               notFoundText="Nema podataka" multiple="true" (add)="onSelect($event)">
+                    </ng-select>
+                </div>
+
+            </div>
+
+            <div class="row padding-top-40">
+                <div class="offset-6 col-md-2">
+                    <button type="button" class="btn btn-default" (click)="c('Close click')">Odustani</button>
+                </div>
+                <div class="col-md-2 ml-4">
+                    <button type="button" class="btn btn-primary" (click)="createNewRelationship(newRelationship)">
+                        Spremi
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+
+</ng-template>
+<button type="button" class="btn white-button oval-button" (click)="openModalForRelationshipsAndRoles(content)">Dodaj
+    procjenjenika
+</button>

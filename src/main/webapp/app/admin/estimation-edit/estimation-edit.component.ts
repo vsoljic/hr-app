@@ -72,7 +72,7 @@ export class EstimationEditComponent implements OnInit {
     prepareEstimationValues(): Estimation {
         // initialize form object
         const estimation = new Estimation(this.estimation.id, this.selectedStatus, this.selectedModel, this.inputEstimationName, new Date(),
-            new Date());
+            new Date(), this.estimation.employeesEvaluators, this.estimation.employeesEvaluatees);
         // return form model for backend
         return estimation;
     }
@@ -84,7 +84,7 @@ export class EstimationEditComponent implements OnInit {
      */
     async storeEstimationAndNavigateToEstimationsOverview(estimation: Estimation) {
         this.dataSharingService.storage = estimation; // store orderForm to application wide storage
-        await this.delay(2000).then(() => this.router.navigate(['admin/estimations-overview']));
+        await this.delay(500).then(() => this.router.navigate(['admin/estimations-overview']));
     }
 
     /**

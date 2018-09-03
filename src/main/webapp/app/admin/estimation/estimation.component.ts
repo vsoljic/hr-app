@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {Estimation} from 'app/admin/models/estimation.model';
 import {Status} from 'app/admin/models/status.model';
+import {Employee} from 'app/admin/models/employee.model';
 
 @Component({
     selector: 'jhi-estimation',
@@ -125,9 +126,11 @@ export class EstimationComponent implements OnInit {
      * Prepares estimation form for POST request to backend.
      */
     prepareEstimationValues(): Estimation {
+        const evaluators: Employee[] = [];
+        const evaluatees: Employee[] = [];
         // initialize form object
         const estimation = new Estimation(null, this.status, this.selectedModel, this.inputEstimationName, new Date(),
-            new Date(2018, 12, 31));
+            new Date(2018, 12, 31), evaluators, evaluatees);
         // return form model for backend
         return estimation;
     }

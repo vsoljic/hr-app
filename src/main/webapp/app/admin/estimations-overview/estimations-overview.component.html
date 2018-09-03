@@ -32,7 +32,7 @@
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-default cursor" (click)="editRelationships(estimation)">
+                        <button type="button" *ngIf="estimation.status.status === 'IN_PROCESS'" class="btn btn-default cursor" (click)="editRelationships(estimation)">
                             Uredi veze
                         </button>
                     </td>

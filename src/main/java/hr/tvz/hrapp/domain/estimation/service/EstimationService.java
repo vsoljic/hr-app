@@ -12,13 +12,14 @@ public interface EstimationService {
 
     List<EstimationDTO> findAllEstimations();
 
+    EstimationDTO findById(Long id);
+
+    List<EstimationDTO> findAllByLoggedInUser();
+
     EstimationDTO createNewEstimation(EstimationDTO estimationDTO);
 
     EstimationDTO saveSelectedEstimation(EstimationDTO estimationDTO);
 
-    EstimationDTO findById(Long id);
+    List<EmployeeDTO> findAllEmployeesEvaluatorsByEstimationId(Long id);
 
-    List<EmployeeDTO> findAllEmployeesEvaluatorsById(Long id);
-
-    List<EmployeeDTO> findAllEvaluateesByEvaluatorAndEstimation(Long id, Long evaluatorId);
 }
