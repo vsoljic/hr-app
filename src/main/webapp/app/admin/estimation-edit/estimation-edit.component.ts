@@ -73,7 +73,7 @@ export class EstimationEditComponent implements OnInit {
         // initialize form object
         const estimation = new Estimation(this.estimation.id, this.selectedStatus, this.selectedModel, this.inputEstimationName, new Date(),
             new Date(), this.estimation.employeesEvaluators, this.estimation.employeesEvaluatees);
-        // return form model for backend
+        // return form estimation_model for backend
         return estimation;
     }
 

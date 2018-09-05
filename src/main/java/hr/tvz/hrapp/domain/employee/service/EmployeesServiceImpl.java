@@ -38,6 +38,11 @@ public class EmployeesServiceImpl implements EmployeesService {
     }
 
     @Override
+    public EmployeeDTO findByUserId(Long userId) {
+        return employeeMapper.mapToDto(employeeRepository.findByUser_Id(userId));
+    }
+
+    @Override
     public List<EmployeeDTO> getAllEmployees() {
 
         List<Employee> employees = employeeRepository.findAll();
@@ -78,16 +83,21 @@ public class EmployeesServiceImpl implements EmployeesService {
     public List<EmployeeDTO> findNotConnectedEmployeesForEvaluator(Long evaluatorId, Long estimationId) {
 
         List<EmployeeDTO> allEmployees = this.getAllEmployees();
+        EmployeeDTO evaluator= this.findById(evaluatorId);
         List<EmployeeDTO> evaluatees = findAllEvaluateesByEvaluatorAndEstimation(estimationId, evaluatorId);
+        evaluatees.add(evaluator);
 
-        List<EmployeeDTO> employeesWOEvaluator = allEmployees.stream()
-            /*.filter(e -> !evaluatees.contains(e))*/
-            .filter(e -> !e.getId().equals(evaluatorId))
-            .collect(Collectors.toList());
+        List<Long> collect = evaluatees.stream().map(EmployeeDTO::getId).collect(Collectors.toList());
 
-        List<EmployeeDTO> notConnectedEmployees = new ArrayList<>();
+        List<EmployeeDTO> filtered = allEmployees.stream().filter(employeeDTO -> !collect.contains(employeeDTO.getId())).collect(Collectors.toList());
+//        List<EmployeeDTO> employeesWOEvaluator = allEmployees.stream()
+//            .filter(e -> evaluatees.contains(e))
+//            .collect(Collectors.toList());
 
-        //TODO: ovo napraviti preko filtera u listi iznad
+      //  List<EmployeeDTO> employeesWOEvaluator = allEmployees.stream().filter(evaluatees::contains).collect(Collectors.toList());
+
+       /* List<EmployeeDTO> notConnectedEmployees = new ArrayList<>();
+
         for (EmployeeDTO emp : employeesWOEvaluator) {
            for (EmployeeDTO e : evaluatees) {
                if (!e.getId().equals(emp.getId())) {
@@ -95,8 +105,8 @@ public class EmployeesServiceImpl implements EmployeesService {
                }
            }
         }
-
-        return notConnectedEmployees;
+*/
+        return filtered;
     }
 
     @Override

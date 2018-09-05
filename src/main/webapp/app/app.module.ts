@@ -1,6 +1,6 @@
 import './vendor.ts';
 
-import {Injector, NgModule} from '@angular/core';
+import {Injector, NgModule, LOCALE_ID } from '@angular/core';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LocalStorageService, Ng2Webstorage, SessionStorageService} from 'ngx-webstorage';
 import {JhiEventManager} from 'ng-jhipster';
@@ -34,6 +34,8 @@ import {EstimationsEvaluatorComponent} from './estimations-evaluator/estimations
 import {EstimationsEvaluateeComponent} from './estimations-evaluatee/estimations-evaluatee.component';
 import {EstimationsEvaluatorService} from 'app/estimations-evaluator/estimations-evaluator.service';
 import {EvaluateeService} from 'app/evaluatee/evaluatee.service';
+import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateCustomParserFormatter} from 'app/shared/ngb-date-custom-parser-formatter';
 
 @NgModule({
     imports: [
@@ -94,7 +96,8 @@ import {EvaluateeService} from 'app/evaluatee/evaluatee.service';
             multi: true,
             deps: [Injector]
         },
-        EstimationsEvaluatorService, EvaluateeService
+        EstimationsEvaluatorService, EvaluateeService,
+        {provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter}
     ],
     bootstrap: [JhiMainComponent]
 })

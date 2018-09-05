@@ -1,7 +1,7 @@
 package hr.tvz.hrapp.web.rest.vm;
 
 /**
- * View Model object for storing the user's key and password.
+ * View EstimationModel object for storing the user's key and password.
  */
 public class KeyAndPasswordVM {
 

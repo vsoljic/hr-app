@@ -12,6 +12,8 @@ public interface RelationshipEstEmployeesService {
 
     RelationshipEstEmployeesDTO findAllForEvaluatorAndEstimation(Long estimationId, Long evaluatorId);
 
+    List<RelationshipEstEmployeesDTO> findAllForEvaluator(Long evaluatorId);
+
     void save(RelationshipEstEmployeesDTO relationshipEstEmployeesDTO);
 
     void delete(Long estimationId, Long evaluatorId, Long evaluateeId);

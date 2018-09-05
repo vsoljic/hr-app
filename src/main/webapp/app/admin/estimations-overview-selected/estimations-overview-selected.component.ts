@@ -36,10 +36,13 @@ export class EstimationsOverviewSelectedComponent implements OnInit {
     }
 
     getAllEvaluateesForEvaluator() {
-        this.estimationsOverviewService.getEvaluateesForEvaluator(this.estimation.id, this.selectedEvaluator.id).subscribe(
-            (evaluatees: Employee[]) => this.evaluatees = evaluatees,
-            error => console.log('error fetching evaluatees', error),
-            () => console.log('success')
-        );
+        if (this.estimation != null && this.selectedEvaluator != null) {
+            this.estimationsOverviewService.getEvaluateesForEvaluator(this.estimation.id, this.selectedEvaluator.id).subscribe(
+                (evaluatees: Employee[]) => this.evaluatees = evaluatees,
+                error => console.log('error fetching evaluatees', error),
+                () => console.log('success')
+            );
+        }
+
     }
 }

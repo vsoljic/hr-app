@@ -48,7 +48,7 @@ public class AccountResource {
     /**
      * POST  /register : register the user.
      *
-     * @param managedUserVM the managed user View Model
+     * @param managedUserVM the managed user View EstimationModel
      * @throws InvalidPasswordException 400 (Bad Request) if the password is incorrect
      * @throws EmailAlreadyUsedException 400 (Bad Request) if the email is already used
      * @throws LoginAlreadyUsedException 400 (Bad Request) if the login is already used

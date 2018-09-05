@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Account, AccountService, Principal} from 'app/core';
+import {Principal} from 'app/core';
 import {EstimationsEvaluatorService} from 'app/estimations-evaluator/estimations-evaluator.service';
+import {Estimation} from 'app/admin/models/estimation.model';
 
 @Component({
     selector: 'jhi-estimations-evaluator',
@@ -8,20 +9,21 @@ import {EstimationsEvaluatorService} from 'app/estimations-evaluator/estimations
     styles: []
 })
 export class EstimationsEvaluatorComponent implements OnInit {
-   /* account: Account;*/
+
+    estimations: Estimation[];
 
     constructor(private principal: Principal, private estimationsEvaluatorService: EstimationsEvaluatorService) {
     }
 
     ngOnInit() {
 
-        this.estimationsEvaluatorService.getEstimationsForEvaluator().subscribe();
+        this.estimationsEvaluatorService.getEstimationsForEvaluator().subscribe(
+            (estimations: Estimation[]) => this.estimations = estimations,
+            error => console.log('error fetching estimations', error),
+            () => console.log('success')
 
-    /*    this.principal.identity().then(account => {
-            this.account = account;
-        });
+        );
 
-       console.log('acc: ' + this.account);*/
     }
 
 }

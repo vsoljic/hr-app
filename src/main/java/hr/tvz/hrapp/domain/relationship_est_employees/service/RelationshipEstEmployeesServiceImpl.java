@@ -35,6 +35,14 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
     }
 
     @Override
+    public List<RelationshipEstEmployeesDTO> findAllForEvaluator(Long evaluatorId) {
+        List<RelationshipEstEmployees> relationshipEstEmployeesList = relationshipEstEmployeesRepository
+            .findDistinctByRelationshipCompositeKey_EmployeeEvaluatorId(evaluatorId);
+
+            return mapper.mapListToDtoList(relationshipEstEmployeesList, evaluatorId);
+    }
+
+    @Override
     public void save(RelationshipEstEmployeesDTO relationshipEstEmployeesDTO) {
 
         List<RelationshipEstEmployees> relationshipEstEmployeesList = new ArrayList<>();

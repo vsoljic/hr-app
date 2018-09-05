@@ -3,6 +3,8 @@ package hr.tvz.hrapp.domain.estimation.mapper;
 import hr.tvz.hrapp.domain.employee.mapper.EmployeeMapper;
 import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
+import hr.tvz.hrapp.domain.estimation_status.mapper.EstimationStatusMapper;
+import hr.tvz.hrapp.domain.estimation_model.mapper.EstimationModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,9 +17,13 @@ import java.util.List;
 public class EstimationMapperImpl implements EstimationMapper {
 
     private final EmployeeMapper employeeMapper;
+    private final EstimationModelMapper estimationModelMapper;
+    private final EstimationStatusMapper estimationStatusMapper;
 
-    public EstimationMapperImpl(EmployeeMapper employeeMapper) {
+    public EstimationMapperImpl(EmployeeMapper employeeMapper, EstimationModelMapper estimationModelMapper, EstimationStatusMapper estimationStatusMapper) {
         this.employeeMapper = employeeMapper;
+        this.estimationModelMapper = estimationModelMapper;
+        this.estimationStatusMapper = estimationStatusMapper;
     }
 
     @Override
@@ -25,12 +31,12 @@ public class EstimationMapperImpl implements EstimationMapper {
 
         EstimationDTO estimationDTO = new EstimationDTO();
         estimationDTO.setId(estimation.getId());
-        estimationDTO.setModel(estimation.getModel());
+        estimationDTO.setModel(estimationModelMapper.mapToDto(estimation.getEstimationModel()));
         estimationDTO.setName(estimation.getName());
         estimationDTO.setPeriodFrom(estimation.getPeriodFrom());
         estimationDTO.setPeriodTo(estimation.getPeriodTo());
         estimationDTO.setActivity(estimation.getActivity());
-        estimationDTO.setStatus(estimation.getStatus());
+        estimationDTO.setStatus(estimationStatusMapper.mapToDto(estimation.getStatus()));
 
         estimationDTO.setEmployeesEvaluators(employeeMapper.mapListToDtoList(estimation.getEmployeesEvaluators()));
         estimationDTO.setEmployeesEvaluatees(employeeMapper.mapListToDtoList(estimation.getEmployeesEvaluatees()));
@@ -43,12 +49,12 @@ public class EstimationMapperImpl implements EstimationMapper {
 
         Estimation estimation = new Estimation();
         estimation.setId(estimationDTO.getId());
-        estimation.setModel(estimationDTO.getModel());
+        estimation.setEstimationModel(estimationModelMapper.reverse(estimationDTO.getModel()));
         estimation.setName(estimationDTO.getName());
         estimation.setPeriodFrom(estimationDTO.getPeriodFrom());
         estimation.setPeriodTo(estimationDTO.getPeriodTo());
         estimation.setActivity(estimationDTO.getActivity());
-        estimation.setStatus(estimationDTO.getStatus());
+        estimation.setStatus(estimationStatusMapper.reverse(estimationDTO.getStatus()));
 
         estimation.setEmployeesEvaluatees(employeeMapper.mapDtoListToList(estimationDTO.getEmployeesEvaluatees()));
         estimation.setEmployeesEvaluators(employeeMapper.mapDtoListToList(estimationDTO.getEmployeesEvaluators()));

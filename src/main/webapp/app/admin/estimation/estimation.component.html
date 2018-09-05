@@ -24,10 +24,12 @@
                     <label>Vrijedi od:</label>
                 </div>
                 <div class="col-md-5">
+
                     <input ngbDatepicker #validFrom="ngbDatepicker" class="form-control"
-                           [ngModel]="dateFrom" name="validFrom" (ngModelChange)="onSelectDateFrom($event)" required />
+                           [(ngModel)]="dateFrom" name="validFrom"  required />
                     <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"
                              (click)="validFrom.toggle()"></fa-icon>
+
                 </div>
 
                 <div class="col-md-1 text-align-center">
@@ -35,7 +37,7 @@
                 </div>
 
                 <div class="col-md-5">
-                    <input type="text" class="form-control" name="dpValidTo" [ngModel]="dateTo" (ngModelChange)="dateTo = onSelectDateTo($event)"
+                    <input type="text" class="form-control" name="dpValidTo" [(ngModel)]="dateTo"
                            ngbDatepicker #validTo="ngbDatepicker" required />
                     <span id="dateTo" class="cursor" (click)="validTo.toggle()">
                         <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"></fa-icon>

@@ -2,7 +2,7 @@
     "register": {
         "title": "Registracija",
         "form": {
-            "button": "Registruj me"
+            "button": "Registriraj me"
         },
         "messages": {
             "validate": {
@@ -15,7 +15,7 @@
             },
             "success": "<strong>Registracija je uspešna!</strong> Molimo Vas proverite svoj email kako biste je potvrdili.",
             "error": {
-                "fail": "<strong>Registracija je neuspešna!</strong> Molimo Vas pokušajte kasnije.",
+                "fail": "<strong>Registracija je neuspješna!</strong> Molimo Vas pokušajte kasnije.",
                 "userexists": "<strong>Korisničko ime već postoji!</strong> Molimo Vas odaberite drugo.",
                 "emailexists": "<strong>Email je već upotrebljen!</strong> Molimo Vas odaberite drugi."
             }

@@ -17,4 +17,8 @@ public interface RelationshipEstEmployeesMapper {
 
     List<RelationshipEstEmployees> reverse(RelationshipEstEmployeesDTO relationshipDTO);
 
+    List<RelationshipEstEmployeesDTO> mapListToDtoList(List<RelationshipEstEmployees> relationships, Long id);
+
+    List<RelationshipEstEmployees> mapDtoListToList(List<RelationshipEstEmployeesDTO> dtos);
+
 }

@@ -11,6 +11,7 @@ import {NgForm} from '@angular/forms';
 import {Estimation} from 'app/admin/models/estimation.model';
 import {Status} from 'app/admin/models/status.model';
 import {Employee} from 'app/admin/models/employee.model';
+import {NgbDate, NgbCalendar  } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-estimation',
@@ -20,24 +21,26 @@ import {Employee} from 'app/admin/models/employee.model';
 export class EstimationComponent implements OnInit {
     modelEstimation: Model[];
     selectedModel: Model;
-    dateFrom: NgbDateStruct;
-    dateTo: NgbDateStruct;
+    dateFrom;
+    dateTo;
     dateString: string;
     statuses: Status[];
     status: Status;
     inputEstimationName: string;
+    updatedEstimation: Estimation;
 
     constructor(private http: HttpClient,
                 private ngbDateParserFormatter: NgbDateParserFormatter,
                 private estimationService: EstimationService,
                 private dataSharingService: DataSharingService,
                 private notificationsService: NotificationsService,
-                private router: Router) {
+                private router: Router,
+                private calendar: NgbCalendar  ) {
     }
 
     ngOnInit() {
-        this.dateFrom = this.setDefaultDate();
-        this.dateTo = this.setDefaultDate();
+        //this.dateFrom = this.setDefaultDate();
+        //this.dateTo = this.setDefaultDate();
 
         this.estimationService.getModels().subscribe(
             (models: Model[]) => this.modelEstimation = models,
@@ -50,13 +53,15 @@ export class EstimationComponent implements OnInit {
             error => console.log('Error fetching statuses', error),
             () => this.status = this.statuses.find(status => status.id === 1)
         );
+
+        //this.dateFrom = this.setDefaultDate()
     }
 
     /**
-     * Returns today's date as a NgbDateStruct model {day, month, year}
+     * Returns today's date as a NgbDateStruct estimation_model {day, month, year}
      */
-    setDefaultDate(): NgbDateStruct {
-        return this.convertToNgbDate(new Date()); // new date = today
+    setDefaultDate()  {
+        return new Date();
     }
 
     convertToNgbDate(date: Date): NgbDateStruct {
@@ -64,6 +69,7 @@ export class EstimationComponent implements OnInit {
         const month = date.getMonth() + 1;
         const day = date.getDate();
 
+        console.info(this.ngbDateParserFormatter.parse(day + '.' + month.toString() + '.' + year));
         return this.ngbDateParserFormatter.parse(day + '.' + month.toString() + '.' + year);
     }
 
@@ -75,22 +81,6 @@ export class EstimationComponent implements OnInit {
      * Checks if newly selected date is greater than date to and if yes, disallows change.
      * @param date selected date
      */
-    onSelectDateFrom(date: NgbDateStruct) {
-        if (date != null) {
-            // if selected dateFrom is greater than dateTo just set it to dateTo
-            this.dateFrom = this.isDateGreaterThan(date, this.dateTo) ? this.dateTo : date;
-            console.log('Ovo je trenutno postavljen datum FROM:' + this.dateFrom);
-            this.dateString = this.ngbDateParserFormatter.format(this.dateFrom);
-        }
-    }
-
-    onSelectDateTo(date: NgbDateStruct) {
-        if (date != null) {
-            this.dateTo = date;
-            console.log('Ovo je trenutno postavljen datum TO:' + this.dateTo);
-            this.dateString = this.ngbDateParserFormatter.format(date);
-        }
-    }
 
     isDateGreaterThan(date1: NgbDateStruct, date2: NgbDateStruct): boolean {
         // get dates from NgbDateStruct type to javascript type
@@ -110,16 +100,17 @@ export class EstimationComponent implements OnInit {
         }
 
         const estimation = this.prepareEstimationValues();
-        this.estimationService.createNewEstimation(estimation).subscribe(
-            (createdEstimation: Estimation) => estimation,
+
+        this.estimationService.createNewEstimation(estimation).subscribe((data: Estimation) => {
+                this.updatedEstimation = data;
+            },
             () => {
                 this.notificationsService.create(null, 'Došlo je do pogreške prilikom kreiranja procjene!', 'error');
             },
             () => {
                 this.notificationsService.create(null, 'Uspješno ste kreirali procjenu', 'success');
-                this.storeEstimationAndNavigateToRelationships(estimation);
-            }
-        );
+                this.storeEstimationAndNavigateToRelationships(this.updatedEstimation);
+            });
     }
 
     /**
@@ -131,7 +122,7 @@ export class EstimationComponent implements OnInit {
         // initialize form object
         const estimation = new Estimation(null, this.status, this.selectedModel, this.inputEstimationName, new Date(),
             new Date(2018, 12, 31), evaluators, evaluatees);
-        // return form model for backend
+        // return form estimation_model for backend
         return estimation;
     }
 

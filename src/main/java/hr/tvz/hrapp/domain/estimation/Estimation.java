@@ -2,8 +2,8 @@ package hr.tvz.hrapp.domain.estimation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.tvz.hrapp.domain.employee.Employee;
+import hr.tvz.hrapp.domain.estimation_model.EstimationModel;
 import hr.tvz.hrapp.domain.estimation_status.EstimationStatus;
-import hr.tvz.hrapp.domain.model.Model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,7 +29,7 @@ public class Estimation implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "MODEL_ID")
-    private Model model;
+    private EstimationModel estimationModel;
 
     @Column(name = "NAME")
     private String name;
@@ -62,10 +62,10 @@ public class Estimation implements Serializable {
     public Estimation() {
     }
 
-    public Estimation(EstimationStatus status, Model model, String name, LocalDate periodFrom, LocalDate periodTo,
+    public Estimation(EstimationStatus status, EstimationModel estimationModel, String name, LocalDate periodFrom, LocalDate periodTo,
                       Integer activity, List<Employee> employeesEvaluators, List<Employee> employeesEvaluatees) {
         this.status = status;
-        this.model = model;
+        this.estimationModel = estimationModel;
         this.name = name;
         this.periodFrom = periodFrom;
         this.periodTo = periodTo;
@@ -124,12 +124,12 @@ public class Estimation implements Serializable {
         this.status = status;
     }
 
-    public Model getModel() {
-        return model;
+    public EstimationModel getEstimationModel() {
+        return estimationModel;
     }
 
-    public void setModel(Model model) {
-        this.model = model;
+    public void setEstimationModel(EstimationModel estimationModel) {
+        this.estimationModel = estimationModel;
     }
 
     public String getName() {

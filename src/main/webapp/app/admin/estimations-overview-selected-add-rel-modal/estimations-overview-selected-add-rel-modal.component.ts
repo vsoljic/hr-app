@@ -58,7 +58,7 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
      * Prepares estimation form for POST request to backend.
      */
     prepareRelationshipValues(): Relationship {
-        const relationship = new Relationship(1, this.selectedEvaluatorId, this.evaluateeIdList);
+        const relationship = new Relationship(this.estimationId, this.selectedEvaluatorId, this.evaluateeIdList);
 
         return relationship;
     }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 
 import { JhiLanguageHelper } from 'app/core';
+import localeFr from '../../../../../../node_modules/@angular/common/locales/fr';
 
 @Component({
     selector: 'jhi-main',

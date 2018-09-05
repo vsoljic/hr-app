@@ -2,6 +2,7 @@ package hr.tvz.hrapp.domain.employee.mapper;
 
 import hr.tvz.hrapp.domain.employee.Employee;
 import hr.tvz.hrapp.domain.employee.EmployeeDTO;
+import hr.tvz.hrapp.service.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,6 +14,13 @@ import java.util.List;
 @Component
 public class EmployeeMapperImpl implements EmployeeMapper {
 
+    private final UserMapper userMapper;
+
+
+    public EmployeeMapperImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     @Override
     public EmployeeDTO mapToDto(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
@@ -21,7 +29,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         employeeDTO.setFirstName(employee.getFirstName());
         employeeDTO.setLastName(employee.getLastName());
         employeeDTO.setEmployeeCode(employee.getEmployeeCode());
-        employeeDTO.setUser(employee.getUser());
+        employeeDTO.setUser(userMapper.userToUserDTO(employee.getUser()));
         employeeDTO.setWorkPosition(employee.getWorkPosition());
 
         return employeeDTO;
@@ -35,7 +43,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
         employee.setEmployeeCode(employeeDTO.getEmployeeCode());
-        employee.setUser(employeeDTO.getUser());
+        employee.setUser(userMapper.userDTOToUser(employeeDTO.getUser()));
         employee.setWorkPosition(employeeDTO.getWorkPosition());
 
         return employee;

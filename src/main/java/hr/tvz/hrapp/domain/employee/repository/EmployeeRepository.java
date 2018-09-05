@@ -15,5 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAllByIdNotIn(Long id);
 
+    Employee findByUser_Id(Long userId);
+
     List<Employee> findDistinctByEstimationsForEvaluator(List<Estimation> estimations);
 }

@@ -4,7 +4,7 @@ import hr.tvz.hrapp.service.dto.UserDTO;
 import javax.validation.constraints.Size;
 
 /**
- * View Model extending the UserDTO, which is meant to be used in the user management UI.
+ * View EstimationModel extending the UserDTO, which is meant to be used in the user management UI.
  */
 public class ManagedUserVM extends UserDTO {
 

@@ -3,6 +3,7 @@ package hr.tvz.hrapp.domain.employee;
 import hr.tvz.hrapp.domain.User;
 import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
+import hr.tvz.hrapp.service.dto.UserDTO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +15,7 @@ public class EmployeeDTO implements Serializable {
 
     private Long id;
 
-    private User user;
+    private UserDTO user;
 
     private Long employeeCode;
 
@@ -31,7 +32,7 @@ public class EmployeeDTO implements Serializable {
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(Long id, User user, Long employeeCode, String firstName, String lastName, String workPosition,
+    public EmployeeDTO(Long id, UserDTO user, Long employeeCode, String firstName, String lastName, String workPosition,
                        List<EstimationDTO> estimationsForEvaluator, List<EstimationDTO> estimationsForEvaluatee) {
         this.id = id;
         this.user = user;
@@ -51,11 +52,11 @@ public class EmployeeDTO implements Serializable {
         this.id = id;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 

@@ -6,7 +6,8 @@ import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.mapper.EstimationMapper;
 import hr.tvz.hrapp.domain.estimation.repository.EstimationRepository;
-import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployees;
+import hr.tvz.hrapp.domain.estimation_status.mapper.EstimationStatusMapper;
+import hr.tvz.hrapp.domain.estimation_model.mapper.EstimationModelMapper;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 import hr.tvz.hrapp.domain.relationship_est_employees.service.RelationshipEstEmployeesService;
 import hr.tvz.hrapp.service.UserService;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author vedrana.soljic
@@ -28,15 +31,20 @@ public class EstimationServiceImpl implements EstimationService {
     private final RelationshipEstEmployeesService relationshipEstEmployeesService;
     private final UserService userService;
     private final EstimationMapper estimationMapper;
-
+    private final EstimationModelMapper estimationModelMapper;
+    private final EstimationStatusMapper estimationStatusMapper;
 
     public EstimationServiceImpl(EstimationRepository estimationRepository, EmployeesService employeesService,
-                                 RelationshipEstEmployeesService relationshipEstEmployeesService, UserService userService, EstimationMapper estimationMapper) {
+                                 RelationshipEstEmployeesService relationshipEstEmployeesService, UserService userService,
+                                 EstimationMapper estimationMapper, EstimationModelMapper estimationModelMapper,
+                                 EstimationStatusMapper estimationStatusMapper) {
         this.estimationRepository = estimationRepository;
         this.employeesService = employeesService;
         this.relationshipEstEmployeesService = relationshipEstEmployeesService;
         this.userService = userService;
         this.estimationMapper = estimationMapper;
+        this.estimationModelMapper = estimationModelMapper;
+        this.estimationStatusMapper = estimationStatusMapper;
     }
 
     @Override
@@ -54,11 +62,14 @@ public class EstimationServiceImpl implements EstimationService {
         UserDTO userDTO = userService.getUserWithAuthorities().map(UserDTO::new)
             .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
 
-     //   List<EstimationDTO> estimationsDTO = estimationRepository.
+        EmployeeDTO employeeDTO = employeesService.findByUserId(userDTO.getId());
 
-//        RelationshipEstEmployeesDTO relationships = relationshipEstEmployeesService.findAllForEvaluatorAndEstimation(1,1);
+        List<RelationshipEstEmployeesDTO> relationships = relationshipEstEmployeesService.findAllForEvaluator(employeeDTO.getId());
 
-        return null;
+        List<EstimationDTO> estimationsDtos = new ArrayList<>();
+        relationships.stream().forEach(relationshipEstEmployeesDTO -> estimationsDtos.add(estimationMapper.mapToDto(estimationRepository.findById(relationshipEstEmployeesDTO.getEstimationId()).get())));
+
+        return estimationsDtos;
     }
 
     @Override
@@ -90,8 +101,8 @@ public class EstimationServiceImpl implements EstimationService {
     public EstimationDTO saveSelectedEstimation(EstimationDTO estimationDTO) {
         Estimation estimation = estimationRepository.findById(estimationDTO.getId()).get();
 
-        estimation.setModel(estimationDTO.getModel());
-        estimation.setStatus(estimationDTO.getStatus());
+        estimation.setEstimationModel(estimationModelMapper.reverse(estimationDTO.getModel()));
+        estimation.setStatus(estimationStatusMapper.reverse(estimationDTO.getStatus()));
         estimation.setName(estimationDTO.getName());
         estimation.setPeriodFrom(estimationDTO.getPeriodFrom());
         estimation.setPeriodTo(estimationDTO.getPeriodTo());

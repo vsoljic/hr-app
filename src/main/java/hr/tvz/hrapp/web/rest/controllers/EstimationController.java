@@ -2,17 +2,11 @@ package hr.tvz.hrapp.web.rest.controllers;
 
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.service.EstimationService;
-import hr.tvz.hrapp.domain.estimation_status.EstimationStatusDTO;
-import hr.tvz.hrapp.domain.estimation_status.service.EstimationStatusService;
-import hr.tvz.hrapp.domain.model.ModelDTO;
-import hr.tvz.hrapp.domain.model.service.ModelService;
 import hr.tvz.hrapp.security.AuthoritiesConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author vedrana.soljic

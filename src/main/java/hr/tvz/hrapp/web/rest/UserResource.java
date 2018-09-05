@@ -36,10 +36,10 @@ import java.util.*;
  * This class accesses the User entity, and needs to fetch its collection of authorities.
  * <p>
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
- * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join
+ * and send everything to the client side: there would be no View EstimationModel and DTO, a lot less code, and an outer-join
  * which would be good for performance.
  * <p>
- * We use a View Model and a DTO for 3 reasons:
+ * We use a View EstimationModel and a DTO for 3 reasons:
  * <ul>
  * <li>We want to keep a lazy association between the user and the authorities, because people will
  * quite often do relationships with the user, and we don't want them to get the authorities all

@@ -16,7 +16,7 @@ import {Estimation} from 'app/admin/models/estimation.model';
 export class CreateRelationshipRolesModalComponent implements OnInit {
     modalReference: NgbModalRef;
     closeResult: string;
-    estimation: Estimation;
+    @Input() estimation: Estimation;
     @Input() employeeId: number;
     @Input() employeeName: string;
     employees: Employee[];
@@ -31,10 +31,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        // dohvat podataka s prvog ekrana
-        this.estimation = this.dataSharingService.storage;
-        // obrisati sve iz dataSharing-a kako se ne bi nepotrebno zadržavali objekti
-        this.dataSharingService.storage = null;
+
     }
 
     openModalForRelationshipsAndRoles(content) {
@@ -63,7 +60,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
      * Prepares estimation form for POST request to backend.
      */
     prepareRelationshipValues(): Relationship {
-        const relationship = new Relationship(1, this.employeeId, this.evaluateeIdList);
+        const relationship = new Relationship(this.estimation.id, this.employeeId, this.evaluateeIdList);
 
         return relationship;
     }

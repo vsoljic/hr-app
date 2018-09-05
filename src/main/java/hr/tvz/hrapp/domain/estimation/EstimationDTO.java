@@ -1,9 +1,8 @@
 package hr.tvz.hrapp.domain.estimation;
 
-import hr.tvz.hrapp.domain.employee.Employee;
 import hr.tvz.hrapp.domain.employee.EmployeeDTO;
-import hr.tvz.hrapp.domain.estimation_status.EstimationStatus;
-import hr.tvz.hrapp.domain.model.Model;
+import hr.tvz.hrapp.domain.estimation_model.EstimationModelDTO;
+import hr.tvz.hrapp.domain.estimation_status.EstimationStatusDTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,9 +15,9 @@ public class EstimationDTO implements Serializable {
 
     private Long id;
 
-    private EstimationStatus status;
+    private EstimationStatusDTO status;
 
-    private Model model;
+    private EstimationModelDTO model;
 
     private String name;
 
@@ -35,9 +34,8 @@ public class EstimationDTO implements Serializable {
     public EstimationDTO() {
     }
 
-    public EstimationDTO(Long id, EstimationStatus status, Model model, String name, LocalDate periodFrom,
-                         LocalDate periodTo, Integer activity, List<EmployeeDTO> employeesEvaluators,
-                         List<EmployeeDTO> employeesEvaluatees) {
+    public EstimationDTO(Long id, EstimationStatusDTO status, EstimationModelDTO model, String name, LocalDate periodFrom,
+                         LocalDate periodTo, Integer activity, List<EmployeeDTO> employeesEvaluators, List<EmployeeDTO> employeesEvaluatees) {
         this.id = id;
         this.status = status;
         this.model = model;
@@ -57,19 +55,19 @@ public class EstimationDTO implements Serializable {
         this.id = id;
     }
 
-    public EstimationStatus getStatus() {
+    public EstimationStatusDTO getStatus() {
         return status;
     }
 
-    public void setStatus(EstimationStatus status) {
+    public void setStatus(EstimationStatusDTO status) {
         this.status = status;
     }
 
-    public Model getModel() {
+    public EstimationModelDTO getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(EstimationModelDTO model) {
         this.model = model;
     }
 

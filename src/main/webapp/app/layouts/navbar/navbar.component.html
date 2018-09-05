@@ -6,7 +6,7 @@
             <fa-icon [icon]="'bars'"></fa-icon>
         </a>
         <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
-            <span class="logo-img"></span>
+          <!--  <span class="logo-img"></span>-->
             <span jhiTranslate="global.title" class="navbar-title">HRApp</span>
         </a>
     </div>
@@ -26,7 +26,7 @@
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluation-menu">
                     <span>
                         <fa-icon [icon]="'home'"></fa-icon>
-                        <span jhiTranslate="global.menu.estimation">Estimation</span>
+                        <span>Procjena radnog učinka</span>
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
@@ -34,36 +34,36 @@
                         <a class="dropdown-item" routerLink="admin/estimations-overview"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
-                            <span>Estimations overview</span>
+                            <span>Pregled procjena</span>
                         </a>
                     </li>
 
-                    <li>
+                 <!--   <li>
                         <a class="dropdown-item" routerLink="admin/estimations-overview-selected"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
                             <span>Estimations overview for selected estimation</span>
                         </a>
-                    </li>
+                    </li>-->
 
                     <li>
                         <a class="dropdown-item" routerLink="admin/estimation"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
-                            <span>Create estimation</span>
+                            <span>Kreiraj novu procjenu</span>
                         </a>
                     </li>
-                    <li>
+          <!--          <li>
                         <a class="dropdown-item" routerLink="admin/relationships"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
                             <span>Relationships</span>
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
             </li>
 
-            <li *jhiHasAnyAuthority="'ROLE_EVALUATOR'" ngbDropdown class="nav-item dropdown pointer"
+         <!--   <li *jhiHasAnyAuthority="'ROLE_EVALUATOR'" ngbDropdown class="nav-item dropdown pointer"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluatee-menu">
                     <span>
@@ -94,7 +94,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
 
 
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
