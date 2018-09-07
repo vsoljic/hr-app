@@ -79,8 +79,8 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
     @Override
     public List<RelationshipEstEmployees> mapDtoListToList(List<RelationshipEstEmployeesDTO> dtos) {
         List<RelationshipEstEmployees> result = new ArrayList<>();
-      /*  dtos.stream().forEach(i -> result.add(reverse(i)));*/
-
+        /*  dtos.stream().forEach(i -> result.add(reverse(i)));*/
+        // TODO: NAPRAVITI OVO!!!!!!!!!!!!!!!
         return result;
     }
 }

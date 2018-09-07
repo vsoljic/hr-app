@@ -11,6 +11,7 @@ import hr.tvz.hrapp.domain.relationship_est_employees.service.RelationshipEstEmp
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +21,14 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeesServiceImpl implements EmployeesService {
 
-    //TODO: Repository umjesto servisa - zato što preko servisa ne može zbog dva mappera - circular reference
+    private final EstimationRepository estimationRepository;
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
     private final RelationshipEstEmployeesService relationshipEstEmployeesService;
 
-    public EmployeesServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper,
+    public EmployeesServiceImpl(EstimationRepository estimationRepository, EmployeeRepository employeeRepository, EmployeeMapper employeeMapper,
                                 RelationshipEstEmployeesService relationshipEstEmployeesService) {
+        this.estimationRepository = estimationRepository;
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.relationshipEstEmployeesService = relationshipEstEmployeesService;
@@ -80,32 +82,37 @@ public class EmployeesServiceImpl implements EmployeesService {
     }
 
     @Override
+    public List<EmployeeDTO> findNotConnectedEmployeesForEstimation(Long estimationId) {
+        List<EmployeeDTO> allEmployees = this.getAllEmployees();
+
+        //TODO:  mora biti bolji način da se radi s DTO????????
+        Estimation estimation = estimationRepository.findById(estimationId).get();
+        List<Employee> allEvaluatorsOnEstimation = estimation.getEmployeesEvaluators();
+
+        List<Long> collectIdsOfEmployeesToRemove = allEvaluatorsOnEstimation.stream().map(Employee::getId).collect(Collectors.toList());
+
+        List<EmployeeDTO> filtered = allEmployees.stream().filter(employeeDTO ->
+            !collectIdsOfEmployeesToRemove.contains(employeeDTO.getId()))
+            .collect(Collectors.toList());
+
+        return filtered;
+
+    }
+
+    @Override
     public List<EmployeeDTO> findNotConnectedEmployeesForEvaluator(Long evaluatorId, Long estimationId) {
 
         List<EmployeeDTO> allEmployees = this.getAllEmployees();
-        EmployeeDTO evaluator= this.findById(evaluatorId);
-        List<EmployeeDTO> evaluatees = findAllEvaluateesByEvaluatorAndEstimation(estimationId, evaluatorId);
-        evaluatees.add(evaluator);
+        EmployeeDTO evaluator = this.findById(evaluatorId);
+        List<EmployeeDTO> employeesToRemove = findAllEvaluateesByEvaluatorAndEstimation(estimationId, evaluatorId);
+        employeesToRemove.add(evaluator);
 
-        List<Long> collect = evaluatees.stream().map(EmployeeDTO::getId).collect(Collectors.toList());
+        List<Long> collectIdsOfEmployeesToRemove = employeesToRemove.stream().map(EmployeeDTO::getId).collect(Collectors.toList());
 
-        List<EmployeeDTO> filtered = allEmployees.stream().filter(employeeDTO -> !collect.contains(employeeDTO.getId())).collect(Collectors.toList());
-//        List<EmployeeDTO> employeesWOEvaluator = allEmployees.stream()
-//            .filter(e -> evaluatees.contains(e))
-//            .collect(Collectors.toList());
+        List<EmployeeDTO> filtered = allEmployees.stream().filter(employeeDTO ->
+            !collectIdsOfEmployeesToRemove.contains(employeeDTO.getId()))
+            .collect(Collectors.toList());
 
-      //  List<EmployeeDTO> employeesWOEvaluator = allEmployees.stream().filter(evaluatees::contains).collect(Collectors.toList());
-
-       /* List<EmployeeDTO> notConnectedEmployees = new ArrayList<>();
-
-        for (EmployeeDTO emp : employeesWOEvaluator) {
-           for (EmployeeDTO e : evaluatees) {
-               if (!e.getId().equals(emp.getId())) {
-                   notConnectedEmployees.add(emp);
-               }
-           }
-        }
-*/
         return filtered;
     }
 

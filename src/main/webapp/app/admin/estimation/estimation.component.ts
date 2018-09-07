@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date-struct';
-import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {EstimationService} from 'app/admin/estimation/estimation.service';
 import {Model} from 'app/admin/models/model.model';
 import {DataSharingService} from 'app/shared/data-sharing.service';
@@ -11,7 +11,6 @@ import {NgForm} from '@angular/forms';
 import {Estimation} from 'app/admin/models/estimation.model';
 import {Status} from 'app/admin/models/status.model';
 import {Employee} from 'app/admin/models/employee.model';
-import {NgbDate, NgbCalendar  } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-estimation',
@@ -35,7 +34,7 @@ export class EstimationComponent implements OnInit {
                 private dataSharingService: DataSharingService,
                 private notificationsService: NotificationsService,
                 private router: Router,
-                private calendar: NgbCalendar  ) {
+                private calendar: NgbCalendar) {
     }
 
     ngOnInit() {
@@ -60,7 +59,7 @@ export class EstimationComponent implements OnInit {
     /**
      * Returns today's date as a NgbDateStruct estimation_model {day, month, year}
      */
-    setDefaultDate()  {
+    setDefaultDate() {
         return new Date();
     }
 
@@ -101,7 +100,8 @@ export class EstimationComponent implements OnInit {
 
         const estimation = this.prepareEstimationValues();
 
-        this.estimationService.createNewEstimation(estimation).subscribe((data: Estimation) => {
+        this.estimationService.createNewEstimation(estimation).subscribe(
+            (data: Estimation) => {
                 this.updatedEstimation = data;
             },
             () => {
@@ -120,16 +120,16 @@ export class EstimationComponent implements OnInit {
         const evaluators: Employee[] = [];
         const evaluatees: Employee[] = [];
         // initialize form object
-        const estimation = new Estimation(null, this.status, this.selectedModel, this.inputEstimationName, new Date(),
-            new Date(2018, 12, 31), evaluators, evaluatees);
-        // return form estimation_model for backend
+        const estimation = new Estimation(null, this.status, this.selectedModel, this.inputEstimationName, this.dateFrom,
+            this.dateTo, evaluators, evaluatees);
+        // return form estimation for backend
         return estimation;
     }
 
     /**
      * Stores estimation response of created estimation into a shared service which later passes the same estimation to another screen.
      * After a short delay, navigates to another screen.
-     * @param estimation created estimation from backend
+     * @param created estimation from backend
      */
     async storeEstimationAndNavigateToRelationships(estimation: Estimation) {
         this.dataSharingService.storage = estimation; // store orderForm to application wide storage

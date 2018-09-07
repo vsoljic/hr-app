@@ -90,10 +90,9 @@ public class EstimationServiceImpl implements EstimationService {
     public EstimationDTO createNewEstimation(EstimationDTO estimationDTO) {
 
         Estimation estimation = estimationMapper.reverse(estimationDTO);
-        estimation.setActivity(1);
+        estimation.setActivity(1); //TODO: promjeniti logiku za activity procjene
 
         Estimation newEstimation = estimationRepository.save(estimation);
-
         return estimationMapper.mapToDto(newEstimation);
     }
 

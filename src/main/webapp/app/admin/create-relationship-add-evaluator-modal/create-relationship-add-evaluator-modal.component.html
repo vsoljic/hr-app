@@ -10,7 +10,7 @@
         <form name="newRelationship" #newRelationship="ngForm" autocomplete="off">
             <div class="row">
                 <div class="col-md-12">
-                    <p class="question-text">{{employeeName}} je procjenitelj za:</p>
+                    <p class="question-text">Dodaj procjenitelja na procjenu: {{estimationName}}</p>
                 </div>
                 <div class="col-md-12">
                     <ng-select [items]="employees" bindLabel="firstName" id="selectEvaluatees" name="selectEvaluatees"
@@ -35,5 +35,5 @@
     <hr>
 
 </ng-template>
-<button type="button" class="btn white-button oval-button" (click)="openModalForRelationshipsAndRoles(content)">Dodaj procjenjenike
+<button type="button" class="btn btn-danger" (click)="openModalForRelationshipsAndRoles(content)">Dodaj procjenitelje
 </button>

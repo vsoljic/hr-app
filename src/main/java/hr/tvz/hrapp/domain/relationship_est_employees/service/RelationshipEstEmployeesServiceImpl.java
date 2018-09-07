@@ -39,7 +39,7 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
         List<RelationshipEstEmployees> relationshipEstEmployeesList = relationshipEstEmployeesRepository
             .findDistinctByRelationshipCompositeKey_EmployeeEvaluatorId(evaluatorId);
 
-            return mapper.mapListToDtoList(relationshipEstEmployeesList, evaluatorId);
+        return mapper.mapListToDtoList(relationshipEstEmployeesList, evaluatorId);
     }
 
     @Override
@@ -63,8 +63,19 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
     }
 
     @Override
+    public void save(List<RelationshipEstEmployeesDTO> relationshipEstEmployeesDTOS) {
+        List<RelationshipEstEmployees> relationshipEstEmployeesList = mapper.mapDtoListToList(relationshipEstEmployeesDTOS);
+
+        for (RelationshipEstEmployees relationship : relationshipEstEmployeesList) {
+            relationshipEstEmployeesRepository.save(relationship);
+        }
+
+    }
+
+    @Override
     public void delete(Long estimationId, Long evaluatorId, Long evaluateeId) {
-        RelationshipEstEmployees relationship = relationshipEstEmployeesRepository.findByRelationshipCompositeKey_EstimationIdAndAndRelationshipCompositeKey_EmployeeEvaluatorIdAndRelationshipCompositeKey_EmployeeEvaluateeId(estimationId, evaluatorId, evaluateeId);
+        RelationshipEstEmployees relationship = relationshipEstEmployeesRepository.
+            findByRelationshipCompositeKey_EstimationIdAndAndRelationshipCompositeKey_EmployeeEvaluatorIdAndRelationshipCompositeKey_EmployeeEvaluateeId(estimationId, evaluatorId, evaluateeId);
 
         relationshipEstEmployeesRepository.delete(relationship);
     }

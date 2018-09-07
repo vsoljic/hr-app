@@ -31,6 +31,7 @@ import {EstimationsOverviewService} from 'app/admin/estimations-overview/estimat
 import {EstimationEditComponent} from './estimation-edit/estimation-edit.component';
 import {EstimationsOverviewSelectedDeleteModalComponent} from 'app/admin/estimations-overview-selected-delete-modal/estimations-overview-selected-delete-modal.component';
 import {EstimationsOverviewSelectedAddRelModalComponent} from 'app/admin/estimations-overview-selected-add-rel-modal/estimations-overview-selected-add-rel-modal.component';
+import { CreateRelationshipAddEvaluatorModalComponent } from './create-relationship-add-evaluator-modal/create-relationship-add-evaluator-modal.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -60,7 +61,8 @@ import {EstimationsOverviewSelectedAddRelModalComponent} from 'app/admin/estimat
         EstimationsOverviewSelectedComponent,
         EstimationEditComponent,
         EstimationsOverviewSelectedDeleteModalComponent,
-        EstimationsOverviewSelectedAddRelModalComponent
+        EstimationsOverviewSelectedAddRelModalComponent,
+        CreateRelationshipAddEvaluatorModalComponent
     ],
     providers: [EstimationService, RelationshipsForEstimationService, EstimationsOverviewService,
         {

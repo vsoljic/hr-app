@@ -58,13 +58,13 @@ export class EstimationEditComponent implements OnInit {
 
         const estimation = this.prepareEstimationValues();
         this.estimationService.editSelectedEstimation(estimation).subscribe(
-            (createdEstimation: Estimation) => estimation,
+            (createdEstimation: Estimation) => this.estimation = createdEstimation,
             () => {
                 this.notificationsService.create(null, 'Došlo je do pogreške prilikom izmjene procjene!', 'error');
             },
             () => {
                 this.notificationsService.create(null, 'Uspješno ste izmijenili procjenu', 'success');
-                this.storeEstimationAndNavigateToEstimationsOverview(estimation);
+                this.storeEstimationAndNavigateToEstimationsOverview(this.estimation);
             }
         );
     }

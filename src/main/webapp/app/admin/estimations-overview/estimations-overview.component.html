@@ -27,7 +27,7 @@
                     <td>{{estimation.model.name}}</td>
                     <td>{{estimation.status.status}}</td>
                     <td>
-                        <button type="button" class="btn btn-default cursor" (click)="editEstimation(estimation)">Uredi
+                        <button type="button" *ngIf="estimation.status.status != 'GRADE_OVERVIEW'" class="btn btn-default cursor" (click)="editEstimation(estimation)">Uredi
                             procjenu
                         </button>
                     </td>

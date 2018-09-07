@@ -22,6 +22,8 @@ public interface EmployeesService {
 
     List<EmployeeDTO> findAllEvaluateesByEvaluatorAndEstimation(Long id, Long evaluatorId);
 
+    List<EmployeeDTO> findNotConnectedEmployeesForEstimation(Long estimationId);
+
     List<EmployeeDTO> findNotConnectedEmployeesForEvaluator(Long evaluatorId, Long estimationId);
 
     void deleteSelectedEvaluatee(Long estimationId, Long evaluatorId, Long evaluateeId);

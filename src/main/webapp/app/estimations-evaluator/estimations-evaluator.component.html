@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 padding-bottom">
-            <h2>Sve procjene (u ulozi procjenitelja) - {{estimation.name}}:</h2>
+            <h2>Sve procjene (u ulozi procjenitelja):</h2>
         </div>
 
         <div class="col-md-12">
@@ -18,25 +18,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let estimation of estimations">
-                      <th scope="row">{{estimation.id}}</th>
-                      <td>{{estimation.name}}</td>
-                      <td>{{estimation.periodFrom | date: 'dd.MM.yyyy.'}}</td>
-                      <td>{{estimation.periodTo | date: 'dd.MM.yyyy.'}}</td>
-                      <td>{{estimation.model.name}}</td>
-                      <td>{{estimation.status.status}}</td>
-                      <td>
-                          <button type="button" class="btn btn-default cursor" (click)="editEstimation(estimation)">Uredi
-                              procjenu
-                          </button>
-                      </td>
-                      <td>
-                          <button type="button" *ngIf="estimation.status.status === 'IN_PROCESS'" class="btn btn-default cursor" (click)="editRelationships(estimation)">
-                              Uredi veze
-                          </button>
-                      </td>
+                <tr *ngFor="let estimation of estimations">
+                    <th scope="row">{{estimation.id}}</th>
+                    <td>{{estimation.name}}</td>
+                    <td>{{estimation.periodFrom | date: 'dd.MM.yyyy.'}}</td>
+                    <td>{{estimation.periodTo | date: 'dd.MM.yyyy.'}}</td>
+                    <td>{{estimation.model.name}}</td>
+                    <td>{{estimation.status.status}}</td>
+                    <td>
+                       <jhi-estimations-evaluator-select-evaluatee-modal [estimationId]="estimation.id" [estimationName]="estimation.name"></jhi-estimations-evaluator-select-evaluatee-modal>
+                    </td>
 
-                  </tr>
+                </tr>
                 </tbody>
             </table>
         </div>

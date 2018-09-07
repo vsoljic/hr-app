@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 padding-bottom">
-            <h2>Izaberite procjenitelja:</h2>
+            <h2>Izaberite procjenitelja ili dodajte novog:</h2>
         </div>
     </div>
     <div class="row">
@@ -11,6 +11,10 @@
                        notFoundText="Nema podataka"
                        (ngModelChange)="getAllEvaluateesForEvaluator()">
             </ng-select>
+        </div>
+
+        <div class="col-md-3" *ngIf="selectedEvaluator === undefined">
+            <jhi-create-relationship-add-evaluator-modal [estimationId]="estimation.id" [estimationName]="estimation.name"></jhi-create-relationship-add-evaluator-modal>
         </div>
     </div>
 
