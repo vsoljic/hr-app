@@ -1,7 +1,6 @@
 package hr.tvz.hrapp.domain.relationship_est_employees.service;
 
 import hr.tvz.hrapp.domain.employee.mapper.EmployeeMapper;
-import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipCompositeKey;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployees;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 import hr.tvz.hrapp.domain.relationship_est_employees.mapper.RelationshipEstEmployeesMapper;
@@ -29,7 +28,7 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
 
     public RelationshipEstEmployeesDTO findAllForEvaluatorAndEstimation(Long estimationId, Long evaluatorId) {
         List<RelationshipEstEmployees> relationshipEstEmployeesList = relationshipEstEmployeesRepository
-            .findAllByRelationshipCompositeKey_EstimationIdAndAndRelationshipCompositeKey_EmployeeEvaluatorId(estimationId, evaluatorId);
+            .findAllByEstimationIdAndEmployeeEvaluatorId(estimationId, evaluatorId);
 
         return mapper.mapToDto(relationshipEstEmployeesList);
     }
@@ -37,28 +36,21 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
     @Override
     public List<RelationshipEstEmployeesDTO> findAllForEvaluator(Long evaluatorId) {
         List<RelationshipEstEmployees> relationshipEstEmployeesList = relationshipEstEmployeesRepository
-            .findDistinctByRelationshipCompositeKey_EmployeeEvaluatorId(evaluatorId);
+            .findDistinctByEmployeeEvaluatorId(evaluatorId);
 
         return mapper.mapListToDtoList(relationshipEstEmployeesList, evaluatorId);
     }
 
     @Override
     public void save(RelationshipEstEmployeesDTO relationshipEstEmployeesDTO) {
-
         List<RelationshipEstEmployees> relationshipEstEmployeesList = new ArrayList<>();
 
         for (Long evaluateeId : relationshipEstEmployeesDTO.getEvaluateeIdList()) {
-            RelationshipCompositeKey relationshipCompositeKey = new RelationshipCompositeKey();
-            relationshipCompositeKey.setEstimationId(relationshipEstEmployeesDTO.getEstimationId());
-            relationshipCompositeKey.setEmployeeEvaluatorId(relationshipEstEmployeesDTO.getEvaluatorId());
-            relationshipCompositeKey.setEmployeeEvaluateeId(evaluateeId);
-
-            relationshipEstEmployeesList.add(new RelationshipEstEmployees(relationshipCompositeKey));
+            relationshipEstEmployeesList.add(new RelationshipEstEmployees(relationshipEstEmployeesDTO.getEstimationId(), relationshipEstEmployeesDTO.getEvaluatorId(), evaluateeId));
         }
 
-        for (RelationshipEstEmployees relationship : relationshipEstEmployeesList) {
-            relationshipEstEmployeesRepository.save(relationship);
-        }
+        relationshipEstEmployeesRepository.saveAll(relationshipEstEmployeesList);
+
 
     }
 
@@ -75,18 +67,17 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
     @Override
     public void delete(Long estimationId, Long evaluatorId, Long evaluateeId) {
         // all relationships on esitmation
-        List<RelationshipEstEmployees> relationshipsOnEstimation = relationshipEstEmployeesRepository.findAllByRelationshipCompositeKey_EstimationId(estimationId);
+        List<RelationshipEstEmployees> relationshipsOnEstimation = relationshipEstEmployeesRepository.findAllByEstimationId(estimationId);
 
         // relationship that we want to delete
         RelationshipEstEmployees relationship = relationshipEstEmployeesRepository.
-            findByRelationshipCompositeKey_EstimationIdAndAndRelationshipCompositeKey_EmployeeEvaluatorIdAndRelationshipCompositeKey_EmployeeEvaluateeId(estimationId, evaluatorId, evaluateeId);
+            findAllByEstimationIdAndEmployeeEvaluatorIdAndEmployeeEvaluateeId(estimationId, evaluatorId, evaluateeId);
 
         // if only one is left, update evaluatee_id to 0 (so we don't loose evaluator)
         if (relationshipsOnEstimation.size() == 1) {
 
             // insert fake one
-            evaluateeId = 0L;
-            RelationshipEstEmployees relationshipToUpdate = new RelationshipEstEmployees(new RelationshipCompositeKey(estimationId, evaluatorId, evaluateeId));
+            RelationshipEstEmployees relationshipToUpdate = new RelationshipEstEmployees(estimationId, evaluatorId);
             relationshipEstEmployeesRepository.save(relationshipToUpdate);
 
             // delete selected one

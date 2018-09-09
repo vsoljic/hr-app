@@ -23,11 +23,11 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         ArrayList<Long> evaluateesIds = new ArrayList<>();
 
         for (RelationshipEstEmployees r : relationships) {
-            evaluateesIds.add(r.getRelationshipCompositeKey().getEmployeeEvaluateeId());
+            evaluateesIds.add(r.getEmployeeEvaluateeId());
         }
 
-        dto.setEvaluatorId(relationships.get(0).getRelationshipCompositeKey().getEmployeeEvaluatorId());
-        dto.setEstimationId(relationships.get(0).getRelationshipCompositeKey().getEstimationId());
+        dto.setEvaluatorId(relationships.get(0).getEmployeeEvaluatorId());
+        dto.setEstimationId(relationships.get(0).getEstimationId());
         dto.setEvaluateeIdList(evaluateesIds);
 
 
@@ -40,16 +40,9 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         List<RelationshipEstEmployees> relationships = new ArrayList<>();
 
         for (Long id : relationshipDTO.getEvaluateeIdList()) {
-            RelationshipEstEmployees relationship = new RelationshipEstEmployees();
-            RelationshipCompositeKey key = new RelationshipCompositeKey();
-
-            key.setEstimationId(relationshipDTO.getEstimationId());
-            key.setEmployeeEvaluatorId(relationshipDTO.getEvaluatorId());
-            key.setEmployeeEvaluateeId(id);
-
+            RelationshipEstEmployees relationship = new RelationshipEstEmployees(relationshipDTO.getEstimationId(), relationshipDTO.getEvaluatorId(), id);
             relationships.add(relationship);
         }
-
         return relationships;
     }
 
@@ -59,14 +52,14 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         Map<Long, List<Long>> groupedEstimations = new HashMap<>();
 
         relationships.stream().forEach(relationshipEstEmployees -> {
-            Long key = relationshipEstEmployees.getRelationshipCompositeKey().getEstimationId();
+            Long key = relationshipEstEmployees.getEstimationId();
 
             if (groupedEstimations.containsKey(key)) {
                 List<Long> list = groupedEstimations.get(key);
-                list.add(relationshipEstEmployees.getRelationshipCompositeKey().getEmployeeEvaluateeId());
+                list.add(relationshipEstEmployees.getEmployeeEvaluateeId());
             } else {
                 List<Long> list = new ArrayList<>();
-                list.add(relationshipEstEmployees.getRelationshipCompositeKey().getEmployeeEvaluateeId());
+                list.add(relationshipEstEmployees.getEmployeeEvaluateeId());
                 groupedEstimations.put(key, list);
             }
         });
@@ -88,7 +81,7 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         );
 
         groupedEstimations.forEach((estimation, evaluator) ->
-            result.add(new RelationshipEstEmployees(new RelationshipCompositeKey(estimation, evaluator, 0L))));
+            result.add(new RelationshipEstEmployees(estimation, evaluator, null)));
 
         return result;
     }
