@@ -19,4 +19,6 @@ public interface RelationshipEstEmployeesRepository extends JpaRepository<Relati
 
     List<RelationshipEstEmployees> findDistinctByRelationshipCompositeKey_EmployeeEvaluatorId(Long evaluatorId);
 
+    List<RelationshipEstEmployees> findAllByRelationshipCompositeKey_EstimationId(Long estimationId);
+
 }

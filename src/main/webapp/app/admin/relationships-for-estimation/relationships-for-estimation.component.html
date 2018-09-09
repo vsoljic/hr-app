@@ -24,7 +24,7 @@
                     <td>{{employee.firstName}}</td>
                     <td>{{employee.lastName}}</td>
                     <td>{{employee.workPosition}}</td>
-                    <td>
+                    <td *ngIf="isEvaluator">
                         <fa-icon [icon]="'times'">
                     </td>
                     <!--  <td><fa-icon [icon]="'edit'"></td>-->

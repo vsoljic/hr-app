@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Employee} from 'app/admin/models/employee.model';
 import {Router} from '@angular/router';
@@ -21,6 +21,7 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
     @Input() selectedEvaluatorName: string;
     employees: Employee[];
     evaluateeIdList: number[] = [];
+
 
     constructor(private modalService: NgbModal,
                 private router: Router,
@@ -70,7 +71,7 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
      */
     async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
         this.dataSharingService.storage = relationship; // store orderForm to application wide storage
-        await this.delay(2000).then(() => this.router.navigate(['admin/estimations-overview']));
+        await this.delay(10).then(() => this.router.navigate(['admin/estimations-overview-selected']));
     }
 
     private createNewRelationship(relationshipTemplate) {

@@ -91,10 +91,9 @@ export class CreateRelationshipAddEvaluatorModalComponent implements OnInit {
     prepareRelationshipValues(evaluatorIdList: number[]): Relationship[] {
         const evaluateeIdList: number[] = [0];
 
-        for (let idEvaluator of evaluatorIdList) {
+        for (const idEvaluator of evaluatorIdList) {
             this.relationshipEvaluatorList.push(new Relationship(this.estimationId, idEvaluator, evaluateeIdList));
         }
-
         return this.relationshipEvaluatorList;
     }
 

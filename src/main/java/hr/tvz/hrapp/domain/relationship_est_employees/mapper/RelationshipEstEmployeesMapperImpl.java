@@ -71,7 +71,7 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
             }
         });
 
-        groupedEstimations.forEach((aLong, longs) -> result.add(new RelationshipEstEmployeesDTO(aLong, id, longs)));
+        groupedEstimations.forEach((estimation, evaluatee) -> result.add(new RelationshipEstEmployeesDTO(estimation, id, evaluatee)));
 
         return result;
     }
@@ -79,8 +79,17 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
     @Override
     public List<RelationshipEstEmployees> mapDtoListToList(List<RelationshipEstEmployeesDTO> dtos) {
         List<RelationshipEstEmployees> result = new ArrayList<>();
-        /*  dtos.stream().forEach(i -> result.add(reverse(i)));*/
-        // TODO: NAPRAVITI OVO!!!!!!!!!!!!!!!
+        Map<Long, Long> groupedEstimations = new HashMap<>();
+
+        dtos.stream().forEach(relationshipEstEmployeesDTO -> {
+                Long key = relationshipEstEmployeesDTO.getEstimationId();
+                groupedEstimations.put(key, relationshipEstEmployeesDTO.getEvaluatorId());
+            }
+        );
+
+        groupedEstimations.forEach((estimation, evaluator) ->
+            result.add(new RelationshipEstEmployees(new RelationshipCompositeKey(estimation, evaluator, 0L))));
+
         return result;
     }
 }

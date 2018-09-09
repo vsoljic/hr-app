@@ -22,6 +22,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     employees: Employee[];
     employeeString: string;
     evaluateeIdList: number[] = [];
+    isEvaluator: boolean = false;
 
     constructor(private modalService: NgbModal,
                 private router: Router,
@@ -80,6 +81,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
             },
             () => {
                 this.notificationsService.create(null, 'Uspješno ste kreirali veze', 'success');
+                this.isEvaluator = true;
                 this.storeRelationshipsAndNavigateToMain(relationship);
                 this.modalReference.close();
             }
@@ -93,7 +95,8 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
      */
     async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
         this.dataSharingService.storage = relationship; // store orderForm to application wide storage
-        await this.delay(2000).then(() => this.router.navigate(['admin/estimations-overview']));
+        this.dataSharingService.storage = this.isEvaluator;
+        await this.delay(10).then(() => this.modalReference.close());
     }
 
     /**

@@ -14,6 +14,7 @@ import {Estimation} from 'app/admin/models/estimation.model';
 export class RelationshipsForEstimationComponent implements OnInit {
     employees: Employee[];
     estimation: Estimation;
+    isEvaluator: boolean = false;
 
     constructor(private http: HttpClient,
                 private relationshipsService: RelationshipsForEstimationService,
@@ -24,6 +25,7 @@ export class RelationshipsForEstimationComponent implements OnInit {
     ngOnInit() {
         // dohvat podataka s prvog ekrana
         this.estimation = this.dataSharingService.storage;
+        this.isEvaluator = this.dataSharingService.storage;
         // obrisati sve iz dataSharing-a kako se ne bi nepotrebno zadržavali objekti
         this.dataSharingService.storage = null;
 

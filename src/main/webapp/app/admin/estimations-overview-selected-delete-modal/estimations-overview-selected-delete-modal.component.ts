@@ -35,6 +35,8 @@ export class EstimationsOverviewSelectedDeleteModalComponent {
         this.estimationOverviewService.deleteSelectedEvaluateeForEvaluatorAndEstimation(this.estimationId,
             this.evaluatorId, this.evaluatee).subscribe();
 
+        this.router.navigate(['admin/estimations-overview-selected']);
+
     }
 
     private getDismissReason(reason: any): string {

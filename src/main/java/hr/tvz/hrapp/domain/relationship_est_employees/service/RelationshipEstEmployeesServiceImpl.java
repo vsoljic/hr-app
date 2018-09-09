@@ -74,9 +74,27 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
 
     @Override
     public void delete(Long estimationId, Long evaluatorId, Long evaluateeId) {
+        // all relationships on esitmation
+        List<RelationshipEstEmployees> relationshipsOnEstimation = relationshipEstEmployeesRepository.findAllByRelationshipCompositeKey_EstimationId(estimationId);
+
+        // relationship that we want to delete
         RelationshipEstEmployees relationship = relationshipEstEmployeesRepository.
             findByRelationshipCompositeKey_EstimationIdAndAndRelationshipCompositeKey_EmployeeEvaluatorIdAndRelationshipCompositeKey_EmployeeEvaluateeId(estimationId, evaluatorId, evaluateeId);
 
-        relationshipEstEmployeesRepository.delete(relationship);
+        // if only one is left, update evaluatee_id to 0 (so we don't loose evaluator)
+        if (relationshipsOnEstimation.size() == 1) {
+
+            // insert fake one
+            evaluateeId = 0L;
+            RelationshipEstEmployees relationshipToUpdate = new RelationshipEstEmployees(new RelationshipCompositeKey(estimationId, evaluatorId, evaluateeId));
+            relationshipEstEmployeesRepository.save(relationshipToUpdate);
+
+            // delete selected one
+            relationshipEstEmployeesRepository.delete(relationship);
+
+        } else {
+            relationshipEstEmployeesRepository.delete(relationship);
+        }
+
     }
 }
