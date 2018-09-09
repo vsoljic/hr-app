@@ -12,6 +12,8 @@ public interface EmployeesService {
 
     EmployeeDTO findById(Long id);
 
+    List<EmployeeDTO> findAllByIds(List<Long> ids);
+
     EmployeeDTO findByUserId(Long userId);
 
     List<EmployeeDTO> getAllEmployees();
@@ -27,4 +29,6 @@ public interface EmployeesService {
     List<EmployeeDTO> findNotConnectedEmployeesForEvaluator(Long evaluatorId, Long estimationId);
 
     void deleteSelectedEvaluatee(Long estimationId, Long evaluatorId, Long evaluateeId);
+
+    List<EmployeeDTO> findAllByEstimation(Long estimationId);
 }

@@ -6,12 +6,13 @@ import hr.tvz.hrapp.domain.employee.mapper.EmployeeMapper;
 import hr.tvz.hrapp.domain.employee.repository.EmployeeRepository;
 import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.estimation.repository.EstimationRepository;
+import hr.tvz.hrapp.domain.estimation_evaluator.EstimationEvaluator;
+import hr.tvz.hrapp.domain.estimation_evaluator.repository.EstimationEvaluatorRepository;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 import hr.tvz.hrapp.domain.relationship_est_employees.service.RelationshipEstEmployeesService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,18 +26,27 @@ public class EmployeesServiceImpl implements EmployeesService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
     private final RelationshipEstEmployeesService relationshipEstEmployeesService;
+    private final EstimationEvaluatorRepository estimationEvaluatorRepository;
 
     public EmployeesServiceImpl(EstimationRepository estimationRepository, EmployeeRepository employeeRepository, EmployeeMapper employeeMapper,
-                                RelationshipEstEmployeesService relationshipEstEmployeesService) {
+                                RelationshipEstEmployeesService relationshipEstEmployeesService, EstimationEvaluatorRepository estimationEvaluatorRepository) {
         this.estimationRepository = estimationRepository;
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.relationshipEstEmployeesService = relationshipEstEmployeesService;
+        this.estimationEvaluatorRepository = estimationEvaluatorRepository;
     }
 
     @Override
     public EmployeeDTO findById(Long id) {
         return employeeMapper.mapToDto(employeeRepository.getOne(id));
+    }
+
+
+    @Override
+    public List<EmployeeDTO> findAllByIds(List<Long> ids) {
+
+        return employeeMapper.mapListToDtoList(employeeRepository.findAllById(ids));
     }
 
     @Override
@@ -120,5 +130,22 @@ public class EmployeesServiceImpl implements EmployeesService {
     public void deleteSelectedEvaluatee(Long estimationId, Long evaluatorId, Long evaluateeId) {
 
         relationshipEstEmployeesService.delete(estimationId, evaluatorId, evaluateeId);
+    }
+
+    @Override
+    public List<EmployeeDTO> findAllByEstimation(Long estimationId) {
+
+        List<EstimationEvaluator> estimationEvaluators = estimationEvaluatorRepository.findDistinctByKey_EstimationId(estimationId);
+
+        List<Long> evaluatorIds = new ArrayList<>();
+
+        estimationEvaluators.stream().forEach(estimationEvaluator -> {
+            evaluatorIds.add(estimationEvaluator.getKey().getEvaluatorId());
+        });
+
+        List<EmployeeDTO> evaluators = employeeMapper.mapListToDtoList(employeeRepository.findAllById(evaluatorIds));
+
+        return evaluators;
+
     }
 }

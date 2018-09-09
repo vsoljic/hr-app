@@ -3,6 +3,7 @@ package hr.tvz.hrapp.domain.estimation_model;
 import hr.tvz.hrapp.domain.group.GroupDTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class EstimationModelDTO implements Serializable {
 
     private String name;
 
-    private List<GroupDTO> groups;
+    private List<GroupDTO> groups = new ArrayList<GroupDTO>();
 
     public EstimationModelDTO() {
     }

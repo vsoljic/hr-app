@@ -115,7 +115,6 @@ public class EstimationServiceImpl implements EstimationService {
 
 */
         estimation = estimationRepository.save(estimation);
-
         return estimationMapper.mapToDto(estimation);
     }
 

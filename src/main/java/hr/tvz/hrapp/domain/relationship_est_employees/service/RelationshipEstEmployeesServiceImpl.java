@@ -1,6 +1,7 @@
 package hr.tvz.hrapp.domain.relationship_est_employees.service;
 
 import hr.tvz.hrapp.domain.employee.mapper.EmployeeMapper;
+import hr.tvz.hrapp.domain.estimation_evaluator.service.EstimationEvaluatorService;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployees;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 import hr.tvz.hrapp.domain.relationship_est_employees.mapper.RelationshipEstEmployeesMapper;
@@ -18,11 +19,14 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
 
     private final RelationshipEstEmployeesRepository relationshipEstEmployeesRepository;
 
+    private final EstimationEvaluatorService estimationEvaluatorService;
+
     private final RelationshipEstEmployeesMapper mapper;
 
-    public RelationshipEstEmployeesServiceImpl(RelationshipEstEmployeesRepository relationshipEstEmployeesRepository, EmployeeMapper employeeMapper, RelationshipEstEmployeesMapper mapper) {
+    public RelationshipEstEmployeesServiceImpl(RelationshipEstEmployeesRepository relationshipEstEmployeesRepository, EmployeeMapper employeeMapper, EstimationEvaluatorService estimationEvaluatorService, RelationshipEstEmployeesMapper mapper) {
 
         this.relationshipEstEmployeesRepository = relationshipEstEmployeesRepository;
+        this.estimationEvaluatorService = estimationEvaluatorService;
         this.mapper = mapper;
     }
 
@@ -43,6 +47,9 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
 
     @Override
     public void save(RelationshipEstEmployeesDTO relationshipEstEmployeesDTO) {
+
+        estimationEvaluatorService.save(relationshipEstEmployeesDTO.getEstimationId(), relationshipEstEmployeesDTO.getEvaluatorId());
+
         List<RelationshipEstEmployees> relationshipEstEmployeesList = new ArrayList<>();
 
         for (Long evaluateeId : relationshipEstEmployeesDTO.getEvaluateeIdList()) {
@@ -66,26 +73,12 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
 
     @Override
     public void delete(Long estimationId, Long evaluatorId, Long evaluateeId) {
-        // all relationships on esitmation
-        List<RelationshipEstEmployees> relationshipsOnEstimation = relationshipEstEmployeesRepository.findAllByEstimationId(estimationId);
-
         // relationship that we want to delete
         RelationshipEstEmployees relationship = relationshipEstEmployeesRepository.
             findAllByEstimationIdAndEmployeeEvaluatorIdAndEmployeeEvaluateeId(estimationId, evaluatorId, evaluateeId);
 
-        // if only one is left, update evaluatee_id to 0 (so we don't loose evaluator)
-        if (relationshipsOnEstimation.size() == 1) {
-
-            // insert fake one
-            RelationshipEstEmployees relationshipToUpdate = new RelationshipEstEmployees(estimationId, evaluatorId);
-            relationshipEstEmployeesRepository.save(relationshipToUpdate);
-
-            // delete selected one
-            relationshipEstEmployeesRepository.delete(relationship);
-
-        } else {
-            relationshipEstEmployeesRepository.delete(relationship);
-        }
-
+        relationshipEstEmployeesRepository.delete(relationship);
     }
+
 }
+
