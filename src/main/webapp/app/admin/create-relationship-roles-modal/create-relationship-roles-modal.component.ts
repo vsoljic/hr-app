@@ -54,7 +54,18 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     }
 
     onSelect(employee) {
-        this.evaluateeIdList.push(employee.id);
+        if (this.evaluateeIdList.length != 0 && this.evaluateeIdList.find(value => value != employee.id)) {
+            this.evaluateeIdList.push(employee.id);
+        } else if (this.evaluateeIdList.length == 0) {
+            this.evaluateeIdList.push(employee.id);
+        }
+    }
+
+    onRemove(employee) {
+        const index: number = this.evaluateeIdList.indexOf(employee.value.id);
+        if (this.evaluateeIdList.length != 0 && index != -1) {
+            this.evaluateeIdList.splice(index, 1);
+        }
     }
 
     /**
@@ -64,6 +75,17 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
         const relationship = new Relationship(this.estimation.id, this.employeeId, this.evaluateeIdList);
 
         return relationship;
+    }
+
+    /**
+     * Stores estimation response of created estimation into a shared service which later passes the same estimation to another screen.
+     * After a short delay, navigates to another screen.
+     * @param estimation created estimation from backend
+     */
+    async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
+        this.dataSharingService.storage = relationship; // store orderForm to application wide storage
+        this.dataSharingService.storage = this.isEvaluator;
+        await this.delay(10).then(() => this.modalReference.close());
     }
 
     private createNewRelationship(relationshipTemplate) {
@@ -86,17 +108,6 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
                 this.modalReference.close();
             }
         );
-    }
-
-    /**
-     * Stores estimation response of created estimation into a shared service which later passes the same estimation to another screen.
-     * After a short delay, navigates to another screen.
-     * @param estimation created estimation from backend
-     */
-    async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
-        this.dataSharingService.storage = relationship; // store orderForm to application wide storage
-        this.dataSharingService.storage = this.isEvaluator;
-        await this.delay(10).then(() => this.modalReference.close());
     }
 
     /**

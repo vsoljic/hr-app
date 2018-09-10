@@ -28,6 +28,8 @@ public interface EmployeesService {
 
     List<EmployeeDTO> findNotConnectedEmployeesForEvaluator(Long evaluatorId, Long estimationId);
 
+    List<EmployeeDTO> findNotConnectedEvaluatorsForEstimation(Long estimationId);
+
     void deleteSelectedEvaluatee(Long estimationId, Long evaluatorId, Long evaluateeId);
 
     List<EmployeeDTO> findAllByEstimation(Long estimationId);

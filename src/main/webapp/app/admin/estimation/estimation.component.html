@@ -5,7 +5,8 @@
             <div class="form-group row">
                 <div class="col-md-12">
                     <label for="selectTypeEstimation" class="label-text">Vrsta procjene (model):</label>
-                    <ng-select [items]="modelEstimation" [(ngModel)]="selectedModel" bindLabel="name" id="selectTypeEstimation" name="selectTypeEstimation"
+                    <ng-select [items]="modelEstimation" [(ngModel)]="selectedModel" bindLabel="name"
+                               id="selectTypeEstimation" name="selectTypeEstimation"
                                notFoundText="Nema podataka" required>
                     </ng-select>
                 </div>
@@ -14,8 +15,9 @@
             <div class="form-group row">
                 <div class="col-md-12">
                     <label for="inputEstimationName" class="label-text">Naziv procjene:</label>
-                    <input type="text" id="inputEstimationName" [(ngModel)]="inputEstimationName" name="estimationName" class="form-control"
-                           required />
+                    <input type="text" id="inputEstimationName" [(ngModel)]="inputEstimationName" name="estimationName"
+                           class="form-control"
+                           required/>
                 </div>
             </div>
 
@@ -26,7 +28,7 @@
                 <div class="col-md-5">
 
                     <input ngbDatepicker #validFrom="ngbDatepicker" class="form-control"
-                           [(ngModel)]="dateFrom" name="validFrom"  required />
+                           [(ngModel)]="dateFrom" name="validFrom" required/>
                     <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"
                              (click)="validFrom.toggle()"></fa-icon>
 
@@ -38,7 +40,7 @@
 
                 <div class="col-md-5">
                     <input type="text" class="form-control" name="dpValidTo" [(ngModel)]="dateTo"
-                           ngbDatepicker #validTo="ngbDatepicker" required />
+                           ngbDatepicker #validTo="ngbDatepicker" required/>
                     <span id="dateTo" class="cursor" (click)="validTo.toggle()">
                         <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"></fa-icon>
                     </span>
@@ -48,12 +50,14 @@
 
             <div class="form-group row padding-top">
                 <div class="offset-md-9 col-md-3">
-                    <button type="submit" class="btn btn-default" (click)="createNewEstimation(estimation)" [disabled]="!estimation.valid">Kreiraj procjenu
+                    <button type="submit" class="btn btn-default" (click)="createNewEstimation(estimation)"
+                            [disabled]="!estimation.valid">Kreiraj procjenu
                     </button>
                 </div>
             </div>
 
         </form>
     </div>
+    <simple-notifications></simple-notifications>
 </div>
-<simple-notifications></simple-notifications>
+

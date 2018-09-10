@@ -23,11 +23,11 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         ArrayList<Long> evaluateesIds = new ArrayList<>();
 
         for (RelationshipEstEmployees r : relationships) {
-            evaluateesIds.add(r.getEmployeeEvaluateeId());
+            evaluateesIds.add(r.getRelationshipCompositeKey().getEmployeeEvaluateeId());
         }
 
-        dto.setEvaluatorId(relationships.get(0).getEmployeeEvaluatorId());
-        dto.setEstimationId(relationships.get(0).getEstimationId());
+        dto.setEvaluatorId(relationships.get(0).getRelationshipCompositeKey().getEmployeeEvaluatorId());
+        dto.setEstimationId(relationships.get(0).getRelationshipCompositeKey().getEstimationId());
         dto.setEvaluateeIdList(evaluateesIds);
 
 
@@ -40,7 +40,9 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         List<RelationshipEstEmployees> relationships = new ArrayList<>();
 
         for (Long id : relationshipDTO.getEvaluateeIdList()) {
-            RelationshipEstEmployees relationship = new RelationshipEstEmployees(relationshipDTO.getEstimationId(), relationshipDTO.getEvaluatorId(), id);
+            RelationshipEstEmployees relationship = new RelationshipEstEmployees(
+                new RelationshipCompositeKey(relationshipDTO.getEstimationId(), relationshipDTO.getEvaluatorId(), id)
+            );
             relationships.add(relationship);
         }
         return relationships;
@@ -52,14 +54,14 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         Map<Long, List<Long>> groupedEstimations = new HashMap<>();
 
         relationships.stream().forEach(relationshipEstEmployees -> {
-            Long key = relationshipEstEmployees.getEstimationId();
+            Long key = relationshipEstEmployees.getRelationshipCompositeKey().getEstimationId();
 
             if (groupedEstimations.containsKey(key)) {
                 List<Long> list = groupedEstimations.get(key);
-                list.add(relationshipEstEmployees.getEmployeeEvaluateeId());
+                list.add(relationshipEstEmployees.getRelationshipCompositeKey().getEmployeeEvaluateeId());
             } else {
                 List<Long> list = new ArrayList<>();
-                list.add(relationshipEstEmployees.getEmployeeEvaluateeId());
+                list.add(relationshipEstEmployees.getRelationshipCompositeKey().getEmployeeEvaluateeId());
                 groupedEstimations.put(key, list);
             }
         });
@@ -81,7 +83,8 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         );
 
         groupedEstimations.forEach((estimation, evaluator) ->
-            result.add(new RelationshipEstEmployees(estimation, evaluator, null)));
+            //TODO: ovo ispraviti (NE BI SE TREBALO UOPĆE KORISTITI NA OVAJ NAČIN jer sad postoji dodatna tablica)
+            result.add(new RelationshipEstEmployees(new RelationshipCompositeKey(estimation, evaluator, 0L))));
 
         return result;
     }

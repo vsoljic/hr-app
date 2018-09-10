@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import {EstimationsOverviewService} from 'app/admin/estimations-overview/estimations-overview.service';
 import {Employee} from 'app/admin/models/employee.model';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
     selector: 'jhi-estimations-overview-evaluator-delete-modal',
@@ -10,7 +11,7 @@ import {Employee} from 'app/admin/models/employee.model';
     styles: []
 })
 export class EstimationsOverviewSelectedDeleteModalComponent {
-
+    modalReference: NgbModalRef;
     @Input() evaluatee: Employee;
     @Input() evaluateeName: string;
     @Input() estimationId: number;
@@ -20,11 +21,13 @@ export class EstimationsOverviewSelectedDeleteModalComponent {
 
     constructor(private modalService: NgbModal,
                 private router: Router,
-                private estimationOverviewService: EstimationsOverviewService) {
+                private estimationOverviewService: EstimationsOverviewService,
+                private notificationsService: NotificationsService) {
     }
 
     openDeleteEvaluateeModal(content) {
-        this.modalService.open(content).result.then(result => {
+        this.modalReference = this.modalService.open(content);
+        this.modalReference.result.then(result => {
             this.closeResult = `Closed with: ${result}`;
         }, reason => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -33,9 +36,16 @@ export class EstimationsOverviewSelectedDeleteModalComponent {
 
     deleteEvaluatee() {
         this.estimationOverviewService.deleteSelectedEvaluateeForEvaluatorAndEstimation(this.estimationId,
-            this.evaluatorId, this.evaluatee).subscribe();
-
-        this.router.navigate(['admin/estimations-overview-selected']);
+            this.evaluatorId, this.evaluatee).subscribe(
+            () => console.log('Success on deleting evaluatee'),
+            () => {
+                this.notificationsService.create(null, 'Došlo je do pogreške prilikom kreiranja veza!', 'error');
+            },
+            () => {
+                this.notificationsService.create(null, 'Uspješno ste izbrisali procjenjenika', 'success');
+                this.modalReference.close();
+            }
+        );
 
     }
 
@@ -48,5 +58,4 @@ export class EstimationsOverviewSelectedDeleteModalComponent {
             return `with: ${reason}`;
         }
     }
-
 }

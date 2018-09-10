@@ -49,15 +49,7 @@ import { EditGoalModalComponent } from './edit-goal-modal/edit-goal-modal.compon
         HrAppCoreModule,
         HrAppHomeModule,
         HrAppAccountModule,
-        HrAppEntityModule,
-        SimpleNotificationsModule.forRoot({
-            position: ['top', 'right'],
-            timeOut: 5000,
-            showProgressBar: true,
-            pauseOnHover: true,
-            clickToClose: true,
-            animate: 'scale'
-        })
+        HrAppEntityModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

@@ -16,7 +16,7 @@ public interface RelationshipEstEmployeesService {
 
     void save(RelationshipEstEmployeesDTO relationshipEstEmployeesDTO);
 
-    void save(List<RelationshipEstEmployeesDTO> relationshipEstEmployeesDTOS);
+    void saveForEvaluator(List<RelationshipEstEmployeesDTO> relationshipEstEmployeesDTOS);
 
     void delete(Long estimationId, Long evaluatorId, Long evaluateeId);
 }

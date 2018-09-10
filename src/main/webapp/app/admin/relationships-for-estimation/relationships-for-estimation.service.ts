@@ -16,6 +16,10 @@ export class RelationshipsForEstimationService {
         return this.http.get(SERVER_API_URL + 'api/admin/relationships/employees/' + employeeEvaluatorId);
     }
 
+    getNotConnectedEvaluatorsForEstimation(estimationId: number) {
+        return this.http.get(SERVER_API_URL + 'api/admin/relationships/employees/estimation/' + estimationId + '/evaluators');
+    }
+
     getNotConnectedEmployeesForEstimation(estimationId: number) {
         return this.http.get(SERVER_API_URL + 'api/admin/relationships/employees/estimation/' + estimationId);
     }

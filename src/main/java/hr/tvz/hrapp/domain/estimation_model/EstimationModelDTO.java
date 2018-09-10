@@ -15,7 +15,7 @@ public class EstimationModelDTO implements Serializable {
 
     private String name;
 
-    private List<GroupDTO> groups = new ArrayList<GroupDTO>();
+    private List<GroupDTO> groups = new ArrayList<>();
 
     public EstimationModelDTO() {
     }

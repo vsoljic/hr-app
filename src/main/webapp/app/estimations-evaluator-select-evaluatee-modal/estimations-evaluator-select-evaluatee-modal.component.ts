@@ -3,14 +3,13 @@ import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-boots
 import {Employee} from 'app/admin/models/employee.model';
 import {Relationship} from 'app/admin/models/relationship.model';
 import {Router} from '@angular/router';
-import {RelationshipsForEstimationService} from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
 import {NotificationsService} from 'angular2-notifications';
 import {DataSharingService} from 'app/shared/data-sharing.service';
 
 @Component({
-  selector: 'jhi-estimations-evaluator-select-evaluatee-modal',
-  templateUrl: './estimations-evaluator-select-evaluatee-modal.component.html',
-  styles: []
+    selector: 'jhi-estimations-evaluator-select-evaluatee-modal',
+    templateUrl: './estimations-evaluator-select-evaluatee-modal.component.html',
+    styles: []
 })
 export class EstimationsEvaluatorSelectEvaluateeModalComponent implements OnInit {
 
@@ -43,46 +42,15 @@ export class EstimationsEvaluatorSelectEvaluateeModalComponent implements OnInit
             }
         );
 
-      /*  this.relationshipsService.getNotConnectedEmployeesForEstimation(this.estimationId).subscribe(
-            (employees: Employee[]) => this.employees = employees,
-            error => console.log('error fetching employees', error),
-            () => console.log('success')
-        );*/
-    }
-
-    private getDismissReason(reason: any): string {
-        if (reason === ModalDismissReasons.ESC) {
-            return 'by pressing ESC';
-        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-            return 'by clicking on a backdrop';
-        } else {
-            return `with: ${reason}`;
-        }
+        /*  this.relationshipsService.getNotConnectedEmployeesForEstimation(this.estimationId).subscribe(
+              (employees: Employee[]) => this.employees = employees,
+              error => console.log('error fetching employees', error),
+              () => console.log('success')
+          );*/
     }
 
     onSelect(employee) {
         this.evaluatorsIdList.push(employee.id);
-    }
-
-    private createNewRelationship(relationshipTemplate) {
-       /* console.log('relationshipTemplate', relationshipTemplate);
-        if (!relationshipTemplate.valid) { // if form is not valid and user sent it, show error
-            this.notificationsService.create(null, 'Veze nisu uspješno definirane! Pokušajte ponovo.', 'error');
-            return; // to exit without calling backend
-        }
-
-        this.prepareRelationshipValues(this.evaluatorsIdList);
-        this.relationshipsService.createNewRelationshipList(this.relationshipEvaluatorList).subscribe(
-            (relationship: Relationship) => relationship,
-            () => {
-                this.notificationsService.create(null, 'Došlo je do pogreške prilikom kreiranja veza!', 'error');
-            },
-            () => {
-                this.notificationsService.create(null, 'Uspješno ste kreirali veze', 'success');
-                this.storeRelationshipsAndNavigateToMain(this.relationshipEvaluatorList);
-                this.modalReference.close();
-            }
-        );*/
     }
 
     /**
@@ -106,6 +74,37 @@ export class EstimationsEvaluatorSelectEvaluateeModalComponent implements OnInit
     async storeRelationshipsAndNavigateToMain(relationships: Relationship[]) {
         this.dataSharingService.storage = relationships; // store orderForm to application wide storage
         await this.delay(2000).then(() => this.router.navigate(['admin/estimations-overview']));
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
+
+    private createNewRelationship(relationshipTemplate) {
+        /* console.log('relationshipTemplate', relationshipTemplate);
+         if (!relationshipTemplate.valid) { // if form is not valid and user sent it, show error
+             this.notificationsService.create(null, 'Veze nisu uspješno definirane! Pokušajte ponovo.', 'error');
+             return; // to exit without calling backend
+         }
+
+         this.prepareRelationshipValues(this.evaluatorsIdList);
+         this.relationshipsService.createNewRelationshipList(this.relationshipEvaluatorList).subscribe(
+             (relationship: Relationship) => relationship,
+             () => {
+                 this.notificationsService.create(null, 'Došlo je do pogreške prilikom kreiranja veza!', 'error');
+             },
+             () => {
+                 this.notificationsService.create(null, 'Uspješno ste kreirali veze', 'success');
+                 this.storeRelationshipsAndNavigateToMain(this.relationshipEvaluatorList);
+                 this.modalReference.close();
+             }
+         );*/
     }
 
     /**

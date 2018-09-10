@@ -80,15 +80,35 @@ public class EmployeesServiceImpl implements EmployeesService {
 
         RelationshipEstEmployeesDTO relationship = relationshipEstEmployeesService.findAllForEvaluatorAndEstimation(id, evaluatorId);
 
-        List<Long> evaluateeIds = relationship.getEvaluateeIdList();
         List<EmployeeDTO> employeeEvaluatees = new ArrayList<>();
+        if (relationship != null) {
+            List<Long> evaluateeIds = relationship.getEvaluateeIdList();
 
-        for (Long evaluateeId : evaluateeIds) {
-            EmployeeDTO employeeDTO = findById(evaluateeId);
-            employeeEvaluatees.add(employeeDTO);
+            for (Long evaluateeId : evaluateeIds) {
+                EmployeeDTO employeeDTO = findById(evaluateeId);
+                employeeEvaluatees.add(employeeDTO);
+            }
         }
 
         return employeeEvaluatees;
+    }
+
+    @Override
+    public List<EmployeeDTO> findNotConnectedEvaluatorsForEstimation(Long estimationId) {
+        List<EstimationEvaluator> estimationEvaluators = estimationEvaluatorRepository.findDistinctByKey_EstimationId(estimationId);
+        List<Long> ids = new ArrayList<>();
+
+        estimationEvaluators.stream().forEach(estimationEvaluator -> {
+            ids.add(estimationEvaluator.getKey().getEvaluatorId());
+        });
+
+        List<EmployeeDTO> allEmployees = this.getAllEmployees();
+
+        List<EmployeeDTO> filteredEmployees = allEmployees.stream().filter(employeeDTO ->
+            !ids.contains(employeeDTO.getId()))
+            .collect(Collectors.toList());
+
+        return filteredEmployees;
     }
 
     @Override
