@@ -23,10 +23,18 @@ public class EstimationEvaluatorServiceImpl implements EstimationEvaluatorServic
     }
 
     @Override
-    public void save(Long estimationId, Long evaluatorId) {
+    public List<EstimationEvaluator> getAllForEstimationId(Long estimationId) {
+        return repository.findDistinctByKey_EstimationId(estimationId);
+    }
 
+    @Override
+    public List<EstimationEvaluator> getAllForEvaluatorId(Long evaluatorId) {
+        return repository.findDistinctByKey_EvaluatorId(evaluatorId);
+    }
+
+    @Override
+    public void save(Long estimationId, Long evaluatorId) {
         EstimationEvaluator estimationEvaluator = new EstimationEvaluator(new EstimationEvaluatorCompositeKey(estimationId, evaluatorId));
         repository.save(estimationEvaluator);
-
     }
 }

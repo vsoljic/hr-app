@@ -24,6 +24,8 @@ public interface EmployeesService {
 
     List<EmployeeDTO> findAllEvaluateesByEvaluatorAndEstimation(Long id, Long evaluatorId);
 
+    List<EmployeeDTO> findAllEvaluateesByEvaluatorLoggedInAndEst(Long estimationId);
+
     List<EmployeeDTO> findNotConnectedEmployeesForEstimation(Long estimationId);
 
     List<EmployeeDTO> findNotConnectedEmployeesForEvaluator(Long evaluatorId, Long estimationId);

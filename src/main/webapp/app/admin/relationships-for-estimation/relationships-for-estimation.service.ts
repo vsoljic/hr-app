@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '../../../../../../node_modules/@angular/common/http';
-import {SERVER_API_URL} from 'app/app.constants';
-import {Relationship} from 'app/admin/models/relationship.model';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '../../../../../../node_modules/@angular/common/http';
+import { SERVER_API_URL } from 'app/app.constants';
+import { Relationship } from 'app/admin/models/relationship.model';
 
 @Injectable()
 export class RelationshipsForEstimationService {
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     getEmployees() {
         return this.http.get(SERVER_API_URL + 'api/admin/relationships/employees');
@@ -24,10 +23,14 @@ export class RelationshipsForEstimationService {
         return this.http.get(SERVER_API_URL + 'api/admin/relationships/employees/estimation/' + estimationId);
     }
 
-
     getNotConnectedEmployeesForEvaluator(employeeEvaluatorId: number, estimationId: number) {
-        return this.http.get(SERVER_API_URL + 'api/admin/relationships/employees/'
-            + employeeEvaluatorId + '/notConnectedEmployees/' + estimationId);
+        return this.http.get(
+            SERVER_API_URL + 'api/admin/relationships/employees/' + employeeEvaluatorId + '/notConnectedEmployees/' + estimationId
+        );
+    }
+
+    getEvaluateesForEvaluatorOnEstimation(estimationId: number) {
+        return this.http.get(SERVER_API_URL + 'api/admin/relationships/estimation/' + estimationId + '/evaluatees');
     }
 
     createNewRelationship(relationship: Relationship) {

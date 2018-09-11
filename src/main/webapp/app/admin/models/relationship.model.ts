@@ -3,7 +3,6 @@ export class Relationship {
     evaluatorId: number;
     evaluateeIdList: number[];
 
-
     constructor(estimationId: number, evaluatorId: number, evaluateeIdList: number[]) {
         this.estimationId = estimationId;
         this.evaluatorId = evaluatorId;

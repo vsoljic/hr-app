@@ -14,4 +14,6 @@ import java.util.List;
 public interface EstimationEvaluatorRepository extends JpaRepository<EstimationEvaluator, EstimationEvaluatorCompositeKey> {
 
     List<EstimationEvaluator> findDistinctByKey_EstimationId(Long estimationId);
+
+    List<EstimationEvaluator> findDistinctByKey_EvaluatorId(Long evalatorId);
 }

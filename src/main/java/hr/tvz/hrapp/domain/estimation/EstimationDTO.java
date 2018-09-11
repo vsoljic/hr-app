@@ -35,7 +35,8 @@ public class EstimationDTO implements Serializable {
     }
 
     public EstimationDTO(Long id, EstimationStatusDTO status, EstimationModelDTO model, String name, LocalDate periodFrom,
-                         LocalDate periodTo, Integer activity, List<EmployeeDTO> employeesEvaluators, List<EmployeeDTO> employeesEvaluatees) {
+                         LocalDate periodTo, Integer activity, List<EmployeeDTO> employeesEvaluators,
+                         List<EmployeeDTO> employeesEvaluatees) {
         this.id = id;
         this.status = status;
         this.model = model;

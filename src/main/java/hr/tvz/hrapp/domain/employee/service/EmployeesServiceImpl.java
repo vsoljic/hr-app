@@ -10,6 +10,9 @@ import hr.tvz.hrapp.domain.estimation_evaluator.EstimationEvaluator;
 import hr.tvz.hrapp.domain.estimation_evaluator.repository.EstimationEvaluatorRepository;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 import hr.tvz.hrapp.domain.relationship_est_employees.service.RelationshipEstEmployeesService;
+import hr.tvz.hrapp.service.UserService;
+import hr.tvz.hrapp.service.dto.UserDTO;
+import hr.tvz.hrapp.web.rest.errors.InternalServerErrorException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,14 +30,16 @@ public class EmployeesServiceImpl implements EmployeesService {
     private final EmployeeMapper employeeMapper;
     private final RelationshipEstEmployeesService relationshipEstEmployeesService;
     private final EstimationEvaluatorRepository estimationEvaluatorRepository;
+    private final UserService userService;
 
     public EmployeesServiceImpl(EstimationRepository estimationRepository, EmployeeRepository employeeRepository, EmployeeMapper employeeMapper,
-                                RelationshipEstEmployeesService relationshipEstEmployeesService, EstimationEvaluatorRepository estimationEvaluatorRepository) {
+                                RelationshipEstEmployeesService relationshipEstEmployeesService, EstimationEvaluatorRepository estimationEvaluatorRepository, UserService userService) {
         this.estimationRepository = estimationRepository;
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.relationshipEstEmployeesService = relationshipEstEmployeesService;
         this.estimationEvaluatorRepository = estimationEvaluatorRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -68,6 +73,7 @@ public class EmployeesServiceImpl implements EmployeesService {
         return employeeMapper.mapListToDtoList(employees);
     }
 
+    @Override
     public List<EmployeeDTO> getAllDistinctEvaluatorsForEstimation(List<Estimation> estimations) {
 
         List<Employee> employeesEvaluators = employeeRepository.findDistinctByEstimationsForEvaluator(estimations);
@@ -91,6 +97,17 @@ public class EmployeesServiceImpl implements EmployeesService {
         }
 
         return employeeEvaluatees;
+    }
+
+    @Override
+    public List<EmployeeDTO> findAllEvaluateesByEvaluatorLoggedInAndEst(Long estimationId) {
+
+        UserDTO userDTO = userService.getUserWithAuthorities().map(UserDTO::new)
+            .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
+        EmployeeDTO employeeDTO = findByUserId(userDTO.getId());
+
+        return findAllEvaluateesByEvaluatorAndEstimation(estimationId, employeeDTO.getId());
+
     }
 
     @Override

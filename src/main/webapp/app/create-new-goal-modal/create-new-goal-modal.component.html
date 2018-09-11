@@ -11,21 +11,21 @@
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="inputPonder" class="label-text">Ponder:</label>
-                    <input type="number" id="inputPonder" name="inputPonder" class="form-control" required max="100"/>
+                    <input type="number" id="inputPonder" name="inputPonder" [(ngModel)]="inputPonder" class="form-control" required /> <!-- max="100"-->
                 </div>
                 <div class="col-md-8">
                     <label for="inputTargetPercentage" class="label-text">Ciljana vrijednost (%):</label>
-                    <input type="number" id="inputTargetPercentage" name="inputTargetPercentage" class="form-control"
-                           max="100"
-                    />
+                    <input type="number" id="inputTargetPercentage" name="inputTargetPercentage" [(ngModel)]="inputTargetPercentage" class="form-control"
+                           required   /> <!--max="100"-->
                 </div>
             </div>
 
             <div class="form-row padding-top">
                 <div class="col-md-12">
                     <label for="inputGoalName" class="label-text">Naziv cilja:</label>
-                    <input type="text" id="inputGoalName" name="inputGoalName" class="form-control" required
-                           maxlength="150"/>
+                    <input type="text" id="inputGoalName" name="inputGoalName" [(ngModel)]="inputGoalName" class="form-control" required />
+                           <!--maxlength="150"-->
+
                 </div>
             </div>
 
@@ -38,7 +38,7 @@
                 <button type="button" class="btn btn-default" (click)="c('Close click')">Odustani</button>
             </div>
             <div class="col-md-6">
-                <button type="button" class="btn btn-primary" (click)="c('Close click');">Spremi</button>
+                <button type="submit" class="btn btn-primary" (click)="createNewGoal(content)">Spremi</button>
             </div>
         </div>
     </div>

@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Employee} from 'app/admin/models/employee.model';
-import {RelationshipsForEstimationService} from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
-import {NotificationsService} from 'angular2-notifications';
-import {Relationship} from 'app/admin/models/relationship.model';
-import {DataSharingService} from 'app/shared/data-sharing.service';
-import {Estimation} from 'app/admin/models/estimation.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Employee } from 'app/admin/models/employee.model';
+import { RelationshipsForEstimationService } from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
+import { NotificationsService } from 'angular2-notifications';
+import { Relationship } from 'app/admin/models/relationship.model';
+import { DataSharingService } from 'app/shared/data-sharing.service';
+import { Estimation } from 'app/admin/models/estimation.model';
 
 @Component({
     selector: 'jhi-create-relationship-roles-modal',
@@ -24,16 +24,15 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     evaluateeIdList: number[] = [];
     isEvaluator: boolean = false;
 
-    constructor(private modalService: NgbModal,
-                private router: Router,
-                private relationshipsService: RelationshipsForEstimationService,
-                private notificationsService: NotificationsService,
-                private dataSharingService: DataSharingService) {
-    }
+    constructor(
+        private modalService: NgbModal,
+        private router: Router,
+        private relationshipsService: RelationshipsForEstimationService,
+        private notificationsService: NotificationsService,
+        private dataSharingService: DataSharingService
+    ) {}
 
-    ngOnInit() {
-
-    }
+    ngOnInit() {}
 
     openModalForRelationshipsAndRoles(content) {
         this.modalReference = this.modalService.open(content);
@@ -46,24 +45,26 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
             }
         );
 
-        this.relationshipsService.getEmployeesExpectSelectedOne(this.employeeId).subscribe(
-            (employees: Employee[]) => this.employees = employees,
-            error => console.log('error fetching employees', error),
-            () => console.log('success')
-        );
+        this.relationshipsService
+            .getEmployeesExpectSelectedOne(this.employeeId)
+            .subscribe(
+                (employees: Employee[]) => (this.employees = employees),
+                error => console.log('error fetching employees', error),
+                () => console.log('success')
+            );
     }
 
     onSelect(employee) {
-        if (this.evaluateeIdList.length != 0 && this.evaluateeIdList.find(value => value != employee.id)) {
+        if (this.evaluateeIdList.length !== 0 && this.evaluateeIdList.find(value => value !== employee.id)) {
             this.evaluateeIdList.push(employee.id);
-        } else if (this.evaluateeIdList.length == 0) {
+        } else if (this.evaluateeIdList.length === 0) {
             this.evaluateeIdList.push(employee.id);
         }
     }
 
     onRemove(employee) {
         const index: number = this.evaluateeIdList.indexOf(employee.value.id);
-        if (this.evaluateeIdList.length != 0 && index != -1) {
+        if (this.evaluateeIdList.length !== 0 && index !== -1) {
             this.evaluateeIdList.splice(index, 1);
         }
     }
@@ -90,7 +91,8 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
 
     private createNewRelationship(relationshipTemplate) {
         console.log('relationshipTemplate', relationshipTemplate);
-        if (!relationshipTemplate.valid) { // if form is not valid and user sent it, show error
+        if (!relationshipTemplate.valid) {
+            // if form is not valid and user sent it, show error
             this.notificationsService.create(null, 'Veze nisu uspješno definirane! Pokušajte ponovo.', 'error');
             return; // to exit without calling backend
         }

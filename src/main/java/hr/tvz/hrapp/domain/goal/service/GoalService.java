@@ -10,4 +10,8 @@ import java.util.List;
 public interface GoalService {
 
     List<GoalDTO> findAllGoals();
+
+    List<GoalDTO> findAllByEmployeeAndGroupAndEst(Long estimationId, Long groupId, Long employeeId);
+
+    GoalDTO saveGoal(GoalDTO goalDTO);
 }

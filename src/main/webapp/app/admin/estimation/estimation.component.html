@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="col-md-6">
         <h2>Kreiraj novu procjenu radnog učinka</h2>
-        <form name="newEstimation" #estimation="ngForm" autocomplete="off">
+        <form name="newEstimation" #estimation="ngForm" autocomplete="off" novalidate>
             <div class="form-group row">
                 <div class="col-md-12">
                     <label for="selectTypeEstimation" class="label-text">Vrsta procjene (model):</label>
@@ -26,12 +26,12 @@
                     <label>Vrijedi od:</label>
                 </div>
                 <div class="col-md-5">
-
-                    <input ngbDatepicker #validFrom="ngbDatepicker" class="form-control"
-                           [(ngModel)]="dateFrom" name="validFrom" required/>
-                    <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"
-                             (click)="validFrom.toggle()"></fa-icon>
-
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" class="form-control"
+                               [(ngModel)]="dateFrom" name="validFrom" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker" class="position-absolute calendar-inside-input"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
                 </div>
 
                 <div class="col-md-1 text-align-center">
@@ -39,11 +39,12 @@
                 </div>
 
                 <div class="col-md-5">
-                    <input type="text" class="form-control" name="dpValidTo" [(ngModel)]="dateTo"
-                           ngbDatepicker #validTo="ngbDatepicker" required/>
-                    <span id="dateTo" class="cursor" (click)="validTo.toggle()">
-                        <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"></fa-icon>
-                    </span>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="pickerTo" placeholder="Choose a date to" class="form-control"
+                               [(ngModel)]="dateTo" name="validTo" [min]="dateFrom" required>
+                        <mat-datepicker-toggle matSuffix [for]="pickerTo" class="position-absolute calendar-inside-input"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerTo></mat-datepicker>
+                    </mat-form-field>
 
                 </div>
             </div>

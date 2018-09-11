@@ -24,10 +24,13 @@
                     <label>Vrijedi od:</label>
                 </div>
                 <div class="col-md-5">
-                    <input ngbDatepicker #validFrom="ngbDatepicker" class="form-control"
-                           [ngModel]="dateFrom" name="validFrom" (ngModelChange)="onSelectDateFrom($event)" required [disabled]="estimation.status.status != 'IN_PROCESS'" />
-                    <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input"
-                             (click)="validFrom.toggle()" [disabled]="estimation.status.status != 'IN_PROCESS'"></fa-icon>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" class="form-control"
+                               [(ngModel)]="dateFrom" name="validFrom" required [disabled]="estimation.status.status != 'IN_PROCESS'"
+                               (dateChange)="onDateFromChange($event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker" class="position-absolute calendar-inside-input"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
                 </div>
 
                 <div class="col-md-1 text-align-center">
@@ -35,11 +38,15 @@
                 </div>
 
                 <div class="col-md-5">
-                    <input type="text" class="form-control" name="dpValidTo" [ngModel]="dateTo" (ngModelChange)="dateTo = onSelectDateTo($event)"
-                           ngbDatepicker #validTo="ngbDatepicker" required [disabled]="estimation.status.status != 'IN_PROCESS'" />
-                    <span id="dateTo" class="cursor" (click)="validTo.toggle()">
-                        <fa-icon [icon]="'calendar-alt'" class="position-absolute calendar-inside-input" [disabled]="estimation.status.status != 'IN_PROCESS'"></fa-icon>
-                    </span>
+
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="pickerTo" placeholder="Choose a date to" class="form-control"
+                               [(ngModel)]="dateTo" name="validTo" [min]="dateFrom" required
+                               [disabled]="estimation.status.status != 'IN_PROCESS'"
+                               (dateChange)="onDateToChange($event)">
+                        <mat-datepicker-toggle matSuffix [for]="pickerTo" class="position-absolute calendar-inside-input"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerTo></mat-datepicker>
+                    </mat-form-field>
 
                 </div>
             </div>
@@ -62,5 +69,6 @@
 
         </form>
     </div>
+    <simple-notifications></simple-notifications>
 </div>
-<simple-notifications></simple-notifications>
+

@@ -4,7 +4,6 @@ import hr.tvz.hrapp.domain.employee.EmployeeDTO;
 import hr.tvz.hrapp.domain.employee.service.EmployeesService;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.service.EstimationService;
-import hr.tvz.hrapp.domain.estimation_evaluator.service.EstimationEvaluatorService;
 import hr.tvz.hrapp.security.AuthoritiesConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +23,11 @@ public class EstimationsOverviewController {
 
     private final EmployeesService employeesService;
 
-    private final EstimationEvaluatorService estimationEvaluatorService;
 
-    public EstimationsOverviewController(EstimationService estimationService, EmployeesService employeesService, EstimationEvaluatorService estimationEvaluatorService) {
+    public EstimationsOverviewController(EstimationService estimationService, EmployeesService employeesService) {
         this.estimationService = estimationService;
         this.employeesService = employeesService;
-        this.estimationEvaluatorService = estimationEvaluatorService;
+
     }
 
     @GetMapping

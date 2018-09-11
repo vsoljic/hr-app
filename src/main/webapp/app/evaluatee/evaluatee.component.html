@@ -1,18 +1,17 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 padding-bottom">
-            <h2>Procjena radnog učinka za - Vedrana Šoljić:</h2>
+            <h2>Procjena radnog učinka za - {{employeeName}}:</h2>
         </div>
 
         <hr>
-        <div class="col-md-12"> <!--*ngFor="let group of groups"-->
+        <div class="col-md-12" *ngFor="let group of groups">
             <!-- <h4>Ciljevi:</h4>-->
             <table class="table table-hover">
                 <thead class="thead-light">
                 <tr>
                     <th scope="col" colspan="4">
-                        <!--  {{group.name}}-->
-                       Individualni ciljevi
+                        {{group.name}}
                     </th>
 
                 </tr>
@@ -35,23 +34,11 @@
                     </td>
 
                 </tr>
-                <tr>
-                    <th scope="row">25</th>
-                    <td>Položiti OCP</td>
-                    <td>80%</td>
-                    <td>
-                        <jhi-edit-goal-modal></jhi-edit-goal-modal>
-                    </td>
-
-                </tr>
-                <tr>
-                    <th scope="row">25</th>
-                    <td>Poboljšati komunikacijske vještine</td>
-                    <td>100%</td>
-                    <td>
-                        <jhi-edit-goal-modal></jhi-edit-goal-modal>
-                    </td>
-
+                <tr *ngIf="!goalsOnGroup">
+                    <td colspan="2" class="text-right">Dodajte cilj:</td>
+                    <td colspan="2">
+                        <jhi-create-new-goal-modal [groupId]="group.id" [employeeId]="employeeId"
+                                                   [estimationId]="relationship.estimationId"></jhi-create-new-goal-modal>
                 </tr>
                 </tbody>
             </table>
@@ -62,62 +49,9 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 padding-top-40">
-            <!-- <h4>Ciljevi:</h4>-->
-            <table class="table table-hover">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col" colspan="4">Korporativni ciljevi</th>
-
-                </tr>
-                <tr>
-                    <th>Ponder</th>
-                    <th>Cilj</th>
-                    <th>Ciljana vrijednost</th>
-                    <!-- <th>Ocjena</th>-->
-                    <th>Dodaj</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                  <!--  <th scope="row"></th>-->
-                <!--    <td></td>
-                    <td></td>-->
-                    <td colspan="4">
-                        <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
-                    </td>
-
-                </tr>
-                <!--<tr>
-                    <th scope="row">25</th>
-                    <td>Riješiti OCP</td>
-                    <td>100%</td>
-                    <td>
-                        <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
-                    </td>
-
-                </tr>
-                <tr>
-                    <th scope="row">25</th>
-                    <td>Blabla</td>
-                    <td>100%</td>
-                    <td>
-                        <jhi-create-new-goal-modal></jhi-create-new-goal-modal>
-                    </td>
-
-                </tr>-->
-                </tbody>
-            </table>
-            <hr>
-            <h6>Ukupno:</h6>
-            <p class="padding-for-total font-weight-bold no-margin">/</p>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="offset-10 col-md-2">
             <button type="submit" class="btn btn-primary">Spremi procjenu</button>
         </div>
     </div>
+    <simple-notifications></simple-notifications>
 </div>
