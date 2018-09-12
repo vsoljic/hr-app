@@ -1,5 +1,8 @@
 package hr.tvz.hrapp.security.jwt;
 
+import hr.tvz.hrapp.domain.employee.EmployeeDTO;
+import hr.tvz.hrapp.service.dto.UserDTO;
+import hr.tvz.hrapp.web.rest.errors.InternalServerErrorException;
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;

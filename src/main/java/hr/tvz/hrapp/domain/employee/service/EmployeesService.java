@@ -16,6 +16,8 @@ public interface EmployeesService {
 
     EmployeeDTO findByUserId(Long userId);
 
+    EmployeeDTO getEmployeeForLoggedInUser();
+
     List<EmployeeDTO> getAllEmployees();
 
     List<EmployeeDTO> getAllEmployeesExceptSelectedOne(Long id);

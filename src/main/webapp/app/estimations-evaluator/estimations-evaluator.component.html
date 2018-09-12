@@ -26,7 +26,12 @@
                     <td>{{estimation.model.name}}</td>
                     <td>{{estimation.status.status}}</td>
                     <td>
-                       <jhi-estimations-evaluator-select-evaluatee-modal [estimationId]="estimation.id" [estimationName]="estimation.name"></jhi-estimations-evaluator-select-evaluatee-modal>
+                        <jhi-estimations-evaluator-select-evaluatee-modal
+                            [estimation]="estimation"
+                            [estimationName]="estimation.name"
+                            [evaluator]="loggedInEmployee">
+
+                        </jhi-estimations-evaluator-select-evaluatee-modal>
                     </td>
 
                 </tr>

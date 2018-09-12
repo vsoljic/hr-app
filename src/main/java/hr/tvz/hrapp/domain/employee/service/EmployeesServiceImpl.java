@@ -101,13 +101,15 @@ public class EmployeesServiceImpl implements EmployeesService {
 
     @Override
     public List<EmployeeDTO> findAllEvaluateesByEvaluatorLoggedInAndEst(Long estimationId) {
+        return findAllEvaluateesByEvaluatorAndEstimation(estimationId,  getEmployeeForLoggedInUser().getId());
 
+    }
+
+    @Override
+    public EmployeeDTO getEmployeeForLoggedInUser() {
         UserDTO userDTO = userService.getUserWithAuthorities().map(UserDTO::new)
             .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
-        EmployeeDTO employeeDTO = findByUserId(userDTO.getId());
-
-        return findAllEvaluateesByEvaluatorAndEstimation(estimationId, employeeDTO.getId());
-
+        return findByUserId(userDTO.getId());
     }
 
     @Override

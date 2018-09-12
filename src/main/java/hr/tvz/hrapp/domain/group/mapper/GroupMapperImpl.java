@@ -1,11 +1,13 @@
 package hr.tvz.hrapp.domain.group.mapper;
 
+import hr.tvz.hrapp.domain.goal.GoalDTO;
 import hr.tvz.hrapp.domain.group.Group;
 import hr.tvz.hrapp.domain.group.GroupDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author vedrana.soljic
@@ -49,5 +51,16 @@ public class GroupMapperImpl implements GroupMapper {
         groupDTOS.stream().forEach(i -> result.add(reverse(i)));
 
         return result;
+    }
+
+    //TODO: OBRIŠI, NIJE U UPOTREBI
+    @Override
+    public List<GroupDTO> mapListMapToDtoList(Map<GroupDTO, List<GoalDTO>> map) {
+        map.forEach((dto, goalDTOS) -> dto.setGoals(goalDTOS));
+
+        List<GroupDTO> groupDTOS = new ArrayList<>();
+        groupDTOS.addAll(map.keySet());
+
+        return groupDTOS;
     }
 }

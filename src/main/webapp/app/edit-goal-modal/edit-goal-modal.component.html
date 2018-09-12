@@ -1,32 +1,45 @@
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Definiranje ciljeva - Izmjena</h4>
+        <h4 class="modal-title" id="modal-basic-title">Definiranje ciljeva - izmjena</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <hr class="mb-0">
     <div class="modal-body pb-1">
-        <form name="createNewGoalForm">
+        <form name="editGoalForm" #editGoalForm="ngForm" autocomplete="off">
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="inputPonder" class="label-text">Ponder:</label>
-                    <input type="number" id="inputPonder" name="inputPonder" class="form-control" required max="100"/>
+                    <input type="number" id="inputPonder" name="inputPonder" [(ngModel)]="inputPonder" class="form-control" required /> <!-- max="100"-->
                 </div>
                 <div class="col-md-8">
                     <label for="inputTargetPercentage" class="label-text">Ciljana vrijednost (%):</label>
-                    <input type="number" id="inputTargetPercentage" name="inputTargetPercentage" class="form-control"
-                           max="100"
-                    />
+                    <input type="number" id="inputTargetPercentage" name="inputTargetPercentage" [(ngModel)]="inputTargetPercentage" class="form-control"
+                           required   /> <!--max="100"-->
                 </div>
             </div>
 
             <div class="form-row padding-top">
                 <div class="col-md-12">
                     <label for="inputGoalName" class="label-text">Naziv cilja:</label>
-                    <input type="text" id="inputGoalName" name="inputGoalName" class="form-control" required
-                           maxlength="150"/>
+                    <input type="text" id="inputGoalName" name="inputGoalName" [(ngModel)]="inputGoalName" class="form-control" required />
+                    <!--maxlength="150"-->
+
                 </div>
+            </div>
+
+            <div class="form-row padding-top" *ngIf="estimationStatus === 4">
+                <div class="col-md-12">
+                    <label for="inputGoalName" class="label-text">Unos postotka ostvarenja:</label>
+                    <input type="number" id="inputAchievementPercentage" name="inputAchievementPercentage" [(ngModel)]="inputAchievementPercentage" class="form-control" required />
+                    <!--maxlength="150"-->
+
+                </div>
+            </div>
+
+            <div class="form-row padding-top text-danger font-weight-bold">
+                <div class="red-text" *ngIf="illegalPonderValue">Nije moguće unijeti navedeni cilj! Ponder grupe prelazi 100%.</div>
             </div>
 
         </form>
@@ -35,10 +48,11 @@
     <div class="modal-footer">
         <div class="row pr-4">
             <div class="col-md-6">
-                <button type="button" class="btn btn-default" (click)="c('Close click')">Odustani</button>
+                <button type="button" class="btn btn-default" (click)="closeModal()">Odustani</button>
             </div>
             <div class="col-md-6">
-                <button type="button" class="btn btn-primary" (click)="c('Close click');">Spremi</button>
+                <button type="submit" class="btn btn-primary" (click)="editGoal(editGoalForm)"
+                        [disabled]="!editGoalForm.valid || illegalPonderValue">Spremi</button>
             </div>
         </div>
     </div>

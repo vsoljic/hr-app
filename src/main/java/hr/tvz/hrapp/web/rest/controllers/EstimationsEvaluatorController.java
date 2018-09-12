@@ -1,12 +1,11 @@
 package hr.tvz.hrapp.web.rest.controllers;
 
-import hr.tvz.hrapp.domain.estimation.Estimation;
 import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.estimation.service.EstimationService;
-import hr.tvz.hrapp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,19 +18,16 @@ import java.util.List;
 @RequestMapping("/api/estimations-evaluator")
 public class EstimationsEvaluatorController {
 
-    private final UserService userService;
-
     private final EstimationService estimationService;
 
-    public EstimationsEvaluatorController(UserService userService, EstimationService estimationService) {
-        this.userService = userService;
+    public EstimationsEvaluatorController(EstimationService estimationService) {
         this.estimationService = estimationService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<EstimationDTO>> getAllEstimationsForEvaluator() {
+    @GetMapping("/{evaluatorId}")
+    public ResponseEntity<List<EstimationDTO>> getAllEstimationsForEvaluator(@PathVariable(name = "evaluatorId") Long evaluatorId) {
 
-        List<EstimationDTO> estimations = estimationService.findAllByLoggedInUser();
+        List<EstimationDTO> estimations = estimationService.findAllByLoggedInUser(evaluatorId);
         return new ResponseEntity<>(estimations, HttpStatus.OK);
     }
 }

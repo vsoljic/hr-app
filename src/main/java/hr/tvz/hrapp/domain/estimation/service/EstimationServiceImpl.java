@@ -12,8 +12,6 @@ import hr.tvz.hrapp.domain.estimation_model.mapper.EstimationModelMapper;
 import hr.tvz.hrapp.domain.estimation_status.mapper.EstimationStatusMapper;
 import hr.tvz.hrapp.domain.relationship_est_employees.service.RelationshipEstEmployeesService;
 import hr.tvz.hrapp.service.UserService;
-import hr.tvz.hrapp.service.dto.UserDTO;
-import hr.tvz.hrapp.web.rest.errors.InternalServerErrorException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,13 +57,9 @@ public class EstimationServiceImpl implements EstimationService {
     }
 
     @Override
-    public List<EstimationDTO> findAllByLoggedInUser() {
-        UserDTO userDTO = userService.getUserWithAuthorities().map(UserDTO::new)
-            .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
+    public List<EstimationDTO> findAllByLoggedInUser(Long id) {
 
-        EmployeeDTO employeeDTO = employeesService.findByUserId(userDTO.getId());
-
-        List<EstimationEvaluator> estimationEvaluators = estimationEvaluatorService.getAllForEvaluatorId(employeeDTO.getId());
+        List<EstimationEvaluator> estimationEvaluators = estimationEvaluatorService.getAllForEvaluatorId(id);
 
         List<EstimationDTO> estimationsDtos = new ArrayList<>();
         estimationEvaluators.stream().forEach(estimationEvaluator -> estimationsDtos.add(

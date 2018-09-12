@@ -29,7 +29,7 @@ import { EvaluateeService } from 'app/evaluatee/evaluatee.service';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateCustomParserFormatter } from 'app/shared/ngb-date-custom-parser-formatter';
 import { EstimationsEvaluatorSelectEvaluateeModalComponent } from './estimations-evaluator-select-evaluatee-modal/estimations-evaluator-select-evaluatee-modal.component';
-import { EditGoalModalComponent } from './edit-goal-modal/edit-goal-modal.component';
+import { EditGoalModalComponent } from 'app/edit-goal-modal/edit-goal-modal.component';
 
 @NgModule({
     imports: [

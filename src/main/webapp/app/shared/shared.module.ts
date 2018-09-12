@@ -8,6 +8,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { RelationshipsForEstimationService } from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
 import { GoalService } from 'app/evaluatee/goal.service';
+import { EmployeeUserService } from 'app/shared/employee-user.service';
+import { GroupService } from 'app/evaluatee/group.service';
 
 @NgModule({
     imports: [
@@ -16,7 +18,7 @@ import { GoalService } from 'app/evaluatee/goal.service';
 
         SimpleNotificationsModule.forRoot({
             position: ['top', 'right'],
-            timeOut: 5000,
+            timeOut: 3000,
             showProgressBar: true,
             pauseOnHover: true,
             clickToClose: true,
@@ -32,6 +34,8 @@ import { GoalService } from 'app/evaluatee/goal.service';
         DataSharingService,
         RelationshipsForEstimationService,
         GoalService,
+        GroupService,
+        EmployeeUserService,
         { provide: MAT_DATE_LOCALE, useValue: 'hr-HR' }
     ],
     entryComponents: [JhiLoginModalComponent],

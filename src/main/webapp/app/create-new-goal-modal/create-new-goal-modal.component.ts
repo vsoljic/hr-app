@@ -1,11 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { Goal } from 'app/admin/models/goal.model';
 import { GoalService } from 'app/evaluatee/goal.service';
-import { DataSharingService } from 'app/shared/data-sharing.service';
+import { GroupOfGoals } from 'app/admin/models/group-of-goals.model';
+import { Estimation } from 'app/admin/models/estimation.model';
+import { Employee } from 'app/admin/models/employee.model';
+import { GroupService } from 'app/evaluatee/group.service';
 
 @Component({
     selector: 'jhi-create-new-goal-modal',
@@ -14,26 +17,41 @@ import { DataSharingService } from 'app/shared/data-sharing.service';
 })
 export class CreateNewGoalModalComponent implements OnInit {
     closeResult: string;
-    @Input() groupId: number;
-    @Input() estimationId: number;
-    @Input() employeeId: number;
+    @Input() group: GroupOfGoals;
+    @Input() estimation: Estimation;
+    @Input() employee: Employee;
     savedGoal: Goal;
     inputPonder: number;
     inputTargetPercentage: number;
     inputGoalName: string;
+    modalRef: NgbModalRef;
+    groups: GroupOfGoals[];
+    @Output() groupsEmitter: EventEmitter<GroupOfGoals[]> = new EventEmitter<GroupOfGoals[]>();
+    employeeId: number;
+    estimationId: number;
+    illegalPonderValue: boolean;
 
     constructor(
         private modalService: NgbModal,
         private router: Router,
         private notificationsService: NotificationsService,
         private goalService: GoalService,
-        private dataSharingService: DataSharingService
+        private groupService: GroupService
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.illegalPonderValue = false;
+        this.employeeId = this.employee.id;
+        this.estimationId = this.estimation.id;
+
+        console.log('Emp ID ' + this.employeeId);
+        console.log('EST ID ' + this.estimationId);
+    }
 
     openCreateNewGoalModal(content) {
-        this.modalService.open(content).result.then(
+        this.illegalPonderValue = false;
+        this.modalRef = this.modalService.open(content);
+        this.modalRef.result.then(
             result => {
                 this.closeResult = `Closed with: ${result}`;
             },
@@ -45,25 +63,61 @@ export class CreateNewGoalModalComponent implements OnInit {
 
     createNewGoal(goalTemplate: NgForm) {
         console.log('goal', goalTemplate);
-        /*if (!goalTemplate.valid) {
+        if (!goalTemplate.valid) {
             this.notificationsService.create(null, 'Cilj nije uspješno definiran! Pokušajte ponovo.', 'error');
             return; // to exit without calling backend
         }
-*/
-        const goal = this.prepareEstimationValues();
 
-        this.goalService.createNewGoal(goal).subscribe(
+        const isPonderValid = this.inputPonder + this.group.totalPonderForGroup;
+        if (isPonderValid > 100) {
+            this.illegalPonderValue = true;
+            return;
+        }
+
+        const goal = this.prepareEstimationValues();
+        console.log('Objekt goal' + goal);
+        console.log('Objekt goal ponder' + goal.ponderPercentage);
+
+        this.goalService.saveGoal(goal).subscribe(
             (data: Goal) => {
                 this.savedGoal = data;
+
+                console.log('Emp ID unutar next' + this.employeeId);
+                console.log('EST ID unutar next' + this.estimationId);
             },
             () => {
                 this.notificationsService.create(null, 'Došlo je do pogreške prilikom kreiranja cilja!', 'error');
             },
             () => {
+                this.modalRef.close();
+                this.deleteAllModalValues();
                 this.notificationsService.create(null, 'Uspješno ste kreirali cilj!', 'success');
-                this.storeGoal(this.savedGoal);
+                this.getGroupsAndGoals();
             }
         );
+    }
+
+    getGroupsAndGoals() {
+        this.groupService.getGroupsByEmployeeAndEstimationWithGoals(this.employeeId, this.estimationId).subscribe(
+            (data: GroupOfGoals[]) => {
+                this.groups = data;
+                console.log('PONOVNI DOHVAT grupa ' + this.groups);
+                console.log('PONOVNI DOHVAT grupa, groupsEmitter ' + this.groupsEmitter);
+            },
+            () => console.log('Unsuccessful'),
+            () => this.groupsEmitter.emit(this.groups)
+        );
+    }
+
+    deleteAllModalValues() {
+        this.inputTargetPercentage = null;
+        this.inputPonder = null;
+        this.inputGoalName = null;
+    }
+
+    closeModal() {
+        this.deleteAllModalValues();
+        this.modalRef.close();
     }
 
     /**
@@ -71,20 +125,26 @@ export class CreateNewGoalModalComponent implements OnInit {
      */
     prepareEstimationValues(): Goal {
         // initialize form object
-        // TODO: zahardkodirano
-        const goal = new Goal(null, 'Blabla', 10, 100, null, this.groupId, this.employeeId, this.estimationId);
+
+        console.log('GOAL NAME:' + this.inputGoalName);
+        console.log('GOAL PONDER:' + this.inputPonder);
+        console.log('GOAL TARGET:' + this.inputTargetPercentage);
+        console.log('GOAL GROUP:' + this.group);
+        console.log('GOAL EMP:' + this.employee);
+        console.log('GOAL EST:' + this.estimation);
+
+        const goal = new Goal(
+            null,
+            this.inputGoalName,
+            this.inputPonder,
+            this.inputTargetPercentage,
+            null,
+            this.group,
+            this.employee,
+            this.estimation
+        );
         // return form estimation for backend
         return goal;
-    }
-
-    /**
-     * Stores estimation response of created estimation into a shared service which later passes the same estimation to another screen.
-     * After a short delay, navigates to another screen.
-     * @param created estimation from backend
-     */
-    async storeGoal(goal: Goal) {
-        this.dataSharingService.storage = goal;
-        await this.delay(50).then(() => this.router.navigate(['/evaluatee']));
     }
 
     private getDismissReason(reason: any): string {
@@ -95,13 +155,5 @@ export class CreateNewGoalModalComponent implements OnInit {
         } else {
             return `with: ${reason}`;
         }
-    }
-
-    /**
-     * Creates delay for given time.
-     * @param timeInMs given time of delay
-     */
-    private delay(timeInMs: number) {
-        return new Promise(resolve => setTimeout(resolve, timeInMs));
     }
 }

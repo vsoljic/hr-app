@@ -1,6 +1,11 @@
 package hr.tvz.hrapp.domain.group;
 
+
+import hr.tvz.hrapp.domain.goal.GoalDTO;
+
 import java.io.Serializable;
+import java.util.List;
+
 
 /**
  * @author vedrana.soljic
@@ -13,13 +18,19 @@ public class GroupDTO implements Serializable {
 
     private Long ponderPercentage;
 
+    private List<GoalDTO> goals;
+
+    private Long totalPonderForGroup;
+
     public GroupDTO() {
     }
 
-    public GroupDTO(Long id, String name, Long ponderPercentage) {
+    public GroupDTO(Long id, String name, Long ponderPercentage, List<GoalDTO> goals, Long totalPonderForGroup) {
         this.id = id;
         this.name = name;
         this.ponderPercentage = ponderPercentage;
+        this.goals = goals;
+        this.totalPonderForGroup = totalPonderForGroup;
     }
 
     public Long getId() {
@@ -44,5 +55,21 @@ public class GroupDTO implements Serializable {
 
     public void setPonderPercentage(Long ponderPercentage) {
         this.ponderPercentage = ponderPercentage;
+    }
+
+    public List<GoalDTO> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(List<GoalDTO> goals) {
+        this.goals = goals;
+    }
+
+    public Long getTotalPonderForGroup() {
+        return totalPonderForGroup;
+    }
+
+    public void setTotalPonderForGroup(Long totalPonderForGroup) {
+        this.totalPonderForGroup = totalPonderForGroup;
     }
 }

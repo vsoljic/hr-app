@@ -1,8 +1,11 @@
 package hr.tvz.hrapp.domain.goal;
 
 import hr.tvz.hrapp.domain.employee.Employee;
+import hr.tvz.hrapp.domain.employee.EmployeeDTO;
 import hr.tvz.hrapp.domain.estimation.Estimation;
+import hr.tvz.hrapp.domain.estimation.EstimationDTO;
 import hr.tvz.hrapp.domain.group.Group;
+import hr.tvz.hrapp.domain.group.GroupDTO;
 
 import java.io.Serializable;
 
@@ -20,17 +23,18 @@ public class GoalDTO implements Serializable {
 
     private Long achievementPercentage;
 
-    private Group group;
+    private GroupDTO group;
 
-    private Employee employee;
+    private EmployeeDTO employee;
 
-    private Estimation estimation;
+    private EstimationDTO estimation;
+
 
     public GoalDTO() {
     }
 
-    public GoalDTO(Long id, String name, Long ponderPercentage, Long targetValue, Long achievementPercentage, Group group,
-                   Employee employee, Estimation estimation) {
+    public GoalDTO(Long id, String name, Long ponderPercentage, Long targetValue, Long achievementPercentage,
+                   GroupDTO group, EmployeeDTO employee, EstimationDTO estimation) {
         this.id = id;
         this.name = name;
         this.ponderPercentage = ponderPercentage;
@@ -81,27 +85,27 @@ public class GoalDTO implements Serializable {
         this.achievementPercentage = achievementPercentage;
     }
 
-    public Group getGroup() {
+    public GroupDTO getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(GroupDTO group) {
         this.group = group;
     }
 
-    public Employee getEmployee() {
+    public EmployeeDTO getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(EmployeeDTO employee) {
         this.employee = employee;
     }
 
-    public Estimation getEstimation() {
+    public EstimationDTO getEstimation() {
         return estimation;
     }
 
-    public void setEstimation(Estimation estimation) {
+    public void setEstimation(EstimationDTO estimation) {
         this.estimation = estimation;
     }
 }

@@ -10,4 +10,6 @@ import java.util.List;
 public interface GroupService {
 
     List<GroupDTO> findAllGroups();
+
+    List<GroupDTO> findAllByEmployeeAndEstimationGroupByGroups(Long estimationId, Long employeeId);
 }

@@ -1,30 +1,34 @@
+import { GroupOfGoals } from 'app/admin/models/group-of-goals.model';
+import { Employee } from 'app/admin/models/employee.model';
+import { Estimation } from 'app/admin/models/estimation.model';
+
 export class Goal {
     id: number;
     name: string;
-    ponder: number;
-    target_value: number;
-    achievement_percentage: number;
-    group_id: number;
-    employee_id: number;
-    estimation_id: number;
+    ponderPercentage: number;
+    targetValue: number;
+    achievementPercentage: number;
+    group: GroupOfGoals;
+    employee: Employee;
+    estimation: Estimation;
 
     constructor(
         id: number,
         name: string,
-        ponder: number,
-        target_value: number,
-        achievement_percentage: number,
-        group_id: number,
-        employee_id: number,
-        estimation_id: number
+        ponderPercentage: number,
+        targetValue: number,
+        achievementPercentage: number,
+        group: GroupOfGoals,
+        employee: Employee,
+        estimation: Estimation
     ) {
         this.id = id;
         this.name = name;
-        this.ponder = ponder;
-        this.target_value = target_value;
-        this.achievement_percentage = achievement_percentage;
-        this.group_id = group_id;
-        this.employee_id = employee_id;
-        this.estimation_id = estimation_id;
+        this.ponderPercentage = ponderPercentage;
+        this.targetValue = targetValue;
+        this.achievementPercentage = achievementPercentage;
+        this.group = group;
+        this.employee = employee;
+        this.estimation = estimation;
     }
 }

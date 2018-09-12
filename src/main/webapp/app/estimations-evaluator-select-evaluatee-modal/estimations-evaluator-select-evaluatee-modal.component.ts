@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { DataSharingService } from 'app/shared/data-sharing.service';
 import { RelationshipsForEstimationService } from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
+import { Estimation } from 'app/admin/models/estimation.model';
+import { RelationshipWithObjectsModel } from 'app/admin/models/relationship-with-objects.model';
 
 @Component({
     selector: 'jhi-estimations-evaluator-select-evaluatee-modal',
@@ -15,11 +17,12 @@ import { RelationshipsForEstimationService } from 'app/admin/relationships-for-e
 export class EstimationsEvaluatorSelectEvaluateeModalComponent implements OnInit {
     modalReference: NgbModalRef;
     closeResult: string;
-    @Input() estimationId: number;
+    @Input() estimation: Estimation;
     @Input() estimationName: string;
+    @Input() evaluator: Employee;
     employees: Employee[];
-    evaluateeId: number;
-    relationship: Relationship;
+    selectedEvaluatee: Employee;
+    relationship: RelationshipWithObjectsModel;
 
     constructor(
         private modalService: NgbModal,
@@ -43,7 +46,7 @@ export class EstimationsEvaluatorSelectEvaluateeModalComponent implements OnInit
         );
 
         this.relationshipsService
-            .getEvaluateesForEvaluatorOnEstimation(this.estimationId)
+            .getEvaluateesForEvaluatorOnEstimation(this.estimation.id)
             .subscribe(
                 (employees: Employee[]) => (this.employees = employees),
                 error => console.log('error fetching employees', error),
@@ -52,17 +55,15 @@ export class EstimationsEvaluatorSelectEvaluateeModalComponent implements OnInit
     }
 
     onSelect(employee) {
-        this.evaluateeId = employee.id;
+        console.log('Odabir employeea' + employee);
+
+        this.selectedEvaluatee = employee;
     }
 
     openEvaluateePageAndSave(content) {
         this.modalReference.close();
 
-        const evaluateeIdList: number[] = [this.evaluateeId];
-
-        //todo: hardcoded, find a way to get logged employee id
-        this.relationship = new Relationship(this.estimationId, 2, evaluateeIdList);
-
+        this.relationship = new RelationshipWithObjectsModel(this.estimation, this.evaluator, this.selectedEvaluatee);
         this.dataSharingService.storage = this.relationship;
 
         this.router.navigate(['/evaluatee']);

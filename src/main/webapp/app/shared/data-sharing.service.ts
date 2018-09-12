@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
  *  any page in application.
  */
 export class DataSharingService {
-
     public storage: any;
 
-    public constructor() { }
+    public second_storage: any;
 
+    public constructor() {}
 }

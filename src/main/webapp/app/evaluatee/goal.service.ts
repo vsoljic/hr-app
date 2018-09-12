@@ -10,7 +10,11 @@ export class GoalService {
         return this.http.get(SERVER_API_URL + 'api/goals/estimation/' + estimationId + '/group/' + groupId + '/employee/' + employeeId);
     }
 
-    createNewGoal(goal: Goal) {
+    getGoalsByEmployeeAndEstimationGroupByGroups(employeeId: number, estimationId: number) {
+        return this.http.get(SERVER_API_URL + 'api/goals/estimation/' + estimationId + '/employee/' + employeeId);
+    }
+
+    saveGoal(goal: Goal) {
         return this.http.post(SERVER_API_URL + 'api/goals/new', goal);
     }
 }
