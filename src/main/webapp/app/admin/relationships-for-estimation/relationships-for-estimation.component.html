@@ -25,17 +25,19 @@
                     <td>{{employee.lastName}}</td>
                     <td>{{employee.workPosition}}</td>
                     <td>
-                        <span *ngIf="isEvaluator">
+                        <span *ngIf="employee.isEvaluator">
                             <fa-icon [icon]="'check'">
                         </span>
-                        <span *ngIf="!isEvaluator">
-                            <fa-icon [icon]="'edit'">
+                        <span *ngIf="!employee.isEvaluator">
+                            <fa-icon [icon]="'times'">
                         </span>
                     </td>
                     <td>
                         <jhi-create-relationship-roles-modal [employeeId]="employee.id"
                                                              [employeeName]="employee.firstName"
-                                                             [estimation]="estimation"></jhi-create-relationship-roles-modal>
+                                                             [estimation]="estimation"
+                                                             (evaluatorEmmitter)="onEmit($event)">
+                        </jhi-create-relationship-roles-modal>
                     </td>
                 </tr>
                 </tbody>

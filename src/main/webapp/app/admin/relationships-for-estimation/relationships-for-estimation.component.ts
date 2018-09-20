@@ -15,6 +15,8 @@ export class RelationshipsForEstimationComponent implements OnInit {
     employees: Employee[];
     estimation: Estimation;
     isEvaluator: boolean = false;
+    evaluator: Employee;
+    evaluatorsList: Employee[] = [];
 
     constructor(
         private http: HttpClient,
@@ -36,5 +38,20 @@ export class RelationshipsForEstimationComponent implements OnInit {
                 error => console.log('error fetching employees', error),
                 () => console.log('success')
             );
+    }
+
+    onEmit(evaluator) {
+        this.evaluator = evaluator;
+        this.isEvaluator = true;
+
+        if (this.employees.find(e => evaluator === e.id)) {
+            for (let e of this.employees) {
+                if (e.id === evaluator) {
+                    e.isEvaluator = true;
+                }
+            }
+        }
+
+        console.log('Evo me u parentu, isEvaluator = ' + this.isEvaluator + ', evaluator: ' + this.evaluator);
     }
 }

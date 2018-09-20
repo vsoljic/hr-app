@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Employee } from 'app/admin/models/employee.model';
@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Relationship } from 'app/admin/models/relationship.model';
 import { DataSharingService } from 'app/shared/data-sharing.service';
 import { Estimation } from 'app/admin/models/estimation.model';
+import { GroupOfGoals } from 'app/admin/models/group-of-goals.model';
 
 @Component({
     selector: 'jhi-create-relationship-roles-modal',
@@ -23,6 +24,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     employeeString: string;
     evaluateeIdList: number[] = [];
     isEvaluator: boolean = false;
+    @Output() evaluatorEmmitter: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(
         private modalService: NgbModal,
@@ -105,6 +107,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
             () => {
                 this.notificationsService.create(null, 'Uspješno ste kreirali veze', 'success');
                 this.isEvaluator = true;
+                this.evaluatorEmmitter.emit(this.employeeId);
                 this.storeRelationshipsAndNavigateToMain(relationship);
                 this.modalReference.close();
             }

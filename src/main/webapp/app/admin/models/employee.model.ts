@@ -1,5 +1,5 @@
-import {User} from 'app/core';
-import {Estimation} from 'app/admin/models/estimation.model';
+import { User } from 'app/core';
+import { Estimation } from 'app/admin/models/estimation.model';
 
 export class Employee {
     id: number;
@@ -10,10 +10,18 @@ export class Employee {
     workPosition: string;
     estimationsForEvaluator: Estimation[];
     estimationsForEvaluatee: Estimation[];
+    isEvaluator: boolean = false;
 
-
-    constructor(id: number, user: User, employeeCode: number, firstName: string, lastName: string, workPosition: string,
-                estimationsForEvaluator: Estimation[], estimationsForEvaluatee: Estimation[]) {
+    constructor(
+        id: number,
+        user: User,
+        employeeCode: number,
+        firstName: string,
+        lastName: string,
+        workPosition: string,
+        estimationsForEvaluator: Estimation[],
+        estimationsForEvaluatee: Estimation[]
+    ) {
         this.id = id;
         this.user = user;
         this.employeeCode = employeeCode;
