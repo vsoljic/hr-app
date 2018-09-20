@@ -15,7 +15,10 @@
 
         <div class="col-md-3" *ngIf="selectedEvaluator === undefined">
             <jhi-create-relationship-add-evaluator-modal [estimationId]="estimation.id"
-                                                         [estimationName]="estimation.name"></jhi-create-relationship-add-evaluator-modal>
+                                                         [estimationName]="estimation.name"
+                                                         (evaluatorEmitter)="onEvaluatorsEmit($event)">
+
+            </jhi-create-relationship-add-evaluator-modal>
         </div>
     </div>
 
@@ -23,8 +26,8 @@
         <div class="offset-10 col-md-2">
             <jhi-estimations-overview-evaluator-add-rel-modal [selectedEvaluatorId]="selectedEvaluator.id"
                                                               [selectedEvaluatorName]="selectedEvaluator.firstName"
-                                                              [estimationId]="estimation.id">
-
+                                                              [estimationId]="estimation.id"
+                                                              (evaluateeEmitter)="onEvaluateeEmit($event)">
 
             </jhi-estimations-overview-evaluator-add-rel-modal>
         </div>
@@ -55,7 +58,8 @@
                             <jhi-estimations-overview-evaluator-delete-modal [estimationId]="estimation.id"
                                                                              [evaluatee]="evaluatee"
                                                                              [evaluateeName]="evaluatee.firstName"
-                                                                             [evaluatorId]="selectedEvaluator.id">
+                                                                             [evaluatorId]="selectedEvaluator.id"
+                                                                             (evaluateeDeleteEmitter)="onEvaluateeDeleteEmit($event)">
 
                             </jhi-estimations-overview-evaluator-delete-modal>
                         </td>

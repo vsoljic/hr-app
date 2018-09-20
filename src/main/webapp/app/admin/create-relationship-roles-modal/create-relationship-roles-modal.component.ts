@@ -24,7 +24,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     employeeString: string;
     evaluateeIdList: number[] = [];
     isEvaluator: boolean = false;
-    @Output() evaluatorEmmitter: EventEmitter<number> = new EventEmitter<number>();
+    @Output() evaluatorEmitter: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(
         private modalService: NgbModal,
@@ -107,7 +107,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
             () => {
                 this.notificationsService.create(null, 'Uspješno ste kreirali veze', 'success');
                 this.isEvaluator = true;
-                this.evaluatorEmmitter.emit(this.employeeId);
+                this.evaluatorEmitter.emit(this.employeeId);
                 this.storeRelationshipsAndNavigateToMain(relationship);
                 this.modalReference.close();
             }

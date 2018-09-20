@@ -46,6 +46,13 @@ public class EstimationsOverviewController {
         return new ResponseEntity<>(employeeEvaluatorsDTOS, HttpStatus.OK);
     }
 
+   @GetMapping("/employees")
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesIn(@RequestParam(name = "employeesIds") List<Long> employeesIds) {
+
+        List<EmployeeDTO> employeeDTOS = employeesService.findAllByIds(employeesIds);
+        return new ResponseEntity<>(employeeDTOS, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}/evaluators/{evaluatorId}/evaluatees")
     public ResponseEntity<List<EmployeeDTO>> getAllEvaluateesForEvaluatorAndEstimation(@PathVariable("id") Long estimationId,
                                                                                        @PathVariable("evaluatorId") Long evaluatorId) {

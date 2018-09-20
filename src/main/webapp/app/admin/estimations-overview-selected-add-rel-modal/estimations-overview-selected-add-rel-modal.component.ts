@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Employee} from 'app/admin/models/employee.model';
-import {Router} from '@angular/router';
-import {RelationshipsForEstimationService} from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
-import {NotificationsService} from 'angular2-notifications';
-import {DataSharingService} from 'app/shared/data-sharing.service';
-import {Relationship} from 'app/admin/models/relationship.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Employee } from 'app/admin/models/employee.model';
+import { Router } from '@angular/router';
+import { RelationshipsForEstimationService } from 'app/admin/relationships-for-estimation/relationships-for-estimation.service';
+import { NotificationsService } from 'angular2-notifications';
+import { DataSharingService } from 'app/shared/data-sharing.service';
+import { Relationship } from 'app/admin/models/relationship.model';
 
 @Component({
     selector: 'jhi-estimations-overview-evaluator-add-rel-modal',
@@ -13,7 +13,6 @@ import {Relationship} from 'app/admin/models/relationship.model';
     styles: []
 })
 export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
-
     modalReference: NgbModalRef;
     closeResult: string;
     @Input() estimationId: number;
@@ -21,17 +20,17 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
     @Input() selectedEvaluatorName: string;
     employees: Employee[];
     evaluateeIdList: number[] = [];
+    @Output() evaluateeEmitter: EventEmitter<number[]> = new EventEmitter<number[]>();
 
+    constructor(
+        private modalService: NgbModal,
+        private router: Router,
+        private relationshipsService: RelationshipsForEstimationService,
+        private notificationsService: NotificationsService,
+        private dataSharingService: DataSharingService
+    ) {}
 
-    constructor(private modalService: NgbModal,
-                private router: Router,
-                private relationshipsService: RelationshipsForEstimationService,
-                private notificationsService: NotificationsService,
-                private dataSharingService: DataSharingService) {
-    }
-
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     openModalForRelationshipsAndRoles(content) {
         this.modalReference = this.modalService.open(content);
@@ -44,11 +43,13 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
             }
         );
 
-        this.relationshipsService.getNotConnectedEmployeesForEvaluator(this.selectedEvaluatorId, this.estimationId).subscribe(
-            (employees: Employee[]) => this.employees = employees,
-            error => console.log('error fetching employees', error),
-            () => console.log('success')
-        );
+        this.relationshipsService
+            .getNotConnectedEmployeesForEvaluator(this.selectedEvaluatorId, this.estimationId)
+            .subscribe(
+                (employees: Employee[]) => (this.employees = employees),
+                error => console.log('error fetching employees', error),
+                () => console.log('success')
+            );
     }
 
     onSelect(employee) {
@@ -64,19 +65,10 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
         return relationship;
     }
 
-    /**
-     * Stores estimation response of created estimation into a shared service which later passes the same estimation to another screen.
-     * After a short delay, navigates to another screen.
-     * @param estimation created estimation from backend
-     */
-    async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
-        this.dataSharingService.storage = relationship; // store orderForm to application wide storage
-        await this.delay(10).then(() => this.router.navigate(['admin/estimations-overview-selected']));
-    }
-
     private createNewRelationship(relationshipTemplate) {
         console.log('relationshipTemplate', relationshipTemplate);
-        if (!relationshipTemplate.valid) { // if form is not valid and user sent it, show error
+        if (!relationshipTemplate.valid) {
+            // if form is not valid and user sent it, show error
             this.notificationsService.create(null, 'Veze nisu uspješno definirane! Pokušajte ponovo.', 'error');
             return; // to exit without calling backend
         }
@@ -89,18 +81,10 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
             },
             () => {
                 this.notificationsService.create(null, 'Uspješno ste kreirali veze', 'success');
-                this.storeRelationshipsAndNavigateToMain(relationship);
+                this.evaluateeEmitter.emit(this.evaluateeIdList);
                 this.modalReference.close();
             }
         );
-    }
-
-    /**
-     * Creates delay for given time.
-     * @param timeInMs given time of delay
-     */
-    private delay(timeInMs: number) {
-        return new Promise(resolve => setTimeout(resolve, timeInMs));
     }
 
     private getDismissReason(reason: any): string {
@@ -112,5 +96,4 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
             return `with: ${reason}`;
         }
     }
-
 }
