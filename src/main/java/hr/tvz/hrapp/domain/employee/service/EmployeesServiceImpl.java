@@ -84,7 +84,7 @@ public class EmployeesServiceImpl implements EmployeesService {
     @Override
     public List<EmployeeDTO> findAllEvaluateesByEvaluatorAndEstimation(Long id, Long evaluatorId) {
 
-        RelationshipEstEmployeesDTO relationship = relationshipEstEmployeesService.findAllForEvaluatorAndEstimation(id, evaluatorId);
+        RelationshipEstEmployeesDTO relationship = relationshipEstEmployeesService.findAllForEmployeeAndEstimation(id, evaluatorId);
 
         List<EmployeeDTO> employeeEvaluatees = new ArrayList<>();
         if (relationship != null) {
@@ -101,7 +101,7 @@ public class EmployeesServiceImpl implements EmployeesService {
 
     @Override
     public List<EmployeeDTO> findAllEvaluateesByEvaluatorLoggedInAndEst(Long estimationId) {
-        return findAllEvaluateesByEvaluatorAndEstimation(estimationId,  getEmployeeForLoggedInUser().getId());
+        return findAllEvaluateesByEvaluatorAndEstimation(estimationId, getEmployeeForLoggedInUser().getId());
 
     }
 

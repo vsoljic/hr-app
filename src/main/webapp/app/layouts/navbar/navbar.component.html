@@ -63,7 +63,7 @@
                 </ul>
             </li>
 
-            <li *jhiHasAnyAuthority="'ROLE_EVALUATOR'" ngbDropdown class="nav-item dropdown pointer"
+            <li ngbDropdown class="nav-item dropdown pointer"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluatee-menu">
                     <span>
@@ -72,27 +72,20 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
+                    <li *jhiHasAnyAuthority="'ROLE_EVALUATOR'">
                         <a class="dropdown-item" routerLink="estimations-evaluator"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
                             <span>Pregled procjena u ulozi procjenitelja</span>
                         </a>
                     </li>
-                    <li>
+                    <li *jhiHasAnyAuthority="'ROLE_EVALUATEE'">
                         <a class="dropdown-item" routerLink="estimations-evaluatee"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
                             <span>Pregled procjena u ulozi procjenjenika</span>
                         </a>
                     </li>
-              <!--      <li>
-                        <a class="dropdown-item" routerLink="evaluatee"
-                           routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon [icon]="'user'"></fa-icon>
-                            <span>Procjena za XY osobu</span>
-                        </a>
-                    </li>-->
                 </ul>
             </li>
 

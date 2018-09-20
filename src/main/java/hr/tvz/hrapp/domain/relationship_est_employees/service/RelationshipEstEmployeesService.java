@@ -1,6 +1,5 @@
 package hr.tvz.hrapp.domain.relationship_est_employees.service;
 
-import hr.tvz.hrapp.domain.employee.EmployeeDTO;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 
 import java.util.List;
@@ -10,7 +9,9 @@ import java.util.List;
  */
 public interface RelationshipEstEmployeesService {
 
-    RelationshipEstEmployeesDTO findAllForEvaluatorAndEstimation(Long estimationId, Long evaluatorId);
+    RelationshipEstEmployeesDTO findAllForEmployeeAndEstimation(Long estimationId, Long evaluatorId);
+
+    List<RelationshipEstEmployeesDTO> findAllForEvaluatee(Long evaluateeId);
 
     List<RelationshipEstEmployeesDTO> findAllForEvaluator(Long evaluatorId);
 

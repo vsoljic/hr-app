@@ -18,46 +18,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--  <tr *ngFor="let estimation of estimations">
-                      <th scope="row">{{estimation.id}}</th>
-                      <td>{{estimation.name}}</td>
-                      <td>{{estimation.periodFrom | date: 'dd.MM.yyyy.'}}</td>
-                      <td>{{estimation.periodTo | date: 'dd.MM.yyyy.'}}</td>
-                      <td>{{estimation.estimation_model.name}}</td>
-                      <td>{{estimation.status.status}}</td>
-                      <td>
-                          <button type="button" class="btn btn-default cursor" (click)="editEstimation(estimation)">Uredi
-                              procjenu
-                          </button>
-                      </td>
-                      <td>
-                          <button type="button" *ngIf="estimation.status.status === 'IN_PROCESS'" class="btn btn-default cursor" (click)="editRelationships(estimation)">
-                              Uredi veze
-                          </button>
-                      </td>
+                <tr *ngFor="let estimation of estimations">
+                    <th scope="row">{{estimation.id}}</th>
+                    <td>{{estimation.name}}</td>
+                    <td>{{estimation.periodFrom | date: 'dd.MM.yyyy.'}}</td>
+                    <td>{{estimation.periodTo | date: 'dd.MM.yyyy.'}}</td>
+                    <td>{{estimation.model.name}}</td>
+                    <td>{{estimation.status.status}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary"
+                                *ngIf="estimation.status.status === 'GRADE_OVERVIEW' || estimation.status.status === 'GOALS_OVERVIEW'"
+                        (click)="openEvaluateeOverview(estimation)"> Pregledaj</button>
+                    </td>
 
-                  </tr>-->
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Procjena xy</td>
-                    <td>10.10.2018.</td>
-                    <td>30.10.2018.</td>
-                    <td>Model Vedrana</td>
-                    <td>Zaključena</td>
-                    <td>
-                        <button type="submit" class="btn btn-default">Odaberi</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Procjena xy</td>
-                    <td>10.10.2018.</td>
-                    <td>30.10.2018.</td>
-                    <td>Model Vedrana</td>
-                    <td>Zaključena</td>
-                    <td>
-                        <button type="submit" class="btn btn-default">Odaberi</button>
-                    </td>
                 </tr>
                 </tbody>
             </table>

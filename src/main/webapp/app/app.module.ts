@@ -30,6 +30,7 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateCustomParserFormatter } from 'app/shared/ngb-date-custom-parser-formatter';
 import { EstimationsEvaluatorSelectEvaluateeModalComponent } from './estimations-evaluator-select-evaluatee-modal/estimations-evaluator-select-evaluatee-modal.component';
 import { EditGoalModalComponent } from 'app/edit-goal-modal/edit-goal-modal.component';
+import { EstimationsEvaluateeService } from 'app/estimations-evaluatee/estimations-evaluatee.service';
 
 @NgModule({
     imports: [
@@ -86,6 +87,7 @@ import { EditGoalModalComponent } from 'app/edit-goal-modal/edit-goal-modal.comp
         },
         EstimationsEvaluatorService,
         EvaluateeService,
+        EstimationsEvaluateeService,
         { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }
     ],
     bootstrap: [JhiMainComponent]

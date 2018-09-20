@@ -5,10 +5,7 @@ import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployees;
 import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author vedrana.soljic
@@ -53,6 +50,14 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
         List<RelationshipEstEmployeesDTO> result = new ArrayList<>();
         Map<Long, List<Long>> groupedEstimations = new HashMap<>();
 
+        groupRelationshipsByEstAndEvaluatees(relationships, groupedEstimations);
+
+        groupedEstimations.forEach((estimation, evaluatee) -> result.add(new RelationshipEstEmployeesDTO(estimation, id, evaluatee)));
+
+        return result;
+    }
+
+    private void groupRelationshipsByEstAndEvaluatees(List<RelationshipEstEmployees> relationships, Map<Long, List<Long>> groupedEstimations) {
         relationships.stream().forEach(relationshipEstEmployees -> {
             Long key = relationshipEstEmployees.getRelationshipCompositeKey().getEstimationId();
 
@@ -65,8 +70,23 @@ public class RelationshipEstEmployeesMapperImpl implements RelationshipEstEmploy
                 groupedEstimations.put(key, list);
             }
         });
+    }
 
-        groupedEstimations.forEach((estimation, evaluatee) -> result.add(new RelationshipEstEmployeesDTO(estimation, id, evaluatee)));
+    public List<RelationshipEstEmployeesDTO> mapListToDtoList(List<RelationshipEstEmployees> relationships) {
+
+        List<RelationshipEstEmployeesDTO> result = new ArrayList<>();
+        Map<Long, Long> groupedEstimations = new HashMap<>();
+
+        relationships.stream().forEach(relationshipEstEmployees -> {
+                Long key = relationshipEstEmployees.getRelationshipCompositeKey().getEstimationId();
+                groupedEstimations.put(key, relationshipEstEmployees.getRelationshipCompositeKey().getEmployeeEvaluatorId());
+            }
+        );
+
+        groupedEstimations.forEach((estimation, evaluator) ->
+            result.add(new RelationshipEstEmployeesDTO(estimation, evaluator,
+                Arrays.asList(relationships.get(0).getRelationshipCompositeKey().getEmployeeEvaluateeId())))
+        );
 
         return result;
     }

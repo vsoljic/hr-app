@@ -84,8 +84,7 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
      * @param estimation created estimation from backend
      */
     async storeRelationshipsAndNavigateToMain(relationship: Relationship) {
-        this.dataSharingService.storage = relationship; // store orderForm to application wide storage
-        this.dataSharingService.storage = this.isEvaluator;
+        this.dataSharingService.storage = relationship;
         await this.delay(10).then(() => this.modalReference.close());
     }
 

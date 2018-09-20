@@ -7,6 +7,7 @@ import hr.tvz.hrapp.domain.goal.service.GoalService;
 import hr.tvz.hrapp.domain.group.GroupDTO;
 import hr.tvz.hrapp.domain.group.mapper.GroupMapper;
 import hr.tvz.hrapp.domain.group.repository.GroupRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupMapper groupMapper;
 
-    public GroupServiceImpl(GroupRepository groupRepository, GoalService goalService,
+    public GroupServiceImpl(GroupRepository groupRepository, @Lazy GoalService goalService,
                             EstimationService estimationService, GroupMapper groupMapper) {
         this.groupRepository = groupRepository;
         this.goalService = goalService;
@@ -44,21 +45,37 @@ public class GroupServiceImpl implements GroupService {
         EstimationDTO estimation = estimationService.findById(estimationId);
         List<GroupDTO> groups = estimation.getModel().getGroups();
 
-
-
         groups.forEach(dto -> {
             List<GoalDTO> goals = goalService.findAllByEmployeeAndGroupAndEst(estimationId, dto.getId(), employeeId);
             Long totalForGroup = 0L;
 
             for (GoalDTO goalDTO : goals) {
-                totalForGroup += goalDTO.getPonderPercentage();
+                if (goalDTO.getPonderPercentage() != null) {
+                    totalForGroup += goalDTO.getPonderPercentage();
+                }
             }
 
             dto.setTotalPonderForGroup(totalForGroup);
             dto.setGoals(goals);
+            dto.setTotalAchievementForGroup(this.calculateTotalAchievementForGroup(dto));
         });
 
-
         return groups;
+    }
+
+    @Override
+    public Double calculateTotalAchievementForGroup(GroupDTO groupDTO) {
+        Double totalGoals = 0D;
+
+        for (GoalDTO goalDTO : groupDTO.getGoals()) {
+            if (goalDTO.getAchievementPercentage() != null) {
+                Double goalAchievement = (goalDTO.getPonderPercentage() * goalDTO.getAchievementPercentage()) / 100.0;
+                totalGoals += goalAchievement;
+            }
+        }
+
+        Double totalAchievementForGroup = (totalGoals * groupDTO.getPonderPercentage()) / 100.0;
+
+        return totalAchievementForGroup;
     }
 }

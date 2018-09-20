@@ -22,7 +22,7 @@ public class GroupMapperImpl implements GroupMapper {
         dto.setId(group.getId());
         dto.setName(group.getName());
         dto.setPonderPercentage(group.getPonderPercentage());
-
+        
         return dto;
     }
 

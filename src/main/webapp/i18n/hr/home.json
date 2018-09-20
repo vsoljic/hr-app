@@ -1,6 +1,6 @@
 {
     "home": {
-        "title": "Dobrodošli, Java Hipsteru!",
+        "title": "Dobro došao u HR aplikaciju za procjenu radnog učinka!",
         "subtitle": "Ovo je Vaša početna stranica",
         "logged": {
             "message": "Prijavljeni ste kao korisnik \"{{username}}\"."
@@ -10,10 +10,10 @@
             "homepage": "JHipster početna stranica",
             "stackoverflow": "JHipster na Stack Overflow",
             "bugtracker": "JHipster tragač za greškama",
-            "chat": "JHipster javni čet",
+            "chat": "JHipster javni chat",
             "follow": "pratite @java_hipster na Twitter-u"
         },
-        "like": "Ako Vam se dopada JHipster, ne zaboravite da nam date zvezdicu na",
+        "like": "Ako Vam se sviđa JHipster, ne zaboravite da nam date zvijezdicu na",
         "github": "GitHub-u"
     }
 }

@@ -14,7 +14,9 @@ public interface EstimationService {
 
     EstimationDTO findById(Long id);
 
-    List<EstimationDTO> findAllByLoggedInUser(Long id);
+    List<EstimationDTO> findAllByLoggedInUserEvaluator(Long id);
+
+    List<EstimationDTO> findAllByLoggedInUserEvaluatee(Long id);
 
     EstimationDTO createNewEstimation(EstimationDTO estimationDTO);
 

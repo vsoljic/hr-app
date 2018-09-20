@@ -1,63 +1,66 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12 padding-bottom">
+        <div class="col-md-7 padding-bottom">
             <h2>Procjena radnog učinka za - {{evaluatee.firstName}}:</h2>
         </div>
-
-        <hr>
-        <div class="col-md-12" *ngFor="let group of groups">
-            <!-- <h4>Ciljevi:</h4>-->
-            <table class="table table-hover">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col" colspan="5">
-                        {{group.name}}, ponder: {{group.ponderPercentage}}
-                    </th>
-
-                </tr>
-                <tr>
-                    <th>Ponder</th>
-                    <th>Cilj</th>
-                    <th>Ciljana vrijednost</th>
-                    <th *ngIf="estimationStatus === 4">Ocjena</th>
-                    <th>*</th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <tr *ngFor="let goal of group.goals">
-                    <th scope="row">{{goal.ponderPercentage}}</th>
-                    <td>{{goal.name}}</td>
-                    <td>{{goal.targetValue}}</td>
-                    <td *ngIf="estimationStatus === 4">{{goal.achievementPercentage}}</td>
-                    <td>
-                        <jhi-edit-goal-modal [selectedGoal]="goal"
-                                             [group]="group" [employee]="evaluatee"
-                                             [estimation]="relationship.estimation"
-                                             (groupsEmitter)="onGroupsEmit($event)">
-
-                        </jhi-edit-goal-modal>
-                    </td>
-                </tr>
-
-                <tr *ngIf="(group.goals.length === 0 || group.totalPonderForGroup !== 100) && estimationStatus !== 4">
-                    <td colspan="2" class="text-right">Dodajte cilj:</td>
-                    <td colspan="2">
-                        <jhi-create-new-goal-modal [group]="group" [employee]="evaluatee"
-                                                   [estimation]="relationship.estimation"
-                                                   (groupsEmitter)="onGroupsEmit($event)">
-
-                        </jhi-create-new-goal-modal>
-                </tr>
-                <hr>
-                <h6>Ukupno:</h6>
-                <p class="padding-for-total font-weight-bold">{{group.totalPonderForGroup}}</p>
-
-                </tbody>
-            </table>
-
+        <div class="col-md-5 padding-bottom" *ngIf="estimationStatus === 4 || estimationStatus === 5">
+            <h2>FINALNO OSTVARENJE: {{finalAchievement | number:'1.2-2'}}%</h2>
         </div>
+    </div>
+    <div class="row" *ngFor="let group of groups">
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col" colspan="5">
+                    {{group.name}}, ponder: {{group.ponderPercentage}}
+                </th>
+
+            </tr>
+            <tr>
+                <th>Ponder</th>
+                <th>Cilj</th>
+                <th>Ciljana vrijednost</th>
+                <th *ngIf="estimationStatus === 4 || estimationStatus === 5">Ocjena</th>
+                <th>*</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr *ngFor="let goal of group.goals">
+                <th scope="row">{{goal.ponderPercentage}}</th>
+                <td>{{goal.name}}</td>
+                <td>{{goal.targetValue}}</td>
+                <td *ngIf="estimationStatus === 4 || estimationStatus === 5">{{goal.achievementPercentage}}</td>
+                <td>
+                    <jhi-edit-goal-modal *ngIf="estimationStatus === 2 || estimationStatus === 4"
+                                         [selectedGoal]="goal"
+                                         [group]="group" [employee]="evaluatee"
+                                         [estimation]="relationship.estimation"
+                                         (groupsEmitter)="onGroupsEmit($event)">
+
+                    </jhi-edit-goal-modal>
+                </td>
+            </tr>
+
+            <tr *ngIf="(group.goals.length === 0 || group.totalPonderForGroup !== 100) && estimationStatus !== 4">
+                <td class="text-right">Dodajte cilj:</td>
+                <td>
+                    <jhi-create-new-goal-modal [group]="group" [employee]="evaluatee"
+                                               [estimation]="relationship.estimation"
+                                               (groupsEmitter)="onGroupsEmit($event)">
+
+                    </jhi-create-new-goal-modal>
+                <td></td>
+                <td></td>
+            </tr>
+            <hr>
+            <h6>Ukupno:</h6>
+            <p class="padding-for-total font-weight-bold">{{group.totalPonderForGroup}}</p>
+
+            </tbody>
+        </table>
+
     </div>
 
     <simple-notifications></simple-notifications>

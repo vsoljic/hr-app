@@ -12,4 +12,6 @@ public interface GroupService {
     List<GroupDTO> findAllGroups();
 
     List<GroupDTO> findAllByEmployeeAndEstimationGroupByGroups(Long estimationId, Long employeeId);
+
+    Double calculateTotalAchievementForGroup(GroupDTO groupDTO);
 }

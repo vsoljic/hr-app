@@ -11,19 +11,25 @@
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="inputPonder" class="label-text">Ponder:</label>
-                    <input type="number" id="inputPonder" name="inputPonder" [(ngModel)]="inputPonder" class="form-control" required /> <!-- max="100"-->
+                    <input type="number" id="inputPonder" name="inputPonder" [(ngModel)]="inputPonder"
+                           class="form-control" required
+                           [disabled]="estimationStatus === 4"/> <!-- max="100"-->
                 </div>
                 <div class="col-md-8">
                     <label for="inputTargetPercentage" class="label-text">Ciljana vrijednost (%):</label>
-                    <input type="number" id="inputTargetPercentage" name="inputTargetPercentage" [(ngModel)]="inputTargetPercentage" class="form-control"
-                           required   /> <!--max="100"-->
+                    <input type="number" id="inputTargetPercentage" name="inputTargetPercentage"
+                           [(ngModel)]="inputTargetPercentage" class="form-control"
+                           required
+                           [disabled]="estimationStatus === 4"/> <!--max="100"-->
                 </div>
             </div>
 
             <div class="form-row padding-top">
                 <div class="col-md-12">
                     <label for="inputGoalName" class="label-text">Naziv cilja:</label>
-                    <input type="text" id="inputGoalName" name="inputGoalName" [(ngModel)]="inputGoalName" class="form-control" required />
+                    <input type="text" id="inputGoalName" name="inputGoalName" [(ngModel)]="inputGoalName"
+                           class="form-control" required
+                           [disabled]="estimationStatus === 4"/>
                     <!--maxlength="150"-->
 
                 </div>
@@ -32,14 +38,17 @@
             <div class="form-row padding-top" *ngIf="estimationStatus === 4">
                 <div class="col-md-12">
                     <label for="inputGoalName" class="label-text">Unos postotka ostvarenja:</label>
-                    <input type="number" id="inputAchievementPercentage" name="inputAchievementPercentage" [(ngModel)]="inputAchievementPercentage" class="form-control" required />
+                    <input type="number" id="inputAchievementPercentage" name="inputAchievementPercentage"
+                           [(ngModel)]="inputAchievementPercentage" class="form-control" required/>
                     <!--maxlength="150"-->
 
                 </div>
             </div>
 
             <div class="form-row padding-top text-danger font-weight-bold">
-                <div class="red-text" *ngIf="illegalPonderValue">Nije moguće unijeti navedeni cilj! Ponder grupe prelazi 100%.</div>
+                <div class="red-text" *ngIf="illegalPonderValue">Nije moguće unijeti navedeni cilj! Ponder grupe prelazi
+                    100%.
+                </div>
             </div>
 
         </form>
@@ -52,7 +61,8 @@
             </div>
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary" (click)="editGoal(editGoalForm)"
-                        [disabled]="!editGoalForm.valid || illegalPonderValue">Spremi</button>
+                        [disabled]="!editGoalForm.valid || illegalPonderValue">Spremi
+                </button>
             </div>
         </div>
     </div>

@@ -1,0 +1,9 @@
+{
+    "activate": {
+        "title": "Aktivacija",
+        "messages": {
+            "success": "<strong>Vaš račun je aktiviran.</strong> Molimo Vas ",
+            "error": "<strong>Vaš račun ne može biti aktiviran.</strong> Molimo vas ispunite formu za registraciju kako biste se prijavili."
+        }
+    }
+}

@@ -11,23 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * @author vedrana.soljic
- */
 @RestController
-@RequestMapping("/api/estimations-evaluator")
-public class EstimationsEvaluatorController {
+@RequestMapping("/api/estimations-evaluatee")
+public class EstimationsEvaluateeController {
 
     private final EstimationService estimationService;
 
-    public EstimationsEvaluatorController(EstimationService estimationService) {
+    public EstimationsEvaluateeController(EstimationService estimationService) {
         this.estimationService = estimationService;
     }
 
-    @GetMapping("/{evaluatorId}")
-    public ResponseEntity<List<EstimationDTO>> getAllEstimationsForEvaluator(@PathVariable(name = "evaluatorId") Long evaluatorId) {
+    @GetMapping("/{evaluateeId}")
+    public ResponseEntity<List<EstimationDTO>> getAllEstimationsForEvaluatee(@PathVariable(name = "evaluateeId") Long evaluateeId) {
 
-        List<EstimationDTO> estimations = estimationService.findAllByLoggedInUserEvaluator(evaluatorId);
+        List<EstimationDTO> estimations = estimationService.findAllByLoggedInUserEvaluatee(evaluateeId);
         return new ResponseEntity<>(estimations, HttpStatus.OK);
     }
 }

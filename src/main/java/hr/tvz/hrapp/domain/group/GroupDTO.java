@@ -22,15 +22,18 @@ public class GroupDTO implements Serializable {
 
     private Long totalPonderForGroup;
 
+    private Double totalAchievementForGroup;
+
     public GroupDTO() {
     }
 
-    public GroupDTO(Long id, String name, Long ponderPercentage, List<GoalDTO> goals, Long totalPonderForGroup) {
+    public GroupDTO(Long id, String name, Long ponderPercentage, List<GoalDTO> goals, Long totalPonderForGroup, Double totalAchievementForGroup) {
         this.id = id;
         this.name = name;
         this.ponderPercentage = ponderPercentage;
         this.goals = goals;
         this.totalPonderForGroup = totalPonderForGroup;
+        this.totalAchievementForGroup = totalAchievementForGroup;
     }
 
     public Long getId() {
@@ -71,5 +74,13 @@ public class GroupDTO implements Serializable {
 
     public void setTotalPonderForGroup(Long totalPonderForGroup) {
         this.totalPonderForGroup = totalPonderForGroup;
+    }
+
+    public Double getTotalAchievementForGroup() {
+        return totalAchievementForGroup;
+    }
+
+    public void setTotalAchievementForGroup(Double totalAchievementForGroup) {
+        this.totalAchievementForGroup = totalAchievementForGroup;
     }
 }

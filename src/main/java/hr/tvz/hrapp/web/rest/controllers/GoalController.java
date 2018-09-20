@@ -38,14 +38,9 @@ public class GoalController {
     @PostMapping("/new")
     public ResponseEntity<GoalDTO> createNewGoal(@RequestBody GoalDTO goalDTO) {
 
-        try {
-            GoalDTO dto = goalService.saveGoal(goalDTO);
-            return new ResponseEntity<>(dto, HttpStatus.OK);
+        GoalDTO dto = goalService.saveGoal(goalDTO);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
 
-        } catch (IllegalArgumentException ex) {
-            log.error(ex.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
 
     }
 }

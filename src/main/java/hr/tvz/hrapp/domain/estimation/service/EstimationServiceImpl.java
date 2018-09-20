@@ -10,8 +10,9 @@ import hr.tvz.hrapp.domain.estimation_evaluator.EstimationEvaluator;
 import hr.tvz.hrapp.domain.estimation_evaluator.service.EstimationEvaluatorService;
 import hr.tvz.hrapp.domain.estimation_model.mapper.EstimationModelMapper;
 import hr.tvz.hrapp.domain.estimation_status.mapper.EstimationStatusMapper;
+import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployees;
+import hr.tvz.hrapp.domain.relationship_est_employees.RelationshipEstEmployeesDTO;
 import hr.tvz.hrapp.domain.relationship_est_employees.service.RelationshipEstEmployeesService;
-import hr.tvz.hrapp.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,20 +27,18 @@ public class EstimationServiceImpl implements EstimationService {
     private final EstimationRepository estimationRepository;
     private final EmployeesService employeesService;
     private final RelationshipEstEmployeesService relationshipEstEmployeesService;
-    private final UserService userService;
     private final EstimationMapper estimationMapper;
     private final EstimationModelMapper estimationModelMapper;
     private final EstimationStatusMapper estimationStatusMapper;
     private final EstimationEvaluatorService estimationEvaluatorService;
 
     public EstimationServiceImpl(EstimationRepository estimationRepository, EmployeesService employeesService,
-                                 RelationshipEstEmployeesService relationshipEstEmployeesService, UserService userService,
+                                 RelationshipEstEmployeesService relationshipEstEmployeesService,
                                  EstimationMapper estimationMapper, EstimationModelMapper estimationModelMapper,
                                  EstimationStatusMapper estimationStatusMapper, EstimationEvaluatorService estimationEvaluatorService) {
         this.estimationRepository = estimationRepository;
         this.employeesService = employeesService;
         this.relationshipEstEmployeesService = relationshipEstEmployeesService;
-        this.userService = userService;
         this.estimationMapper = estimationMapper;
         this.estimationModelMapper = estimationModelMapper;
         this.estimationStatusMapper = estimationStatusMapper;
@@ -57,7 +56,7 @@ public class EstimationServiceImpl implements EstimationService {
     }
 
     @Override
-    public List<EstimationDTO> findAllByLoggedInUser(Long id) {
+    public List<EstimationDTO> findAllByLoggedInUserEvaluator(Long id) {
 
         List<EstimationEvaluator> estimationEvaluators = estimationEvaluatorService.getAllForEvaluatorId(id);
 
@@ -67,6 +66,19 @@ public class EstimationServiceImpl implements EstimationService {
         ));
 
         return estimationsDtos;
+    }
+
+    @Override
+    public List<EstimationDTO> findAllByLoggedInUserEvaluatee(Long id) {
+
+        List<RelationshipEstEmployeesDTO> relationshipEstEmployees = relationshipEstEmployeesService.findAllForEvaluatee(id);
+
+        List<EstimationDTO> estimationDTOS = new ArrayList<>();
+
+        relationshipEstEmployees.forEach(relationship ->
+            estimationDTOS.add(estimationMapper.mapToDto(estimationRepository.findById(relationship.getEstimationId()).get())));
+
+        return estimationDTOS;
     }
 
     @Override

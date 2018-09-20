@@ -9,7 +9,7 @@
         },
         "messages": {
             "error": {
-                "authentication": "<strong>Prijava je neuspješna!</strong> Korisničko ime i/ili lozinka nisu ispavni."
+                "authentication": "<strong>Prijava je neuspješna!</strong> Korisničko ime i/ili lozinka nisu ispravni."
             }
         },
         "password" : {

@@ -24,10 +24,14 @@
                     <td>{{employee.firstName}}</td>
                     <td>{{employee.lastName}}</td>
                     <td>{{employee.workPosition}}</td>
-                    <td *ngIf="isEvaluator">
-                        <fa-icon [icon]="'times'">
+                    <td>
+                        <span *ngIf="isEvaluator">
+                            <fa-icon [icon]="'check'">
+                        </span>
+                        <span *ngIf="!isEvaluator">
+                            <fa-icon [icon]="'edit'">
+                        </span>
                     </td>
-                    <!--  <td><fa-icon [icon]="'edit'"></td>-->
                     <td>
                         <jhi-create-relationship-roles-modal [employeeId]="employee.id"
                                                              [employeeName]="employee.firstName"

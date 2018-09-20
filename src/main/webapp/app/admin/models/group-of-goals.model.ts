@@ -6,6 +6,7 @@ export class GroupOfGoals {
     ponderPercentage: number;
     goals: Goal[] = [];
     totalPonderForGroup: number;
+    totalAchievementForGroup: number;
 
     constructor(id: number, name: string, ponderPercentage: number, goals: Goal[], totalPonderForGroup: number) {
         this.id = id;

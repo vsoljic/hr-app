@@ -31,9 +31,10 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
         this.mapper = mapper;
     }
 
-    public RelationshipEstEmployeesDTO findAllForEvaluatorAndEstimation(Long estimationId, Long evaluatorId) {
+    @Override
+    public RelationshipEstEmployeesDTO findAllForEmployeeAndEstimation(Long estimationId, Long employeeId) {
         List<RelationshipEstEmployees> relationshipEstEmployeesList = relationshipEstEmployeesRepository
-            .findAllByRelationshipCompositeKey_EstimationIdAndAndRelationshipCompositeKey_EmployeeEvaluatorId(estimationId, evaluatorId);
+            .findAllByRelationshipCompositeKey_EstimationIdAndAndRelationshipCompositeKey_EmployeeEvaluatorId(estimationId, employeeId);
 
         if (relationshipEstEmployeesList.size() != 0) {
             return mapper.mapToDto(relationshipEstEmployeesList);
@@ -41,6 +42,12 @@ public class RelationshipEstEmployeesServiceImpl implements RelationshipEstEmplo
             return null;
         }
 
+    }
+
+    @Override
+    public List<RelationshipEstEmployeesDTO> findAllForEvaluatee(Long evaluateeId) {
+        return mapper.mapListToDtoList(relationshipEstEmployeesRepository
+            .findDistinctByRelationshipCompositeKey_EmployeeEvaluateeId(evaluateeId));
     }
 
     @Override

@@ -19,6 +19,8 @@ public interface RelationshipEstEmployeesMapper {
 
     List<RelationshipEstEmployeesDTO> mapListToDtoList(List<RelationshipEstEmployees> relationships, Long id);
 
+    List<RelationshipEstEmployeesDTO> mapListToDtoList(List<RelationshipEstEmployees> relationships);
+
     List<RelationshipEstEmployees> mapDtoListToList(List<RelationshipEstEmployeesDTO> dtos);
 
 }

@@ -68,13 +68,15 @@ export class EditGoalModalComponent implements OnInit {
             return; // to exit without calling backend
         }
 
-        const isPonderValid = this.group.totalPonderForGroup + this.inputPonder - this.selectedGoal.ponderPercentage;
-        if (isPonderValid > 100) {
-            this.illegalPonderValue = true;
-            return;
+        if (this.estimationStatus !== 4) {
+            const isPonderValid = this.group.totalPonderForGroup + this.inputPonder - this.selectedGoal.ponderPercentage;
+            if (isPonderValid > 100) {
+                this.illegalPonderValue = true;
+                return;
+            }
+            this.group.totalPonderForGroup = isPonderValid;
         }
 
-        this.group.totalPonderForGroup = isPonderValid;
         const goal = this.prepareEstimationValues();
         console.log('Objekt goal' + goal);
         console.log('Objekt goal ponder' + goal.ponderPercentage);
@@ -89,7 +91,7 @@ export class EditGoalModalComponent implements OnInit {
             () => {
                 this.modalRef.close();
                 this.deleteAllModalValues();
-                this.notificationsService.create(null, 'Uspješno ste kreirali cilj!', 'success');
+                this.notificationsService.create(null, 'Uspješno ste izmijenili cilj!', 'success');
                 this.getGroupsAndGoals();
             }
         );

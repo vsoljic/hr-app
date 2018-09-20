@@ -17,8 +17,8 @@ export class EvaluateeComponent implements OnInit {
     groups: GroupOfGoals[];
     evaluatee: Employee;
     relationship: RelationshipWithObjectsModel;
-    evaluator: Employee;
     estimationStatus: number;
+    finalAchievement: number = 0;
 
     constructor(
         private evaluateeService: EvaluateeService,
@@ -32,20 +32,31 @@ export class EvaluateeComponent implements OnInit {
         this.relationship = this.dataSharingService.storage;
 
         this.evaluatee = this.relationship.evaluatee;
-        this.evaluator = this.relationship.evaluator;
         this.estimationStatus = this.relationship.estimation.status.id;
 
         this.getGroupsAndGoals();
     }
 
     getGroupsAndGoals() {
-        this.groupService
-            .getGroupsByEmployeeAndEstimationWithGoals(this.evaluatee.id, this.relationship.estimation.id)
-            .subscribe((data: GroupOfGoals[]) => (this.groups = data), () => console.log('Unsuccessful'), () => console.log('success'));
+        this.groupService.getGroupsByEmployeeAndEstimationWithGoals(this.evaluatee.id, this.relationship.estimation.id).subscribe(
+            (data: GroupOfGoals[]) => {
+                this.groups = data;
+            },
+            () => console.log('Unsuccessful'),
+            () => this.setFinalAchievement()
+        );
     }
 
     onGroupsEmit(event) {
         this.groups = event;
+        this.finalAchievement = 0;
+        this.setFinalAchievement();
         console.log('Hello to parent, groups: ' + this.groups + ',event:' + event);
+    }
+
+    setFinalAchievement() {
+        for (let group of this.groups) {
+            this.finalAchievement += group.totalAchievementForGroup;
+        }
     }
 }
