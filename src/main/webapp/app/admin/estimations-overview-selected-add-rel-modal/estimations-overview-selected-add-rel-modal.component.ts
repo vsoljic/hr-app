@@ -33,6 +33,7 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
     ngOnInit() {}
 
     openModalForRelationshipsAndRoles(content) {
+        this.evaluateeIdList = [];
         this.modalReference = this.modalService.open(content);
         this.modalReference.result.then(
             result => {

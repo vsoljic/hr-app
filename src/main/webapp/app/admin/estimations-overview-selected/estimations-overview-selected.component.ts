@@ -54,6 +54,7 @@ export class EstimationsOverviewSelectedComponent implements OnInit {
     onEvaluatorsEmit(evaluatorsIds) {
         this.evaluatorsIds = evaluatorsIds;
         console.log('U parentu sam s ovim: ' + this.evaluatorsIds);
+        console.log('U parentu sam s ovim postojećim evaluatorima: ' + this.evaluators);
 
         this.estimationsOverviewService.getEmployeesIn(evaluatorsIds).subscribe(
             (evaluators: Employee[]) => {
@@ -63,6 +64,7 @@ export class EstimationsOverviewSelectedComponent implements OnInit {
                 } else {
                     for (const e of evaluators) {
                         this.evaluators.push(e);
+                        this.evaluators = [...this.evaluators];
                         console.log('evaluator id: ' + e.id);
                     }
                 }
@@ -81,7 +83,7 @@ export class EstimationsOverviewSelectedComponent implements OnInit {
                     this.evaluatees = evaluatees;
                 } else {
                     for (const e of evaluatees) {
-                        if (this.evaluatees.find(evaluatee => evaluatee.id !== e.id)) {
+                        if (!this.evaluatees.includes(e)) {
                             this.evaluatees.push(e);
                         }
                     }
@@ -90,6 +92,10 @@ export class EstimationsOverviewSelectedComponent implements OnInit {
             () => console.log('error on emit evaluatees'),
             () => console.log('success')
         );
+    }
+
+    onBla(event) {
+        console.log('Event');
     }
 
     onEvaluateeDeleteEmit(evaluatee) {

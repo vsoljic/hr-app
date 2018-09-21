@@ -34,6 +34,7 @@ export class CreateRelationshipAddEvaluatorModalComponent implements OnInit {
     ngOnInit() {}
 
     openModalForRelationshipsAndRoles(content) {
+        this.evaluatorsIdList = [];
         this.modalReference = this.modalService.open(content);
         this.modalReference.result.then(
             result => {

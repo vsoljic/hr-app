@@ -9,6 +9,7 @@
             <ng-select [items]="evaluators" [(ngModel)]="selectedEvaluator" bindLabel="firstName"
                        id="selectEvaluators" name="selectEvaluators"
                        notFoundText="Nema podataka"
+                       (change)="onBla($event)"
                        (ngModelChange)="getAllEvaluateesForEvaluator()">
             </ng-select>
         </div>
