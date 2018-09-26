@@ -13,7 +13,7 @@
                     <p class="question-text">{{employeeName}} je procjenitelj za:</p>
                 </div>
                 <div class="col-md-12">
-                    <ng-select [items]="employees" bindLabel="firstName" id="selectEvaluatees" name="selectEvaluatees"
+                    <ng-select [items]="employees" bindLabel="fullName" id="selectEvaluatees" name="selectEvaluatees"
                                notFoundText="Nema podataka" multiple="true" (add)="onSelect($event)" (remove)="onRemove($event)">
                     </ng-select>
                 </div>

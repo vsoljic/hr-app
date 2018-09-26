@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-7 padding-bottom">
-            <h2>Procjena radnog učinka za - {{evaluatee.firstName}}:</h2>
+            <h2>Procjena radnog učinka za - {{evaluateeFullName}}:</h2>
         </div>
         <div class="col-md-5 padding-bottom" *ngIf="estimationStatus === 4 || estimationStatus === 5">
             <h2>FINALNO OSTVARENJE: {{finalAchievement | number:'1.2-2'}}%</h2>

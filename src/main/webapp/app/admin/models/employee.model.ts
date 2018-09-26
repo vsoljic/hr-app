@@ -11,6 +11,7 @@ export class Employee {
     estimationsForEvaluator: Estimation[];
     estimationsForEvaluatee: Estimation[];
     isEvaluator: boolean = false;
+    fullName: string;
 
     constructor(
         id: number,

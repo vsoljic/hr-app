@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <ng-select [items]="evaluators" [(ngModel)]="selectedEvaluator" bindLabel="firstName"
+            <ng-select [items]="evaluators" [(ngModel)]="selectedEvaluator" bindLabel="fullName"
                        id="selectEvaluators" name="selectEvaluators"
                        notFoundText="Nema podataka"
                        (change)="onBla($event)"

@@ -19,22 +19,23 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let employee of employees">
-                    <th scope="row">{{employee.id}}</th>
-                    <td>{{employee.employeeCode}}</td>
-                    <td>{{employee.firstName}}</td>
-                    <td>{{employee.lastName}}</td>
-                    <td>{{employee.workPosition}}</td>
+                    <th scope="row">{{employee?.id}}</th>
+                    <td>{{employee?.employeeCode}}</td>
+                    <td>{{employee?.firstName}}</td>
+                    <td>{{employee?.lastName}}</td>
+                    <td>{{employee?.workPosition}}</td>
                     <td>
-                        <span *ngIf="employee.isEvaluator">
+                        <span *ngIf="employee?.isEvaluator">
                             <fa-icon [icon]="'check'">
                         </span>
-                        <span *ngIf="!employee.isEvaluator">
+                        <span *ngIf="!employee?.isEvaluator">
                             <fa-icon [icon]="'times'">
                         </span>
                     </td>
                     <td>
-                        <jhi-create-relationship-roles-modal [employeeId]="employee.id"
-                                                             [employeeName]="employee.firstName"
+                        <jhi-create-relationship-roles-modal [employee]="employee"
+                                                             [employeeId]="employee?.id"
+                                                             [employeeName]="employee?.firstName + ' ' + employee?.lastName"
                                                              [estimation]="estimation"
                                                              (evaluatorEmitter)="onEmit($event)">
                         </jhi-create-relationship-roles-modal>

@@ -7,7 +7,6 @@ import { NotificationsService } from 'angular2-notifications';
 import { Relationship } from 'app/admin/models/relationship.model';
 import { DataSharingService } from 'app/shared/data-sharing.service';
 import { Estimation } from 'app/admin/models/estimation.model';
-import { GroupOfGoals } from 'app/admin/models/group-of-goals.model';
 
 @Component({
     selector: 'jhi-create-relationship-roles-modal',
@@ -18,10 +17,10 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
     modalReference: NgbModalRef;
     closeResult: string;
     @Input() estimation: Estimation;
+    @Input() evaluator: Employee;
     @Input() employeeId: number;
     @Input() employeeName: string;
     employees: Employee[];
-    employeeString: string;
     evaluateeIdList: number[] = [];
     isEvaluator: boolean = false;
     @Output() evaluatorEmitter: EventEmitter<number> = new EventEmitter<number>();
@@ -47,13 +46,16 @@ export class CreateRelationshipRolesModalComponent implements OnInit {
             }
         );
 
-        this.relationshipsService
-            .getEmployeesExpectSelectedOne(this.employeeId)
-            .subscribe(
-                (employees: Employee[]) => (this.employees = employees),
-                error => console.log('error fetching employees', error),
-                () => console.log('success')
-            );
+        this.relationshipsService.getEmployeesExpectSelectedOne(this.employeeId).subscribe(
+            (employees: Employee[]) => {
+                this.employees = employees.map(e => {
+                    e.fullName = e.firstName + ' ' + e.lastName;
+                    return e;
+                });
+            },
+            error => console.log('error fetching employees', error),
+            () => console.log('success')
+        );
     }
 
     onSelect(employee) {

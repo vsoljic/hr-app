@@ -45,13 +45,16 @@ export class CreateRelationshipAddEvaluatorModalComponent implements OnInit {
             }
         );
 
-        this.relationshipsService
-            .getNotConnectedEvaluatorsForEstimation(this.estimationId)
-            .subscribe(
-                (employees: Employee[]) => (this.employees = employees),
-                error => console.log('error fetching employees', error),
-                () => console.log('success')
-            );
+        this.relationshipsService.getNotConnectedEvaluatorsForEstimation(this.estimationId).subscribe(
+            (employees: Employee[]) => {
+                this.employees = employees.map(e => {
+                    e.fullName = e.firstName + ' ' + e.lastName;
+                    return e;
+                });
+            },
+            error => console.log('error fetching employees', error),
+            () => console.log('success')
+        );
     }
 
     onSelect(employee) {

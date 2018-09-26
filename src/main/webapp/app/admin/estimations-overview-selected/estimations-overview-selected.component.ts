@@ -30,13 +30,16 @@ export class EstimationsOverviewSelectedComponent implements OnInit {
         this.estimation = this.dataSharingService.storage;
         this.dataSharingService.storage = null;
 
-        this.estimationsOverviewService
-            .getEvaluators(this.estimation.id)
-            .subscribe(
-                (evaluators: Employee[]) => (this.evaluators = evaluators),
-                error => console.log('error fetching evaluators', error),
-                () => console.log('success')
-            );
+        this.estimationsOverviewService.getEvaluators(this.estimation.id).subscribe(
+            (evaluators: Employee[]) => {
+                this.evaluators = evaluators.map(e => {
+                    e.fullName = e.firstName + ' ' + e.lastName;
+                    return e;
+                });
+            },
+            error => console.log('error fetching evaluators', error),
+            () => console.log('success')
+        );
     }
 
     getAllEvaluateesForEvaluator() {

@@ -44,13 +44,16 @@ export class EstimationsOverviewSelectedAddRelModalComponent implements OnInit {
             }
         );
 
-        this.relationshipsService
-            .getNotConnectedEmployeesForEvaluator(this.selectedEvaluatorId, this.estimationId)
-            .subscribe(
-                (employees: Employee[]) => (this.employees = employees),
-                error => console.log('error fetching employees', error),
-                () => console.log('success')
-            );
+        this.relationshipsService.getNotConnectedEmployeesForEvaluator(this.selectedEvaluatorId, this.estimationId).subscribe(
+            (employees: Employee[]) => {
+                this.employees = employees.map(e => {
+                    e.fullName = e.firstName + ' ' + e.lastName;
+                    return e;
+                });
+            },
+            error => console.log('error fetching employees', error),
+            () => console.log('success')
+        );
     }
 
     onSelect(employee) {

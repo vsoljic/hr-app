@@ -14,7 +14,7 @@ import { Estimation } from 'app/admin/models/estimation.model';
 export class RelationshipsForEstimationComponent implements OnInit {
     employees: Employee[];
     estimation: Estimation;
-    isEvaluator: boolean = false;
+    isEvaluator = false;
     evaluator: Employee;
     evaluatorsList: Employee[] = [];
 
@@ -45,7 +45,7 @@ export class RelationshipsForEstimationComponent implements OnInit {
         this.isEvaluator = true;
 
         if (this.employees.find(e => evaluator === e.id)) {
-            for (let e of this.employees) {
+            for (const e of this.employees) {
                 if (e.id === evaluator) {
                     e.isEvaluator = true;
                 }

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Employee } from 'app/admin/models/employee.model';
-import { Relationship } from 'app/admin/models/relationship.model';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { DataSharingService } from 'app/shared/data-sharing.service';
@@ -45,13 +44,16 @@ export class EstimationsEvaluatorSelectEvaluateeModalComponent implements OnInit
             }
         );
 
-        this.relationshipsService
-            .getEvaluateesForEvaluatorOnEstimation(this.estimation.id)
-            .subscribe(
-                (employees: Employee[]) => (this.employees = employees),
-                error => console.log('error fetching employees', error),
-                () => console.log('success')
-            );
+        this.relationshipsService.getEvaluateesForEvaluatorOnEstimation(this.estimation.id).subscribe(
+            (employees: Employee[]) => {
+                this.employees = employees.map(e => {
+                    e.fullName = e.firstName + ' ' + e.lastName;
+                    return e;
+                });
+            },
+            error => console.log('error fetching employees', error),
+            () => console.log('success')
+        );
     }
 
     onSelect(employee) {

@@ -21,7 +21,7 @@
                     </span>
                 </a>
             </li>
-            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer"
+            <li *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_EVALUATOR', 'ROLE_EVALUATEE']" ngbDropdown class="nav-item dropdown pointer"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluation-menu">
                     <span>
@@ -30,7 +30,7 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
+                    <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
                         <a class="dropdown-item" routerLink="admin/estimations-overview"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
@@ -38,40 +38,13 @@
                         </a>
                     </li>
 
-                 <!--   <li>
-                        <a class="dropdown-item" routerLink="admin/estimations-overview-selected"
-                           routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon [icon]="'user'"></fa-icon>
-                            <span>Estimations overview for selected estimation</span>
-                        </a>
-                    </li>-->
-
-                    <li>
+                    <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
                         <a class="dropdown-item" routerLink="admin/estimation"
                            routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'"></fa-icon>
                             <span>Kreiraj novu procjenu</span>
                         </a>
                     </li>
-          <!--          <li>
-                        <a class="dropdown-item" routerLink="admin/relationships"
-                           routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon [icon]="'user'"></fa-icon>
-                            <span>Relationships</span>
-                        </a>
-                    </li>-->
-                </ul>
-            </li>
-
-            <li ngbDropdown class="nav-item dropdown pointer"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluatee-menu">
-                    <span>
-                        <fa-icon [icon]="'home'"></fa-icon>
-                        <span>Procjena radnog učinka</span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu>
                     <li *jhiHasAnyAuthority="'ROLE_EVALUATOR'">
                         <a class="dropdown-item" routerLink="estimations-evaluator"
                            routerLinkActive="active" (click)="collapseNavbar()">
@@ -86,8 +59,28 @@
                             <span>Pregled procjena u ulozi procjenjenika</span>
                         </a>
                     </li>
+          <!--          <li>
+                        <a class="dropdown-item" routerLink="admin/relationships"
+                           routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'user'"></fa-icon>
+                            <span>Relationships</span>
+                        </a>
+                    </li>-->
                 </ul>
             </li>
+
+           <!-- <li ngbDropdown class="nav-item dropdown pointer"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="evaluatee-menu">
+                    <span>
+                        <fa-icon [icon]="'home'"></fa-icon>
+                        <span>Procjena radnog učinka</span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu>
+
+                </ul>
+            </li>-->
 
 
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->

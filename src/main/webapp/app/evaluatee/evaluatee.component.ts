@@ -16,6 +16,7 @@ import { GroupService } from 'app/evaluatee/group.service';
 export class EvaluateeComponent implements OnInit {
     groups: GroupOfGoals[];
     evaluatee: Employee;
+    evaluateeFullName: string;
     relationship: RelationshipWithObjectsModel;
     estimationStatus: number;
     finalAchievement: number = 0;
@@ -32,6 +33,7 @@ export class EvaluateeComponent implements OnInit {
         this.relationship = this.dataSharingService.storage;
 
         this.evaluatee = this.relationship.evaluatee;
+        this.evaluateeFullName = this.evaluatee.firstName + ' ' + this.evaluatee.lastName;
         this.estimationStatus = this.relationship.estimation.status.id;
 
         this.getGroupsAndGoals();
